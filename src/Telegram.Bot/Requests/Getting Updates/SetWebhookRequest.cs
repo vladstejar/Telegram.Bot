@@ -98,10 +98,10 @@ public class SetWebhookRequest : FileRequestBase<bool>
     public string? SecretToken { get; set; }
 
     /// <summary>
-    /// Initializes a new request with uri
+    /// Initializes a new request with URL
     /// </summary>
     /// <param name="url">
-    /// HTTPS url to send updates to. Use an empty string to remove webhook integration
+    /// HTTPS URL to send updates to. Use an empty string to remove webhook integration
     /// </param>
     public SetWebhookRequest(string url)
         : base("setWebhook")
