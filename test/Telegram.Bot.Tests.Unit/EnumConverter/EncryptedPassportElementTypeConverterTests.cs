@@ -25,7 +25,7 @@ public class EncryptedPassportElementTypeConverterTests
     public void Should_Convert_EncryptedPassportElementType_To_String(EncryptedPassportElementType encryptedPassportElementType, string value)
     {
         EncryptedPassportElement encryptedPassportElement = new() { Type = encryptedPassportElementType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(encryptedPassportElement);
 
@@ -49,7 +49,7 @@ public class EncryptedPassportElementTypeConverterTests
     public void Should_Convert_String_To_EncryptedPassportElementType(EncryptedPassportElementType encryptedPassportElementType, string value)
     {
         EncryptedPassportElement expectedResult = new() { Type = encryptedPassportElementType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         EncryptedPassportElement? result = JsonConvert.DeserializeObject<EncryptedPassportElement>(jsonData);
 
@@ -60,7 +60,7 @@ public class EncryptedPassportElementTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_EncryptedPassportElementType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         EncryptedPassportElement? result = JsonConvert.DeserializeObject<EncryptedPassportElement>(jsonData);
 

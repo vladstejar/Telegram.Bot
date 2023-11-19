@@ -48,7 +48,7 @@ public class MessageTypeConverterTests
     public void Should_Convert_UpdateType_To_String(MessageType messageType, string value)
     {
         Message message = new() { Type = messageType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(message);
 
@@ -95,7 +95,7 @@ public class MessageTypeConverterTests
     public void Should_Convert_String_To_UpdateType(MessageType messageType, string value)
     {
         Message expectedResult = new() { Type = messageType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         Message? result = JsonConvert.DeserializeObject<Message>(jsonData);
 
@@ -106,7 +106,7 @@ public class MessageTypeConverterTests
     [Fact]
     public void Should_Return_Unknown_For_Incorrect_UpdateType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         Message? result = JsonConvert.DeserializeObject<Message>(jsonData);
 

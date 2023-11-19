@@ -192,7 +192,7 @@ public static partial class TelegramBotClientExtensions
             .MakeRequestAsync(
                 request: new DeleteWebhookRequest
                 {
-                    DropPendingUpdates = dropPendingUpdates
+                    DropPendingUpdates = dropPendingUpdates,
                 },
                 cancellationToken
             )

@@ -7,16 +7,9 @@ namespace Telegram.Bot.Tests.Integ.Update_Messages;
 
 [Collection(Constants.TestCollections.DeleteMessage2)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class DeleteMessageTests2
+public class DeleteMessageTests2(TestsFixture fixture)
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    public DeleteMessageTests2(TestsFixture fixture)
-    {
-        _fixture = fixture;
-    }
+    ITelegramBotClient BotClient => fixture.BotClient;
 
     [OrderedFact("Should delete message")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
@@ -24,7 +17,7 @@ public class DeleteMessageTests2
     public async Task Should_Delete_Message()
     {
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: fixture.SupergroupChat.Id,
             text: "This message will be deleted shortly"
         );
 

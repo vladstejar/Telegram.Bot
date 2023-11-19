@@ -9,8 +9,10 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultCachedSticker.InputMessageContent"/> to send a message with
 /// the specified content instead of the sticker.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="stickerFileId">A valid file identifier of the sticker</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultCachedSticker : InlineQueryResult
+public class InlineQueryResultCachedSticker(string id, string stickerFileId) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be sticker
@@ -22,20 +24,9 @@ public class InlineQueryResultCachedSticker : InlineQueryResult
     /// A valid file identifier of the sticker
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string StickerFileId { get; }
+    public string StickerFileId { get; } = stickerFileId;
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="stickerFileId">A valid file identifier of the sticker</param>
-    public InlineQueryResultCachedSticker(string id, string stickerFileId)
-        : base(id)
-    {
-        StickerFileId = stickerFileId;
-    }
 }

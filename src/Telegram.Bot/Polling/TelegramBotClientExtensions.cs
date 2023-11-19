@@ -24,9 +24,9 @@ internal static class TelegramBotClientExtensions
             Limit = 1,
             Offset = -1,
             Timeout = 0,
-            AllowedUpdates = Array.Empty<UpdateType>(),
+            AllowedUpdates = [],
         };
-        var updates = await botClient.MakeRequestAsync(request: request, cancellationToken: cancellationToken)
+        var updates = await botClient.MakeRequestAsync(request, cancellationToken)
             .ConfigureAwait(false);
 
 #if NET6_0_OR_GREATER

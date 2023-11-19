@@ -49,10 +49,10 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
     {
         if (Interlocked.CompareExchange(ref _inProcess, 1, 0) is 1)
         {
-            throw new InvalidOperationException(nameof(GetAsyncEnumerator) + " may only be called once");
+            throw new InvalidOperationException($"{nameof(GetAsyncEnumerator)} may only be called once");
         }
 
-        return new Enumerator(receiver: this, cancellationToken: cancellationToken);
+        return new Enumerator(receiver: this, cancellationToken);
     }
 
     class Enumerator : IAsyncEnumerator<Update>
@@ -63,7 +63,7 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
         readonly UpdateType[]? _allowedUpdates;
         readonly int? _limit;
 
-        Update[] _updateArray = Array.Empty<Update>();
+        Update[] _updateArray = [];
         int _updateIndex;
         int _messageOffset;
         bool _updatesThrown;
@@ -100,9 +100,9 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
             {
                 try
                 {
-                    _messageOffset = await _receiver._botClient.ThrowOutPendingUpdatesAsync(
-                        cancellationToken: _token
-                    ).ConfigureAwait(false);
+                    _messageOffset = await _receiver._botClient
+                        .ThrowOutPendingUpdatesAsync(_token)
+                        .ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
@@ -114,7 +114,7 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
                 }
             }
 
-            _updateArray = Array.Empty<Update>();
+            _updateArray = [];
             _updateIndex = 0;
 
             while (_updateArray.Length is 0)
@@ -123,7 +123,7 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
                 {
                     _updateArray = await _receiver._botClient
                         .MakeRequestAsync(
-                            request: new GetUpdatesRequest
+                            new GetUpdatesRequest
                             {
                                 Offset = _messageOffset,
                                 Timeout = (int) _receiver._botClient.Timeout.TotalSeconds,

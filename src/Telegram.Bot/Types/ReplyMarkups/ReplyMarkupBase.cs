@@ -3,7 +3,7 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// <summary>
 /// Defines how clients display a reply interface to the <see cref="User"/>
 /// </summary>
-/// <seealso cref="Telegram.Bot.Types.ReplyMarkups.IReplyMarkup" />
+/// <seealso cref="IReplyMarkup" />
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public abstract class ReplyMarkupBase : IReplyMarkup
 {

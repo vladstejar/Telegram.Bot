@@ -35,11 +35,12 @@ public class ReplyMarkupTests
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
     public async Task Should_Send_MultiRow_Keyboard()
     {
-        ReplyKeyboardMarkup replyMarkup = new[] {
-            new[] {    "Top-Left",   "Top" , "Top-Right"    },
-            new[] {        "Left", "Center", "Right"        },
-            new[] { "Bottom-Left", "Bottom", "Bottom-Right" },
-        };
+        ReplyKeyboardMarkup replyMarkup =
+        [
+            [   "Top-Left",   "Top" , "Top-Right"   ],
+            [       "Left", "Center", "Right"       ],
+            ["Bottom-Left", "Bottom", "Bottom-Right"]
+        ];
 
         await BotClient.SendTextMessageAsync(
             chatId: _fixture.SupergroupChat,
@@ -66,23 +67,21 @@ public class ReplyMarkupTests
         Message sentMessage = await BotClient.SendTextMessageAsync(
             chatId: _fixture.SupergroupChat,
             text: "Message with inline keyboard markup",
-            replyMarkup: new InlineKeyboardMarkup(new[]
-            {
-                new []
-                {
+            replyMarkup: new InlineKeyboardMarkup(
+            [
+                [
                     InlineKeyboardButton.WithUrl(
                         "Link to Repository",
                         "https://github.com/TelegramBots/Telegram.Bot"
                     ),
-                },
-                new []
-                {
+                ],
+                [
                     InlineKeyboardButton.WithCallbackData("callback_data1"),
                     InlineKeyboardButton.WithCallbackData("callback_data2", "data"),
-                },
-                new [] { InlineKeyboardButton.WithSwitchInlineQuery("switch_inline_query"), },
-                new [] { InlineKeyboardButton.WithSwitchInlineQueryCurrentChat("switch_inline_query_current_chat"), },
-            })
+                ],
+                [InlineKeyboardButton.WithSwitchInlineQuery("switch_inline_query"),],
+                [InlineKeyboardButton.WithSwitchInlineQueryCurrentChat("switch_inline_query_current_chat"),],
+            ])
         );
 
         Assert.True(
@@ -90,30 +89,20 @@ public class ReplyMarkupTests
                 JToken.FromObject(sentMessage.ReplyMarkup),
                 JToken.FromObject(
                     new InlineKeyboardMarkup(
-                        new[]
-                        {
-                            new[]
-                            {
-                                InlineKeyboardButton.WithUrl(
-                                    "Link to Repository",
-                                    "https://github.com/TelegramBots/Telegram.Bot"
-                                ),
-                            },
-                            new[]
-                            {
-                                InlineKeyboardButton.WithCallbackData("callback_data1"),
-                                InlineKeyboardButton.WithCallbackData("callback_data2", "data"),
-                            },
-                            new[]
-                            {
-                                InlineKeyboardButton.WithSwitchInlineQuery("switch_inline_query"),
-                            },
-                            new[]
-                            {
-                                InlineKeyboardButton.WithSwitchInlineQueryCurrentChat("switch_inline_query_current_chat"),
-                            },
-                        }
-                    )
+                    [
+                        [
+                            InlineKeyboardButton.WithUrl(
+                                "Link to Repository",
+                                "https://github.com/TelegramBots/Telegram.Bot"
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton.WithCallbackData("callback_data1"),
+                            InlineKeyboardButton.WithCallbackData("callback_data2", "data"),
+                        ],
+                        [InlineKeyboardButton.WithSwitchInlineQuery("switch_inline_query"),],
+                        [InlineKeyboardButton.WithSwitchInlineQueryCurrentChat("switch_inline_query_current_chat"),],
+                    ])
                 )
             )
         );

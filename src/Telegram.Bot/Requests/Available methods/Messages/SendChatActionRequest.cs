@@ -20,12 +20,20 @@ namespace Telegram.Bot.Requests;
 /// amount of time to arrive.
 /// </para>
 /// </remarks>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="action">
+/// Type of action to broadcast. Choose one, depending on what the user is about to receive
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendChatActionRequest : RequestBase<bool>, IChatTargetable
+public class SendChatActionRequest(ChatId chatId, ChatAction action)
+    : RequestBase<bool>("sendChatAction"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread; supergroups only
@@ -46,21 +54,5 @@ public class SendChatActionRequest : RequestBase<bool>, IChatTargetable
     /// <see cref="SendVideoNoteRequest">video notes</see>
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public ChatAction Action { get; }
-
-    /// <summary>
-    /// Initializes a new request chatId and action
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="action">
-    /// Type of action to broadcast. Choose one, depending on what the user is about to receive
-    /// </param>
-    public SendChatActionRequest(ChatId chatId, ChatAction action)
-        : base("sendChatAction")
-    {
-        ChatId = chatId;
-        Action = action;
-    }
+    public ChatAction Action { get; } = action;
 }

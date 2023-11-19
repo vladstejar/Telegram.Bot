@@ -9,16 +9,9 @@ namespace Telegram.Bot.Tests.Integ.Sending_Messages;
 
 [Collection(Constants.TestCollections.SendDocumentMessage)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class SendingDocumentMessageTests
+public class SendingDocumentMessageTests(TestsFixture fixture)
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    public SendingDocumentMessageTests(TestsFixture fixture)
-    {
-        _fixture = fixture;
-    }
+    ITelegramBotClient BotClient => fixture.BotClient;
 
     [OrderedFact("Should send a pdf document with caption")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendDocument)]
@@ -26,7 +19,7 @@ public class SendingDocumentMessageTests
     {
         await using Stream stream = System.IO.File.OpenRead(Constants.PathToFile.Documents.Hamlet);
         Message message = await BotClient.SendDocumentAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: fixture.SupergroupChat.Id,
             document: new InputFileStream(content: stream, fileName: "HAMLET.pdf"),
             caption: "The Tragedy of Hamlet,\nPrince of Denmark"
         );
@@ -50,7 +43,7 @@ public class SendingDocumentMessageTests
     {
         await using Stream stream = System.IO.File.OpenRead(Constants.PathToFile.Documents.Hamlet);
         Message message = await BotClient.SendDocumentAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: fixture.SupergroupChat.Id,
             document: new InputFileStream(content: stream, fileName: "هملت.pdf"),
             caption: "تراژدی هملت\nشاهزاده دانمارک"
         );
@@ -75,7 +68,7 @@ public class SendingDocumentMessageTests
             thumbStream = System.IO.File.OpenRead(Constants.PathToFile.Thumbnail.TheAbilityToBreak);
 
         Message message = await BotClient.SendDocumentAsync(
-            chatId: _fixture.SupergroupChat,
+            chatId: fixture.SupergroupChat,
             document: new InputFileStream(content: documentStream, fileName: "Hamlet.pdf"),
             thumbnail: new InputFileStream(content: thumbStream, fileName: "thumb.jpg")
         );

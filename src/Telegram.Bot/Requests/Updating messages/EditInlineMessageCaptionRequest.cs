@@ -9,12 +9,13 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to edit captions of messages. On success <see langword="true"/> is returned.
 /// </summary>
+/// <param name="inlineMessageId">Identifier of the inline message</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditInlineMessageCaptionRequest : RequestBase<bool>
+public class EditInlineMessageCaptionRequest(string inlineMessageId) : RequestBase<bool>("editMessageCaption")
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
     [JsonProperty(Required = Required.Always)]
-    public string InlineMessageId { get; }
+    public string InlineMessageId { get; } = inlineMessageId;
 
     /// <summary>
     /// New caption of the message, 0-1024 characters after entities parsing
@@ -33,14 +34,4 @@ public class EditInlineMessageCaptionRequest : RequestBase<bool>
     /// <inheritdoc cref="Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with inlineMessageId and new caption
-    /// </summary>
-    /// <param name="inlineMessageId">Identifier of the inline message</param>
-    public EditInlineMessageCaptionRequest(string inlineMessageId)
-        : base("editMessageCaption")
-    {
-        InlineMessageId = inlineMessageId;
-    }
 }

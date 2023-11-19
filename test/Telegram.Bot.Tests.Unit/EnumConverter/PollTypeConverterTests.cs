@@ -14,7 +14,7 @@ public class PollTypeConverterTests
     public void Should_Convert_ChatType_To_String(PollType pollType, string value)
     {
         Poll poll = new() { Type = pollType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(poll);
 
@@ -27,7 +27,7 @@ public class PollTypeConverterTests
     public void Should_Convert_String_To_PollType(PollType pollType, string value)
     {
         Poll expectedResult = new() { Type = pollType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         Poll? result = JsonConvert.DeserializeObject<Poll>(jsonData);
 
@@ -38,7 +38,7 @@ public class PollTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_PollType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         Poll? result = JsonConvert.DeserializeObject<Poll>(jsonData);
 

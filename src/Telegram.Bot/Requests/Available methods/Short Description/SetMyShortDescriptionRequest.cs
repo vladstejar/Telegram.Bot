@@ -1,3 +1,4 @@
+// ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Requests;
 
 /// <summary>
@@ -6,7 +7,7 @@ namespace Telegram.Bot.Requests;
 /// Returns <see langword="true"/> on success.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetMyShortDescriptionRequest : RequestBase<bool>
+public class SetMyShortDescriptionRequest() : RequestBase<bool>("setMyShortDescription")
 {
     /// <summary>
     /// New short description for the bot; 0-120 characters.
@@ -21,11 +22,4 @@ public class SetMyShortDescriptionRequest : RequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? LanguageCode { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public SetMyShortDescriptionRequest()
-        : base("setMyShortDescription")
-    { }
 }

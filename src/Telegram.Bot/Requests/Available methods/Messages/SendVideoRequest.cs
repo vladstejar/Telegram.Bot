@@ -13,12 +13,22 @@ namespace Telegram.Bot.Requests;
 /// sent as <see cref="Document"/>). On success, the sent <see cref="Message"/> is returned.
 /// Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="video">
+/// Video to send. Pass a <see cref="InputFileId"/> as String to send a video that
+/// exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to
+/// get a video from the Internet, or upload a new video using multipart/form-data
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendVideoRequest : FileRequestBase<Message>, IChatTargetable
+public class SendVideoRequest(ChatId chatId, InputFile video)
+    : FileRequestBase<Message>("sendVideo"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -32,7 +42,7 @@ public class SendVideoRequest : FileRequestBase<Message>, IChatTargetable
     /// get a video from the Internet, or upload a new video using multipart/form-data
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFile Video { get; }
+    public InputFile Video { get; } = video;
 
     /// <summary>
     /// Duration of sent video in seconds
@@ -102,24 +112,6 @@ public class SendVideoRequest : FileRequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and video
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="video">
-    /// Video to send. Pass a <see cref="InputFileId"/> as String to send a video that
-    /// exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to
-    /// get a video from the Internet, or upload a new video using multipart/form-data
-    /// </param>
-    public SendVideoRequest(ChatId chatId, InputFile video)
-        : base("sendVideo")
-    {
-        ChatId = chatId;
-        Video = video;
-    }
 
     /// <inheritdoc />
     public override HttpContent? ToHttpContent() =>

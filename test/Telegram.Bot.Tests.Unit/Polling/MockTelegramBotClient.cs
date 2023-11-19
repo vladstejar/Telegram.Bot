@@ -17,7 +17,7 @@ namespace Telegram.Bot.Tests.Unit.Polling;
 public class MockClientOptions
 {
     public bool HandleNegativeOffset { get; set; }
-    public string[] Messages { get; set; } = Array.Empty<string>();
+    public string[] Messages { get; set; } = [];
     public int RequestDelay { get; set; } = 10;
     public Exception? ExceptionToThrow { get; set; }
 
@@ -54,7 +54,7 @@ public class MockTelegramBotClient : ITelegramBotClient
 
         if (Options.ExceptionToThrow is not null) { throw Options.ExceptionToThrow; }
 
-        if (Options.HandleNegativeOffset && getUpdatesRequest.Offset == -1)
+        if (Options.HandleNegativeOffset && getUpdatesRequest.Offset is -1)
         {
             int messageCount = _messages.Select(group => @group.Length).Sum() + 1;
             string lastMessage = _messages.Last().Last();

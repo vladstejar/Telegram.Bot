@@ -15,7 +15,7 @@ public class MenuButtonTypeConverterTests
     public void Should_Convert_MenuButtonType_To_String(MenuButtonType menuButtonType, string value)
     {
         MenuButton menuButton = new() { Type = menuButtonType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(menuButton);
 
@@ -29,7 +29,7 @@ public class MenuButtonTypeConverterTests
     public void Should_Convert_String_To_MenuButtonType(MenuButtonType menuButtonType, string value)
     {
         MenuButton expectedResult = new() { Type = menuButtonType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         MenuButton? result = JsonConvert.DeserializeObject<MenuButton>(jsonData);
 
@@ -40,7 +40,7 @@ public class MenuButtonTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_MenuButtonType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         MenuButton? result = JsonConvert.DeserializeObject<MenuButton>(jsonData);
 

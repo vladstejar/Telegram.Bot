@@ -8,8 +8,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// Alternatively, you can use <see cref="InlineQueryResultContact.InputMessageContent"/> to send
 /// a message with the specified content instead of the contact.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="phoneNumber">Contact's phone number</param>
+/// <param name="firstName">Contact's first name</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultContact : InlineQueryResult
+public class InlineQueryResultContact(string id, string phoneNumber, string firstName) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be contact
@@ -21,13 +24,13 @@ public class InlineQueryResultContact : InlineQueryResult
     /// Contact's phone number
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string PhoneNumber { get; }
+    public string PhoneNumber { get; } = phoneNumber;
 
     /// <summary>
     /// Contact's first name
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string FirstName { get; }
+    public string FirstName { get; } = firstName;
 
     /// <summary>
     /// Optional. Contact's last name
@@ -56,17 +59,4 @@ public class InlineQueryResultContact : InlineQueryResult
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailHeight { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="phoneNumber">Contact's phone number</param>
-    /// <param name="firstName">Contact's first name</param>
-    public InlineQueryResultContact(string id, string phoneNumber, string firstName)
-        : base(id)
-    {
-        PhoneNumber = phoneNumber;
-        FirstName = firstName;
-    }
 }

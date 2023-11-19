@@ -10,12 +10,21 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to send photos. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="photo">
+/// Photo to send. Pass a <see cref="InputFileId"/> as String to send a photo that
+/// exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to
+/// get a photo from the Internet, or upload a new photo using multipart/form-data. The photo
+/// must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total.
+/// Width and height ratio must be at most 20</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendPhotoRequest : FileRequestBase<Message>, IChatTargetable
+public class SendPhotoRequest(ChatId chatId, InputFile photo) : FileRequestBase<Message>("sendPhoto"), IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -31,7 +40,7 @@ public class SendPhotoRequest : FileRequestBase<Message>, IChatTargetable
     /// Width and height ratio must be at most 20
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFile Photo { get; }
+    public InputFile Photo { get; } = photo;
 
     /// <summary>
     /// Photo caption (may also be used when resending photos by <see cref="InputFileId"/>),
@@ -74,30 +83,11 @@ public class SendPhotoRequest : FileRequestBase<Message>, IChatTargetable
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
 
-    /// <summary>
-    /// Initializes a new request with chatId and photo
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="photo">
-    /// Photo to send. Pass a <see cref="InputFileId"/> as String to send a photo that
-    /// exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to
-    /// get a photo from the Internet, or upload a new photo using multipart/form-data. The photo
-    /// must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total.
-    /// Width and height ratio must be at most 20</param>
-    public SendPhotoRequest(ChatId chatId, InputFile photo)
-        : base("sendPhoto")
-    {
-        ChatId = chatId;
-        Photo = photo;
-    }
-
     /// <inheritdoc />
     public override HttpContent? ToHttpContent() =>
         Photo switch
         {
-            InputFileStream photo => ToMultipartFormDataContent(fileParameterName: "photo", inputFile: photo),
-            _               => base.ToHttpContent()
+            InputFileStream photoFile => ToMultipartFormDataContent(fileParameterName: "photo", inputFile: photoFile),
+            _                         => base.ToHttpContent()
         };
 }

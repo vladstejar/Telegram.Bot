@@ -7,7 +7,7 @@ namespace Telegram.Bot.Requests;
 /// If commands aren't set, an empty list is returned.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetMyCommandsRequest : RequestBase<BotCommand[]>
+public class GetMyCommandsRequest() : RequestBase<BotCommand[]>("getMyCommands")
 {
     /// <summary>
     /// An object, describing scope of users. Defaults to <see cref="BotCommandScopeDefault"/>.
@@ -20,11 +20,4 @@ public class GetMyCommandsRequest : RequestBase<BotCommand[]>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? LanguageCode { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public GetMyCommandsRequest()
-        : base("getMyCommands")
-    { }
 }

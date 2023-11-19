@@ -33,7 +33,7 @@ public class StickerFormatConverterTests
     public void Should_Convert_StickerFormat_To_String(StickerFormat stickerFormat, string value)
     {
         Sticker sticker = new() { Format = stickerFormat };
-        string expectedResult = @$"{{""format"":""{value}""}}";
+        string expectedResult = $$"""{"format":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(sticker);
 
@@ -45,7 +45,7 @@ public class StickerFormatConverterTests
     public void Should_Convert_String_To_StickerFormat(StickerFormat stickerFormat, string value)
     {
         Sticker expectedResult = new() { Format = stickerFormat };
-        string jsonData = @$"{{""format"":""{value}""}}";
+        string jsonData = $$"""{"format":"{{value}}"}""";
 
         Sticker result = JsonConvert.DeserializeObject<Sticker>(jsonData)!;
 
@@ -55,7 +55,7 @@ public class StickerFormatConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_StickerFormat()
     {
-        string jsonData = @$"{{""format"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"format":"{{int.MaxValue}}"}""";
 
         Sticker result = JsonConvert.DeserializeObject<Sticker>(jsonData)!;
 

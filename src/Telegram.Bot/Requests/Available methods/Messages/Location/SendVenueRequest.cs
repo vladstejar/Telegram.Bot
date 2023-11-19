@@ -7,12 +7,26 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to send information about a venue. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="latitude">Latitude of the venue</param>
+/// <param name="longitude">Longitude of the venue</param>
+/// <param name="title">Name of the venue</param>
+/// <param name="address">Address of the venue</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendVenueRequest : RequestBase<Message>, IChatTargetable
+public class SendVenueRequest(
+    ChatId chatId,
+    double latitude,
+    double longitude,
+    string title,
+    string address)
+        : RequestBase<Message>("sendVenue"),
+          IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -24,25 +38,25 @@ public class SendVenueRequest : RequestBase<Message>, IChatTargetable
     /// Latitude of the venue
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public double Latitude { get; }
+    public double Latitude { get; } = latitude;
 
     /// <summary>
     /// Longitude of the venue
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public double Longitude { get; }
+    public double Longitude { get; } = longitude;
 
     /// <summary>
     /// Name of the venue
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <summary>
     /// Address of the venue
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Address { get; }
+    public string Address { get; } = address;
 
     /// <summary>
     /// Foursquare identifier of the venue
@@ -89,28 +103,4 @@ public class SendVenueRequest : RequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId, location, venue title and address
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="latitude">Latitude of the venue</param>
-    /// <param name="longitude">Longitude of the venue</param>
-    /// <param name="title">Name of the venue</param>
-    /// <param name="address">Address of the venue</param>
-    public SendVenueRequest(
-        ChatId chatId,
-        double latitude,
-        double longitude,
-        string title,
-        string address) : base("sendVenue")
-    {
-        ChatId = chatId;
-        Latitude = latitude;
-        Longitude = longitude;
-        Title = title;
-        Address = address;
-    }
 }

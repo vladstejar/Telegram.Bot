@@ -9,8 +9,10 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultCachedPhoto.InputMessageContent"/> to send a message with the
 /// specified content instead of the photo.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="photoFileId">A valid file identifier of the photo</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultCachedPhoto : InlineQueryResult
+public class InlineQueryResultCachedPhoto(string id, string photoFileId) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be photo
@@ -22,7 +24,7 @@ public class InlineQueryResultCachedPhoto : InlineQueryResult
     /// A valid file identifier of the photo
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string PhotoFileId { get; }
+    public string PhotoFileId { get; } = photoFileId;
 
     /// <summary>
     /// Optional. Title for the result
@@ -51,15 +53,4 @@ public class InlineQueryResultCachedPhoto : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="photoFileId">A valid file identifier of the photo</param>
-    public InlineQueryResultCachedPhoto(string id, string photoFileId)
-        : base(id)
-    {
-        PhotoFileId = photoFileId;
-    }
 }

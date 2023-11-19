@@ -7,29 +7,22 @@ namespace Telegram.Bot.Tests.Integ.Sending_Messages;
 
 [Collection(Constants.TestCollections.SendCopyMessage)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class CopyMessageTests
+public class CopyMessageTests(TestsFixture testsFixture)
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    public CopyMessageTests(TestsFixture testsFixture)
-    {
-        _fixture = testsFixture;
-    }
+    ITelegramBotClient BotClient => testsFixture.BotClient;
 
     [OrderedFact("Should copy text message")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.CopyMessage)]
     public async Task Should_Copy_Text_Message()
     {
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             text: "hello"
         );
 
         MessageId copyMessageId = await BotClient.CopyMessageAsync(
-            _fixture.SupergroupChat.Id,
-            _fixture.SupergroupChat.Id,
+            testsFixture.SupergroupChat.Id,
+            testsFixture.SupergroupChat.Id,
             message.MessageId
         );
 

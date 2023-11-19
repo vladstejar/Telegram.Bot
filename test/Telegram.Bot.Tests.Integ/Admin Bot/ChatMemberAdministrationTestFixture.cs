@@ -6,12 +6,8 @@ using Xunit;
 
 namespace Telegram.Bot.Tests.Integ.Admin_Bot;
 
-public class ChatMemberAdministrationTestFixture : IAsyncLifetime
+public class ChatMemberAdministrationTestFixture(TestsFixture testsFixture) : IAsyncLifetime
 {
-    readonly TestsFixture _testsFixture;
-
-    public ChatMemberAdministrationTestFixture(TestsFixture testsFixture) => _testsFixture = testsFixture;
-
     public Chat RegularMemberChat { get; private set; }
     public long RegularMemberUserId { get; private set; }
     public string RegularMemberUserName { get; private set; }
@@ -53,9 +49,9 @@ public class ChatMemberAdministrationTestFixture : IAsyncLifetime
     {
         const string collectionName = Constants.TestCollections.ChatMemberAdministration;
 
-        RegularMemberChat = await GetChat(_testsFixture, collectionName);
+        RegularMemberChat = await GetChat(testsFixture, collectionName);
 
-        await _testsFixture.SendTestCollectionNotificationAsync(
+        await testsFixture.SendTestCollectionNotificationAsync(
             collectionName,
             $"Chosen regular member is @{RegularMemberChat.GetSafeUsername()}"
         );
@@ -63,13 +59,13 @@ public class ChatMemberAdministrationTestFixture : IAsyncLifetime
         RegularMemberUserId = RegularMemberChat.Id;
         RegularMemberUserName = RegularMemberChat.Username;
         // Updates from regular user will be received
-        _testsFixture.UpdateReceiver.AllowedUsernames.Add(RegularMemberUserName);
+        testsFixture.UpdateReceiver.AllowedUsernames.Add(RegularMemberUserName);
     }
 
     public Task DisposeAsync()
     {
         // Remove regular user from AllowedUserNames
-        _testsFixture.UpdateReceiver.AllowedUsernames.Remove(RegularMemberUserName);
+        testsFixture.UpdateReceiver.AllowedUsernames.Remove(RegularMemberUserName);
         return Task.CompletedTask;
     }
 }

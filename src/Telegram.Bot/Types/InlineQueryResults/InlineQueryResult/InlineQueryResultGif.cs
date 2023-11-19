@@ -9,8 +9,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultGif.InputMessageContent"/> to send a message with the
 /// specified content instead of the animation.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="gifUrl">Width of the GIF</param>
+/// <param name="thumbnailUrl">Url of the thumbnail for the result.</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultGif : InlineQueryResult
+public class InlineQueryResultGif(string id, string gifUrl, string thumbnailUrl) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be GIF
@@ -22,7 +25,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// A valid URL for the GIF file. File size must not exceed 1MB
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string GifUrl { get; }
+    public string GifUrl { get; } = gifUrl;
 
     /// <summary>
     /// Optional. Width of the GIF.
@@ -46,7 +49,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string ThumbnailUrl { get; }
+    public string ThumbnailUrl { get; } = thumbnailUrl;
 
     /// <summary>
     /// Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”,
@@ -76,17 +79,4 @@ public class InlineQueryResultGif : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="gifUrl">Width of the GIF</param>
-    /// <param name="thumbnailUrl">Url of the thumbnail for the result.</param>
-    public InlineQueryResultGif(string id, string gifUrl, string thumbnailUrl)
-        : base(id)
-    {
-        GifUrl = gifUrl;
-        ThumbnailUrl = thumbnailUrl;
-    }
 }

@@ -42,7 +42,7 @@ public class EnumConverterGenerator : IIncrementalGenerator
         IEnumerable<EnumDeclarationSyntax> distinctEnums = enums.Distinct();
 
         List<EnumInfo> enumsToProcess = GetTypesToGenerate(compilation, distinctEnums, context.CancellationToken);
-        if (enumsToProcess.Count == 0)
+        if (enumsToProcess.Count is 0)
         {
             return;
         }
@@ -99,7 +99,7 @@ public class EnumConverterGenerator : IIncrementalGenerator
                     continue;
                 }
 
-                string? displayName = GetDisplayName(member) ?? ToSnakeCase(member.Name);
+                string displayName = GetDisplayName(member) ?? ToSnakeCase(member.Name);
 
                 members.Add(new(
                     member.Name,
@@ -169,14 +169,9 @@ public class EnumConverterGenerator : IIncrementalGenerator
     }
 
     [StructLayout(LayoutKind.Auto)]
-    private readonly struct State
+    private readonly struct State(char character, bool isUpper)
     {
-        public readonly char Character;
-        public readonly bool IsUpper;
-        public State(char character, bool isUpper)
-        {
-            Character = character;
-            IsUpper = isUpper;
-        }
+        public readonly char Character = character;
+        public readonly bool IsUpper = isUpper;
     }
 }

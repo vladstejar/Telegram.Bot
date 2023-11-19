@@ -7,12 +7,19 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to send point on the map. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="latitude">Latitude of the location</param>
+/// <param name="longitude">Longitude of the location</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendLocationRequest : RequestBase<Message>, IChatTargetable
+public class SendLocationRequest(ChatId chatId, double latitude, double longitude)
+    : RequestBase<Message>("sendLocation"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -24,13 +31,13 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// Latitude of the location
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public double Latitude { get; }
+    public double Latitude { get; } = latitude;
 
     /// <summary>
     /// Longitude of the location
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public double Longitude { get; }
+    public double Longitude { get; } = longitude;
 
     /// <summary>
     /// Period in seconds for which the location will be updated, should be between 60 and 86400
@@ -77,20 +84,4 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId, latitude and longitude
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="latitude">Latitude of the location</param>
-    /// <param name="longitude">Longitude of the location</param>
-    public SendLocationRequest(ChatId chatId, double latitude, double longitude)
-        : base("sendLocation")
-    {
-        ChatId = chatId;
-        Latitude = latitude;
-        Longitude = longitude;
-    }
 }

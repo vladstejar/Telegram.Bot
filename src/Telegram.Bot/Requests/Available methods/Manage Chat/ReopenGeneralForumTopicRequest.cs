@@ -8,17 +8,13 @@ namespace Telegram.Bot.Requests;
 /// in the chat for this to work and must have the <see cref="ChatAdministratorRights.CanManageTopics"/> administrator
 /// rights. The topic will be automatically unhidden if it was hidden. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class ReopenGeneralForumTopicRequest : RequestBase<bool>, IChatTargetable
+public class ReopenGeneralForumTopicRequest(ChatId chatId)
+    : RequestBase<bool>("reopenGeneralForumTopic"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
-    public ReopenGeneralForumTopicRequest(ChatId chatId)
-        : base("reopenGeneralForumTopic") => ChatId = chatId;
+    public ChatId ChatId { get; } = chatId;
 }

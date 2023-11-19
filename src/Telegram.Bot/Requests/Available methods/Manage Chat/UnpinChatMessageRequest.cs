@@ -10,12 +10,15 @@ namespace Telegram.Bot.Requests;
 /// '<see cref="ChatMemberAdministrator.CanEditMessages"/>' admin right in a channel.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class UnpinChatMessageRequest : RequestBase<bool>, IChatTargetable
+public class UnpinChatMessageRequest(ChatId chatId) : RequestBase<bool>("unpinChatMessage"), IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of a message to unpin. If not specified, the most recent pinned message
@@ -23,16 +26,4 @@ public class UnpinChatMessageRequest : RequestBase<bool>, IChatTargetable
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? MessageId { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    public UnpinChatMessageRequest(ChatId chatId)
-        : base("unpinChatMessage")
-    {
-        ChatId = chatId;
-    }
 }

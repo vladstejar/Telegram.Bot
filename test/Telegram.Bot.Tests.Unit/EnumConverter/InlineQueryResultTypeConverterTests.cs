@@ -26,7 +26,7 @@ public class InlineQueryResultTypeConverterTests
     public void Should_Convert_InlineQueryResultType_To_String(InlineQueryResultType inlineQueryResultType, string value)
     {
         InlineQueryResult inlineQuery = new() { Type = inlineQueryResultType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(inlineQuery);
 
@@ -51,7 +51,7 @@ public class InlineQueryResultTypeConverterTests
     public void Should_Convert_String_To_InlineQueryResultType(InlineQueryResultType inlineQueryResultType, string value)
     {
         InlineQueryResult expectedResult = new() { Type = inlineQueryResultType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         InlineQueryResult? result = JsonConvert.DeserializeObject<InlineQueryResult>(jsonData);
 
@@ -62,7 +62,7 @@ public class InlineQueryResultTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_InlineQueryResultType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         InlineQueryResult? result = JsonConvert.DeserializeObject<InlineQueryResult>(jsonData);
 

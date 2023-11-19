@@ -14,12 +14,22 @@ namespace Telegram.Bot.Requests;
 /// is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be
 /// changed in the future.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="audio">
+/// Audio file to send. Pass a <see cref="InputFileId"/> as String to send an audio
+/// file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for
+/// Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendAudioRequest : FileRequestBase<Message>, IChatTargetable
+public class SendAudioRequest(ChatId chatId, InputFile audio)
+    : FileRequestBase<Message>("sendAudio"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -33,7 +43,7 @@ public class SendAudioRequest : FileRequestBase<Message>, IChatTargetable
     /// Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFile Audio { get; }
+    public InputFile Audio { get; } = audio;
 
     /// <summary>
     /// Audio caption, 0-1024 characters after entities parsing
@@ -90,24 +100,6 @@ public class SendAudioRequest : FileRequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and audio
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="audio">
-    /// Audio file to send. Pass a <see cref="InputFileId"/> as String to send an audio
-    /// file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for
-    /// Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data
-    /// </param>
-    public SendAudioRequest(ChatId chatId, InputFile audio)
-        : base("sendAudio")
-    {
-        ChatId = chatId;
-        Audio = audio;
-    }
 
     /// <inheritdoc />
     public override HttpContent? ToHttpContent() =>

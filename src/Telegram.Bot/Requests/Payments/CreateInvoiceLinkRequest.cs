@@ -7,47 +7,68 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to create a link for an invoice. Returns the created invoice link as <c>string</c> on success.
 /// </summary>
+/// <param name="title">Product name, 1-32 characters</param>
+/// <param name="description">Product description, 1-255 characters</param>
+/// <param name="payload">Bot-defined invoice payload, 1-128 bytes</param>
+/// <param name="providerToken">
+/// Payments provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>
+/// </param>
+/// <param name="currency">
+/// Three-letter ISO 4217 currency code, see
+/// <a href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>
+/// </param>
+/// <param name="prices">
+/// Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost,
+/// delivery tax, bonus, etc.)
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class CreateInvoiceLinkRequest : RequestBase<string>
+public class CreateInvoiceLinkRequest(
+    string title,
+    string description,
+    string payload,
+    string providerToken,
+    string currency,
+    IEnumerable<LabeledPrice> prices)
+        : RequestBase<string>("createInvoiceLink")
 {
     /// <summary>
     /// Product name, 1-32 characters
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <summary>
     /// Product description, 1-255 characters
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Description { get; }
+    public string Description { get; } = description;
 
     /// <summary>
     /// Bot-defined invoice payload, 1-128 bytes.This will not be displayed to the user,
     /// use for your internal processes.
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Payload { get; }
+    public string Payload { get; } = payload;
 
     /// <summary>
     /// Payments provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string ProviderToken { get; }
+    public string ProviderToken { get; } = providerToken;
 
     /// <summary>
     /// Three-letter ISO 4217 currency code, see
     /// <a href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Currency { get; }
+    public string Currency { get; } = currency;
 
     /// <summary>
     /// Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost,
     /// delivery tax, bonus, etc.)
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public IEnumerable<LabeledPrice> Prices { get; }
+    public IEnumerable<LabeledPrice> Prices { get; } = prices;
 
     /// <summary>
     /// The maximum accepted amount for tips in the smallest units of the currency.
@@ -141,38 +162,4 @@ public class CreateInvoiceLinkRequest : RequestBase<string>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? IsFlexible { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with title, description, payload, providerToken, currency
-    /// and an array of <see cref="LabeledPrice"/>
-    /// </summary>
-    /// <param name="title">Product name, 1-32 characters</param>
-    /// <param name="description">Product description, 1-255 characters</param>
-    /// <param name="payload">Bot-defined invoice payload, 1-128 bytes</param>
-    /// <param name="providerToken">
-    /// Payments provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>
-    /// </param>
-    /// <param name="currency">
-    /// Three-letter ISO 4217 currency code, see
-    /// <a href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>
-    /// </param>
-    /// <param name="prices">
-    /// Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost,
-    /// delivery tax, bonus, etc.)
-    /// </param>
-    public CreateInvoiceLinkRequest(
-        string title,
-        string description,
-        string payload,
-        string providerToken,
-        string currency,
-        IEnumerable<LabeledPrice> prices) : base("createInvoiceLink")
-    {
-        Title = title;
-        Description = description;
-        Payload = payload;
-        ProviderToken = providerToken;
-        Currency = currency;
-        Prices = prices;
-    }
 }

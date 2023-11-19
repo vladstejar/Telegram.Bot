@@ -9,30 +9,39 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Types.Location.LivePeriod"/> expires or editing is explicitly disabled by a call to
 /// <see cref="StopMessageLiveLocationRequest"/>. On success the edited <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="messageId">Identifier of the message to edit</param>
+/// <param name="latitude">Latitude of new location</param>
+/// <param name="longitude">Longitude of new location</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargetable
+public class EditMessageLiveLocationRequest(ChatId chatId, int messageId, double latitude, double longitude)
+    : RequestBase<Message>("editMessageLiveLocation"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of the message to edit
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public int MessageId { get; }
+    public int MessageId { get; } = messageId;
 
     /// <summary>
     /// Latitude of new location
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public double Latitude { get; }
+    public double Latitude { get; } = latitude;
 
     /// <summary>
     /// Longitude of new location
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public double Longitude { get; }
+    public double Longitude { get; } = longitude;
 
     /// <summary>
     /// The radius of uncertainty for the location, measured in meters; 0-1500
@@ -56,23 +65,4 @@ public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargeta
     /// <inheritdoc cref="Abstractions.Documentation.InlineReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId, messageId, latitude and longitude
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="messageId">Identifier of the message to edit</param>
-    /// <param name="latitude">Latitude of new location</param>
-    /// <param name="longitude">Longitude of new location</param>
-    public EditMessageLiveLocationRequest(ChatId chatId, int messageId, double latitude, double longitude)
-        : base("editMessageLiveLocation")
-    {
-        ChatId = chatId;
-        MessageId = messageId;
-        Latitude = latitude;
-        Longitude = longitude;
-    }
 }

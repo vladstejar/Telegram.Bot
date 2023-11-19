@@ -13,8 +13,22 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// If an <see cref="InlineQueryResultVideo"/> message contains an embedded video (e.g., YouTube),
 /// you <b>must</b> replace its content using <see cref="InlineQueryResultVideo.InputMessageContent"/>.
 /// </remarks>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="videoUrl">A valid URL for the embedded video player</param>
+/// <param name="thumbnailUrl">Url of the thumbnail for the result</param>
+/// <param name="title">Title of the result</param>
+/// <param name="inputMessageContent">
+/// Content of the message to be sent instead of the video. This field is <b>required</b> if
+/// <see cref="InlineQueryResultVideo"/> is used to send an HTML-page as a result
+/// (e.g., a YouTube video).
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultVideo : InlineQueryResult
+public class InlineQueryResultVideo(
+    string id,
+    string videoUrl,
+    string thumbnailUrl,
+    string title,
+    InputMessageContent? inputMessageContent = default) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be video
@@ -26,25 +40,27 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// A valid URL for the embedded video player or video file
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string VideoUrl { get; }
+    public string VideoUrl { get; } = videoUrl;
 
     /// <summary>
     /// Mime type of the content of video url, “text/html” or “video/mp4”
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string MimeType { get; }
+    public string MimeType { get; } = inputMessageContent is null
+        ? "video/mp4"
+        : "text/html";
 
     /// <summary>
     /// URL of the thumbnail (jpeg only) for the video
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string ThumbnailUrl { get; }
+    public string ThumbnailUrl { get; } = thumbnailUrl;
 
     /// <summary>
     /// Title for the result
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -88,31 +104,5 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// HTML-page as a result (e.g., a YouTube video).
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="videoUrl">A valid URL for the embedded video player</param>
-    /// <param name="thumbnailUrl">Url of the thumbnail for the result</param>
-    /// <param name="title">Title of the result</param>
-    /// <param name="inputMessageContent">
-    /// Content of the message to be sent instead of the video. This field is <b>required</b> if
-    /// <see cref="InlineQueryResultVideo"/> is used to send an HTML-page as a result
-    /// (e.g., a YouTube video).
-    /// </param>
-    public InlineQueryResultVideo(
-        string id,
-        string videoUrl,
-        string thumbnailUrl,
-        string title,
-        InputMessageContent? inputMessageContent = default) : base(id)
-    {
-        VideoUrl = videoUrl;
-        MimeType = inputMessageContent is null ? "video/mp4" : "text/html";
-        ThumbnailUrl = thumbnailUrl;
-        Title = title;
-        InputMessageContent = inputMessageContent;
-    }
+    public InputMessageContent? InputMessageContent { get; set; } = inputMessageContent;
 }

@@ -6,7 +6,8 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// This object represents an HTTP URL for the file to be sent
 /// </summary>
-public class InputFileUrl : InputFile
+/// <param name="uri">HTTP URL for the file to be sent</param>
+public class InputFileUrl(Uri uri) : InputFile
 {
     /// <inheritdoc/>
     public override FileType FileType => FileType.Url;
@@ -14,17 +15,13 @@ public class InputFileUrl : InputFile
     /// <summary>
     /// HTTP URL for the file to be sent
     /// </summary>
-    public Uri Url { get; }
+    public Uri Url { get; } = uri;
 
     /// <summary>
     /// This object represents an HTTP URL for the file to be sent
     /// </summary>
     /// <param name="url">HTTP URL for the file to be sent</param>
-    public InputFileUrl(string url) => Url = new(url);
-
-    /// <summary>
-    /// This object represents an HTTP URL for the file to be sent
-    /// </summary>
-    /// <param name="uri">HTTP URL for the file to be sent</param>
-    public InputFileUrl(Uri uri) => Url = uri;
+    public InputFileUrl(string url)
+        : this(new Uri(url))
+    {}
 }

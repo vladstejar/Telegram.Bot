@@ -10,8 +10,10 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultCachedMpeg4Gif.InputMessageContent"/> to send a message with
 /// the specified content instead of the animation.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="mpeg4FileId">A valid file identifier for the MP4 file</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultCachedMpeg4Gif : InlineQueryResult
+public class InlineQueryResultCachedMpeg4Gif(string id, string mpeg4FileId) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be mpeg4_gif
@@ -23,7 +25,7 @@ public class InlineQueryResultCachedMpeg4Gif : InlineQueryResult
     /// A valid file identifier for the MP4 file
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Mpeg4FileId { get; }
+    public string Mpeg4FileId { get; } = mpeg4FileId;
 
     /// <summary>
     /// Optional. Title for the result
@@ -46,15 +48,4 @@ public class InlineQueryResultCachedMpeg4Gif : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="mpeg4FileId">A valid file identifier for the MP4 file</param>
-    public InlineQueryResultCachedMpeg4Gif(string id, string mpeg4FileId)
-        : base(id)
-    {
-        Mpeg4FileId = mpeg4FileId;
-    }
 }

@@ -7,23 +7,15 @@ namespace Telegram.Bot.Requests;
 /// Use this method to get information about custom emoji stickers by their identifiers.
 /// Returns an Array of <see cref="Sticker"/> objects.
 /// </summary>
+/// <param name="customEmojiIds">List of custom emoji identifiers. At most 200 custom emoji
+/// identifiers can be specified.</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetCustomEmojiStickersRequest : RequestBase<Sticker[]>
+public class GetCustomEmojiStickersRequest(IEnumerable<string> customEmojiIds)
+    : RequestBase<Sticker[]>("getCustomEmojiStickers")
 {
     /// <summary>
     /// List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public IEnumerable<string> CustomEmojiIds { get; }
-
-    /// <summary>
-    /// Initializes a new request with name
-    /// </summary>
-    /// <param name="customEmojiIds">List of custom emoji identifiers. At most 200 custom emoji
-    /// identifiers can be specified.</param>
-    public GetCustomEmojiStickersRequest(IEnumerable<string> customEmojiIds)
-        : base("getCustomEmojiStickers")
-    {
-        CustomEmojiIds = customEmojiIds;
-    }
+    public IEnumerable<string> CustomEmojiIds { get; } = customEmojiIds;
 }

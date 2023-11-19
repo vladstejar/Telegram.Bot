@@ -9,8 +9,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultCachedVoice.InputMessageContent"/> to send a message
 /// with the specified content instead of the voice message.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="fileId">A valid file identifier for the voice message</param>
+/// <param name="title">Title of the result</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultCachedVoice : InlineQueryResult
+public class InlineQueryResultCachedVoice(string id, string fileId, string title) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be voice
@@ -22,13 +25,13 @@ public class InlineQueryResultCachedVoice : InlineQueryResult
     /// A valid file identifier for the voice message
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string VoiceFileId { get; }
+    public string VoiceFileId { get; } = fileId;
 
     /// <summary>
     /// Voice message title
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -45,17 +48,4 @@ public class InlineQueryResultCachedVoice : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="fileId">A valid file identifier for the voice message</param>
-    /// <param name="title">Title of the result</param>
-    public InlineQueryResultCachedVoice(string id, string fileId, string title)
-        : base(id)
-    {
-        VoiceFileId = fileId;
-        Title = title;
-    }
 }

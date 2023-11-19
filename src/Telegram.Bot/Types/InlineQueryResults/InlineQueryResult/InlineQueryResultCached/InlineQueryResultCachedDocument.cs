@@ -9,8 +9,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultCachedDocument.InputMessageContent"/> to send a message with the
 /// specified content instead of the file.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="documentFileId">A valid file identifier for the file</param>
+/// <param name="title">Title of the result</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultCachedDocument : InlineQueryResult
+public class InlineQueryResultCachedDocument(string id, string documentFileId, string title) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be document
@@ -22,13 +25,13 @@ public class InlineQueryResultCachedDocument : InlineQueryResult
     /// Title for the result
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <summary>
     /// A valid file identifier for the file
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string DocumentFileId { get; }
+    public string DocumentFileId { get; } = documentFileId;
 
     /// <summary>
     /// Optional. Short description of the result
@@ -51,17 +54,4 @@ public class InlineQueryResultCachedDocument : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="documentFileId">A valid file identifier for the file</param>
-    /// <param name="title">Title of the result</param>
-    public InlineQueryResultCachedDocument(string id, string documentFileId, string title)
-        : base(id)
-    {
-        DocumentFileId = documentFileId;
-        Title = title;
-    }
 }

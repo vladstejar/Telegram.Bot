@@ -18,12 +18,14 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// clients will display unsupported message.
 /// </para>
 /// </remarks>
+/// <param name="text">Label text on the button</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class KeyboardButton : IKeyboardButton
+[method: JsonConstructor]
+public class KeyboardButton(string text) : IKeyboardButton
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public string Text { get; set; }
+    public string Text { get; set; } = text;
 
     /// <summary>
     /// Optional. If specified, pressing the button will open a list of suitable users. Tapping on any user will send
@@ -66,13 +68,6 @@ public class KeyboardButton : IKeyboardButton
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public WebAppInfo? WebApp { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="KeyboardButton"/> class.
-    /// </summary>
-    /// <param name="text">Label text on the button</param>
-    [JsonConstructor]
-    public KeyboardButton(string text) => Text = text;
 
     /// <summary>
     /// Generate a keyboard button to request for contact

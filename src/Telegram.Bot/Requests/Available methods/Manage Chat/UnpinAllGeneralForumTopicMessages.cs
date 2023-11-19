@@ -8,20 +8,13 @@ namespace Telegram.Bot.Requests;
 /// the chat for this to work and must have the <see cref="ChatAdministratorRights.CanPinMessages"/> administrator right in the supergroup.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class UnpinAllGeneralForumTopicMessages : RequestBase<bool>, IChatTargetable
+public class UnpinAllGeneralForumTopicMessages(ChatId chatId)
+    : RequestBase<bool>("unpinAllGeneralForumTopicMessages"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
-    public UnpinAllGeneralForumTopicMessages(ChatId chatId)
-        : base("unpinAllGeneralForumTopicMessages")
-    {
-        ChatId = chatId;
-    }
+    public ChatId ChatId { get; } = chatId;
 }

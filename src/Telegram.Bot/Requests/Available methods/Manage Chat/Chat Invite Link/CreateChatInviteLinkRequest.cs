@@ -10,12 +10,17 @@ namespace Telegram.Bot.Requests;
 /// The link can be revoked using the method <see cref="RevokeChatInviteLinkRequest"/>.
 /// Returns the new invite link as <see cref="Types.ChatInviteLink"/> object.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class CreateChatInviteLinkRequest : RequestBase<ChatInviteLink>, IChatTargetable
+public class CreateChatInviteLinkRequest(ChatId chatId)
+    : RequestBase<ChatInviteLink>("createChatInviteLink"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Invite link name; 0-32 characters
@@ -38,21 +43,9 @@ public class CreateChatInviteLinkRequest : RequestBase<ChatInviteLink>, IChatTar
     public int? MemberLimit { get; set; }
 
     /// <summary>
-    /// Set to <see langword="true"/>, if users joining the chat via the link need to be approved by chat administrators.
-    /// If <see langword="true"/>, <see cref="MemberLimit"/> can't be specified
+    /// Set to <see langword="true"/>, if users joining the chat via the link need to be approved by chat
+    /// administrators. If <see langword="true"/>, <see cref="MemberLimit"/> can't be specified
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? CreatesJoinRequest { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    public CreateChatInviteLinkRequest(ChatId chatId)
-        : base("createChatInviteLink")
-    {
-        ChatId = chatId;
-    }
 }

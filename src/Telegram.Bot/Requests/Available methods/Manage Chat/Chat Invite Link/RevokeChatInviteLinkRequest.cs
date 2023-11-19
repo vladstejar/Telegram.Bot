@@ -9,30 +9,22 @@ namespace Telegram.Bot.Requests;
 /// must have the appropriate admin rights. Returns the revoked invite link as
 /// <see cref="ChatInviteLink"/> object.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="inviteLink">The invite link to revoke</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class RevokeChatInviteLinkRequest : RequestBase<ChatInviteLink>, IChatTargetable
+public class RevokeChatInviteLinkRequest(ChatId chatId, string inviteLink)
+    : RequestBase<ChatInviteLink>("revokeChatInviteLink"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// The invite link to revoke
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string InviteLink { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and inviteLink
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="inviteLink">The invite link to revoke</param>
-    public RevokeChatInviteLinkRequest(ChatId chatId, string inviteLink)
-        : base("revokeChatInviteLink")
-    {
-        ChatId = chatId;
-        InviteLink = inviteLink;
-    }
+    public string InviteLink { get; } = inviteLink;
 }

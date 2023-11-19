@@ -6,7 +6,8 @@ namespace Telegram.Bot.Requests;
 /// Returns <see cref="ChatAdministratorRights"/> on success.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetMyDefaultAdministratorRightsRequest : RequestBase<ChatAdministratorRights>
+public class GetMyDefaultAdministratorRightsRequest()
+    : RequestBase<ChatAdministratorRights>("getMyDefaultAdministratorRights")
 {
     /// <summary>
     /// Pass <see langword="true"/> to get default administrator rights of the bot in channels. Otherwise, default administrator
@@ -14,11 +15,4 @@ public class GetMyDefaultAdministratorRightsRequest : RequestBase<ChatAdministra
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? ForChannels { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public GetMyDefaultAdministratorRightsRequest()
-        : base("getMyDefaultAdministratorRights")
-    { }
 }

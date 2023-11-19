@@ -9,12 +9,16 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to send text messages. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="text">Text of the message to be sent, 1-4096 characters after entities parsing</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendMessageRequest : RequestBase<Message>, IChatTargetable
+public class SendMessageRequest(ChatId chatId, string text) : RequestBase<Message>("sendMessage"), IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -26,7 +30,7 @@ public class SendMessageRequest : RequestBase<Message>, IChatTargetable
     /// Text of the message to be sent, 1-4096 characters after entities parsing
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Text { get; }
+    public string Text { get; } = text;
 
     /// <inheritdoc cref="Abstractions.Documentation.ParseMode"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -61,18 +65,4 @@ public class SendMessageRequest : RequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and text
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="text">Text of the message to be sent, 1-4096 characters after entities parsing</param>
-    public SendMessageRequest(ChatId chatId, string text)
-        : base("sendMessage")
-    {
-        ChatId = chatId;
-        Text = text;
-    }
 }

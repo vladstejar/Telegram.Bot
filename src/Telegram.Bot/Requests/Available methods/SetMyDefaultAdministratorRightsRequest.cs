@@ -7,7 +7,7 @@ namespace Telegram.Bot.Requests;
 /// modify the list before adding the bot. Returns <see langword="true"/> on success.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetMyDefaultAdministratorRightsRequest : RequestBase<bool>
+public class SetMyDefaultAdministratorRightsRequest() : RequestBase<bool>("setMyDefaultAdministratorRights")
 {
     /// <summary>
     /// Optional. An object describing new default administrator rights. If not specified, the default administrator
@@ -22,11 +22,4 @@ public class SetMyDefaultAdministratorRightsRequest : RequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? ForChannels { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public SetMyDefaultAdministratorRightsRequest()
-        : base("setMyDefaultAdministratorRights")
-    { }
 }

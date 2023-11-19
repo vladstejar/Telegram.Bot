@@ -5,15 +5,18 @@ namespace Telegram.Bot.Requests;
 /// The sticker must belong to a sticker set that was created by the bot.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="sticker">
+/// <see cref="InputFileId">File identifier</see> of the sticker
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetStickerMaskPositionRequest : RequestBase<bool>
+public class SetStickerMaskPositionRequest(InputFileId sticker) : RequestBase<bool>("setStickerMaskPosition")
 {
     //
     /// <summary>
     /// <see cref="InputFileId">File identifier</see> of the sticker
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFileId Sticker { get; }
+    public InputFileId Sticker { get; } = sticker;
 
     /// <summary>
     /// A JSON-serialized object with the position where the mask should be placed on faces.
@@ -21,16 +24,4 @@ public class SetStickerMaskPositionRequest : RequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public MaskPosition? MaskPosition { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with sticker
-    /// </summary>
-    /// <param name="sticker">
-    /// <see cref="InputFileId">File identifier</see> of the sticker
-    /// </param>
-    public SetStickerMaskPositionRequest(InputFileId sticker)
-        : base("setStickerMaskPosition")
-    {
-        Sticker = sticker;
-    }
 }

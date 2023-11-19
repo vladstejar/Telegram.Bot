@@ -1,4 +1,4 @@
-#if NET6_0_OR_GREATER
+﻿#if NET6_0_OR_GREATER
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -99,7 +99,7 @@ public class QueuedUpdateReceiver : IAsyncEnumerable<Update>
                 new()
                 {
                     SingleReader = true,
-                    SingleWriter = true
+                    SingleWriter = true,
                 }
             );
 
@@ -136,9 +136,9 @@ public class QueuedUpdateReceiver : IAsyncEnumerable<Update>
             {
                 try
                 {
-                    _messageOffset = await _receiver._botClient.ThrowOutPendingUpdatesAsync(
-                        cancellationToken: _token
-                    ).ConfigureAwait(false);
+                    _messageOffset = await _receiver._botClient
+                        .ThrowOutPendingUpdatesAsync(_token)
+                        .ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
@@ -152,7 +152,7 @@ public class QueuedUpdateReceiver : IAsyncEnumerable<Update>
                 {
                     Update[] updateArray = await _receiver._botClient
                         .MakeRequestAsync(
-                            request: new GetUpdatesRequest
+                            new GetUpdatesRequest
                             {
                                 Offset = _messageOffset,
                                 Timeout = (int)_receiver._botClient.Timeout.TotalSeconds,

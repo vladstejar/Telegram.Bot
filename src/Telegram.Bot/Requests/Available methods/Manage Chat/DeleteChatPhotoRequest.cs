@@ -8,22 +8,15 @@ namespace Telegram.Bot.Requests;
 /// must be an administrator in the chat for this to work and must have the appropriate
 /// admin rights. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class DeleteChatPhotoRequest : RequestBase<bool>, IChatTargetable
+public class DeleteChatPhotoRequest(ChatId chatId)
+    : RequestBase<bool>("deleteChatPhoto"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    public DeleteChatPhotoRequest(ChatId chatId)
-        : base("deleteChatPhoto")
-    {
-        ChatId = chatId;
-    }
+    public ChatId ChatId { get; } = chatId;
 }

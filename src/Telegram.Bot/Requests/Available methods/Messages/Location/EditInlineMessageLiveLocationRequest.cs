@@ -8,24 +8,28 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Types.Location.LivePeriod"/> expires or editing is explicitly disabled by a call to
 /// <see cref="StopInlineMessageLiveLocationRequest"/>. On success <see langword="true"/> is returned.
 /// </summary>
+/// <param name="inlineMessageId">Identifier of the inline message</param>
+/// <param name="latitude">Latitude of new location</param>
+/// <param name="longitude">Longitude of new location</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditInlineMessageLiveLocationRequest : RequestBase<bool>
+public class EditInlineMessageLiveLocationRequest(string inlineMessageId, double latitude, double longitude)
+    : RequestBase<bool>("editMessageLiveLocation")
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
     [JsonProperty(Required = Required.Always)]
-    public string InlineMessageId { get; }
+    public string InlineMessageId { get; } = inlineMessageId;
 
     /// <summary>
     /// Latitude of new location
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public double Latitude { get; }
+    public double Latitude { get; } = latitude;
 
     /// <summary>
     /// Longitude of new location
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public double Longitude { get; }
+    public double Longitude { get; } = longitude;
 
     /// <summary>
     /// The radius of uncertainty for the location, measured in meters; 0-1500
@@ -49,18 +53,4 @@ public class EditInlineMessageLiveLocationRequest : RequestBase<bool>
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with inlineMessageId, latitude and longitude
-    /// </summary>
-    /// <param name="inlineMessageId">Identifier of the inline message</param>
-    /// <param name="latitude">Latitude of new location</param>
-    /// <param name="longitude">Longitude of new location</param>
-    public EditInlineMessageLiveLocationRequest(string inlineMessageId, double latitude, double longitude)
-        : base("editMessageLiveLocation")
-    {
-        InlineMessageId = inlineMessageId;
-        Latitude = latitude;
-        Longitude = longitude;
-    }
 }

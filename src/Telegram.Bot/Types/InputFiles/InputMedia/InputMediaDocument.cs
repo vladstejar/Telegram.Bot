@@ -6,9 +6,10 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents a general file to be sent
 /// </summary>
+/// <param name="media">File to send</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InputMediaDocument :
-    InputMedia,
+public class InputMediaDocument(InputFile media) :
+    InputMedia(media),
     IInputMediaThumb,
     IAlbumInputMedia
 {
@@ -26,12 +27,4 @@ public class InputMediaDocument :
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? DisableContentTypeDetection { get; set; }
-
-    /// <summary>
-    /// Initializes a new document media to send with an <see cref="InputMedia"/>
-    /// </summary>
-    /// <param name="media">File to send</param>
-    public InputMediaDocument(InputFile media)
-        : base(media)
-    { }
 }

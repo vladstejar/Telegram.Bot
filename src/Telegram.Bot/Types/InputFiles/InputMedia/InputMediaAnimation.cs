@@ -6,9 +6,10 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.
 /// </summary>
+/// <param name="media">File to send</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InputMediaAnimation :
-    InputMedia,
+public class InputMediaAnimation(InputFile media) :
+    InputMedia(media),
     IInputMediaThumb
 {
     /// <inheritdoc />
@@ -42,12 +43,4 @@ public class InputMediaAnimation :
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? HasSpoiler { get; set; }
-
-    /// <summary>
-    /// Initializes a new animation media to send with an <see cref="InputFile"/>
-    /// </summary>
-    /// <param name="media">File to send</param>
-    public InputMediaAnimation(InputFile media)
-        : base(media)
-    { }
 }

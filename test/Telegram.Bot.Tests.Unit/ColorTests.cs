@@ -18,7 +18,7 @@ public class ColorTests
     [InlineData(0x0, 0, 0, 0)]            // 0
     public void Should_Create_Int_Color_Instance_With_Correct_Components(int color, int red, int green, int blue)
     {
-        var (r, g, b) = new Color(color);
+        (int r, int g, int b) = new Color(color);
         Assert.Equal(red, r);
         Assert.Equal(green, g);
         Assert.Equal(blue, b);
@@ -36,7 +36,7 @@ public class ColorTests
     [InlineData(0x0, 0, 0, 0)]            // 0
     public void Should_Create_Uint_Color_Instance_With_Correct_Components(uint color, int red, int green, int blue)
     {
-        var (r, g, b) = new Color(color);
+        (int r, int g, int b) = new Color(color);
         Assert.Equal(red, r);
         Assert.Equal(green, g);
         Assert.Equal(blue, b);

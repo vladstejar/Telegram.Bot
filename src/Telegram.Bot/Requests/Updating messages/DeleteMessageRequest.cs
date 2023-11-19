@@ -19,31 +19,23 @@ namespace Telegram.Bot.Requests;
 /// </list>
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="messageId">Identifier of the message to delete</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class DeleteMessageRequest : RequestBase<bool>, IChatTargetable
+public class DeleteMessageRequest(ChatId chatId, int messageId)
+    : RequestBase<bool>("deleteMessage"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of the message to delete
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public int MessageId { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and messageId
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="messageId">Identifier of the message to delete</param>
-    public DeleteMessageRequest(ChatId chatId, int messageId)
-        : base("deleteMessage")
-    {
-        ChatId = chatId;
-        MessageId = messageId;
-    }
+    public int MessageId { get; } = messageId;
 }

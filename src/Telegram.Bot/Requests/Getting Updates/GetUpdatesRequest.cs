@@ -19,7 +19,7 @@ namespace Telegram.Bot.Requests;
 /// </list>
 /// </remarks>
 [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetUpdatesRequest : RequestBase<Update[]>
+public class GetUpdatesRequest() : RequestBase<Update[]>("getUpdates")
 {
     /// <summary>
     /// Identifier of the first update to be returned. Must be greater by one than the highest among
@@ -60,11 +60,4 @@ public class GetUpdatesRequest : RequestBase<Update[]>
     /// </remarks>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IEnumerable<UpdateType>? AllowedUpdates { get; set; }
-
-    /// <summary>
-    /// Initializes a new GetUpdates request
-    /// </summary>
-    public GetUpdatesRequest()
-        : base("getUpdates")
-    { }
 }

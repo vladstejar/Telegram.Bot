@@ -130,7 +130,7 @@ public class BlockingUpdateReceiverTests
         CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(4));
         MockTelegramBotClient bot = new(new MockClientOptions
         {
-            Messages = new[] { "foo-bar", "baz", "quux" },
+            Messages = ["foo-bar", "baz", "quux"],
             HandleNegativeOffset = true,
         });
 

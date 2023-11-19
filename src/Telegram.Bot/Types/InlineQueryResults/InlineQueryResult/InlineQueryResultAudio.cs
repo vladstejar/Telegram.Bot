@@ -8,8 +8,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// Alternatively, you can use <see cref="InlineQueryResultAudio.InputMessageContent"/> to send
 /// a message with the specified content instead of the audio.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="audioUrl">A valid URL for the audio file</param>
+/// <param name="title">Title of the result</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultAudio : InlineQueryResult
+public class InlineQueryResultAudio(string id, string audioUrl, string title) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be audio
@@ -21,13 +24,13 @@ public class InlineQueryResultAudio : InlineQueryResult
     /// A valid URL for the audio file
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string AudioUrl { get; }
+    public string AudioUrl { get; } = audioUrl;
 
     /// <summary>
     /// Title
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -56,17 +59,4 @@ public class InlineQueryResultAudio : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="audioUrl">A valid URL for the audio file</param>
-    /// <param name="title">Title of the result</param>
-    public InlineQueryResultAudio(string id, string audioUrl, string title)
-        : base(id)
-    {
-        AudioUrl = audioUrl;
-        Title = title;
-    }
 }

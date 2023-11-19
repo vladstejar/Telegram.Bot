@@ -9,8 +9,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultVoice.InputMessageContent"/> to send a message with the specified
 /// content instead of the voice message.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="voiceUrl">A valid URL for the voice recording</param>
+/// <param name="title">Title of the result</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultVoice : InlineQueryResult
+public class InlineQueryResultVoice(string id, string voiceUrl, string title) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be voice
@@ -22,13 +25,13 @@ public class InlineQueryResultVoice : InlineQueryResult
     /// A valid URL for the voice recording
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string VoiceUrl { get; }
+    public string VoiceUrl { get; } = voiceUrl;
 
     /// <summary>
     /// Recording title
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -51,17 +54,4 @@ public class InlineQueryResultVoice : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="voiceUrl">A valid URL for the voice recording</param>
-    /// <param name="title">Title of the result</param>
-    public InlineQueryResultVoice(string id, string voiceUrl, string title)
-        : base(id)
-    {
-        VoiceUrl = voiceUrl;
-        Title = title;
-    }
 }

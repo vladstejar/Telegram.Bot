@@ -3,16 +3,19 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// <summary>
 /// This object represents one button of an inline keyboard. You <b>must</b> use exactly one of the optional fields.
 /// </summary>
+/// <param name="text">Label text on the button</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineKeyboardButton : IKeyboardButton
+[method: JsonConstructor]
+public class InlineKeyboardButton(string text) : IKeyboardButton
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public string Text { get; set; }
+    public string Text { get; set; } = text;
 
     /// <summary>
-    /// Optional. HTTP or tg:// URL to be opened when the button is pressed. Links <c>tg://user?id=&lt;user_id&gt;</c>
-    /// can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
+    /// Optional. HTTP or tg:// URL to be opened when the button is pressed. Links
+    /// <c>tg://user?id=&lt;user_id&gt;</c> can be used to mention a user by their ID without using a username,
+    /// if this is allowed by their privacy settings.
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Url { get; set; }
@@ -82,23 +85,14 @@ public class InlineKeyboardButton : IKeyboardButton
     public CallbackGame? CallbackGame { get; set; }
 
     /// <summary>
-    /// Optional. Specify <see langword="true"/>, to send a <a href="https://core.telegram.org/bots/api#payments">Pay button</a>.
+    /// Optional. Specify <see langword="true"/>, to send
+    /// a <a href="https://core.telegram.org/bots/api#payments">Pay button</a>.
     /// </summary>
     /// <remarks>
     /// <b>NOTE:</b> This type of button <b>must</b> always be the first button in the first row.
     /// </remarks>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? Pay { get; set; }
-
-    /// <summary>
-    /// Instantiates new Inline Keyboard object
-    /// </summary>
-    /// <param name="text">Label text on the button</param>
-    [JsonConstructor]
-    public InlineKeyboardButton(string text)
-    {
-        Text = text;
-    }
 
     /// <summary>
     /// Creates an inline keyboard button that opens a HTTP url when pressed
@@ -178,7 +172,10 @@ public class InlineKeyboardButton : IKeyboardButton
     /// with an optional default inline query.
     /// </param>
     /// <returns></returns>
-    public static InlineKeyboardButton WithSwitchInlineQueryChosenChat(string text, SwitchInlineQueryChosenChat switchInlineQueryChosenChat) =>
+    public static InlineKeyboardButton WithSwitchInlineQueryChosenChat(
+        string text,
+        SwitchInlineQueryChosenChat switchInlineQueryChosenChat
+    ) =>
         new(text) { SwitchInlineQueryChosenChat = switchInlineQueryChosenChat };
 
     /// <summary>

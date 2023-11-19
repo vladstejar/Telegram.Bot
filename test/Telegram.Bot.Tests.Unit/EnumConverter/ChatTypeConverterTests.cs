@@ -17,7 +17,7 @@ public class ChatTypeConverterTests
     public void Should_Convert_ChatType_To_String(ChatType chatType, string value)
     {
         InlineQuery inlineQuery = new() { Type = chatType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(inlineQuery);
 
@@ -33,7 +33,7 @@ public class ChatTypeConverterTests
     public void Should_Convert_String_To_ChatType(ChatType chatType, string value)
     {
         InlineQuery expectedResult = new() { Type = chatType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         InlineQuery? result = JsonConvert.DeserializeObject<InlineQuery>(jsonData);
 
@@ -44,7 +44,7 @@ public class ChatTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_ChatType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         InlineQuery? result = JsonConvert.DeserializeObject<InlineQuery>(jsonData);
 

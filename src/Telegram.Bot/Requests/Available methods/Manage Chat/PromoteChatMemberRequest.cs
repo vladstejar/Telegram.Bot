@@ -8,16 +8,23 @@ namespace Telegram.Bot.Requests;
 /// an administrator in the chat for this to work and must have the appropriate admin rights.
 /// Pass <see langword="false"/> for all boolean parameters to demote a user. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="userId">Unique identifier of the target user</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class PromoteChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
+public class PromoteChatMemberRequest(ChatId chatId, long userId)
+    : RequestBase<bool>("promoteChatMember"),
+      IChatTargetable,
+      IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// Pass <see langword="true"/>, if the administrator's presence in the chat is hidden
@@ -113,18 +120,4 @@ public class PromoteChatMemberRequest : RequestBase<bool>, IChatTargetable, IUse
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? CanManageTopics { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and userId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="userId">Unique identifier of the target user</param>
-    public PromoteChatMemberRequest(ChatId chatId, long userId)
-        : base("promoteChatMember")
-    {
-        ChatId = chatId;
-        UserId = userId;
-    }
 }

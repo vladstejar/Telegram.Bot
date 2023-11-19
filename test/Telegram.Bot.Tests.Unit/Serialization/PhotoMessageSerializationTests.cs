@@ -95,9 +95,8 @@ public class PhotoMessageSerializationTests
                 Type = ChatType.Private
             },
             Date = new(2018, 1, 1, 0, 0, 0, DateTimeKind.Utc),
-            Photo = new[]
-            {
-                new PhotoSize
+            Photo = [
+                new()
                 {
                     FileId = "AgADAgADvKgxGxW80EtRgjrTaWNmy7UerQ4ABN7x5HqnrHW_wp4BAAEC",
                     FileUniqueId = "AgADcOsAAhUdZAc",
@@ -105,7 +104,7 @@ public class PhotoMessageSerializationTests
                     Width = 90,
                     Height = 90,
                 },
-                new PhotoSize
+                new()
                 {
                     FileId = "AgADAgADvKgxGxW80EtRgjrTaWNmy7UerQ4ABIrxzSBLXOQYw54BAAEC",
                     FileUniqueId = "AgADcOsAAhUdZAc",
@@ -113,7 +112,7 @@ public class PhotoMessageSerializationTests
                     Width = 320,
                     Height = 320,
                 },
-                new PhotoSize
+                new()
                 {
                     FileId = "AgADAgADvKgxGxW80EtRgjrTaWNmy7UerQ4ABIJONRZpTJFnxJ4BAAEC",
                     FileUniqueId = "AgADcOsAAhUdZAc",
@@ -121,7 +120,7 @@ public class PhotoMessageSerializationTests
                     Width = 800,
                     Height = 800,
                 },
-                new PhotoSize
+                new()
                 {
                     FileId = "AgADAgADvKgxGxW80EtRgjrTaWNmy7UerQ4ABP6uRLtwe8Z8wZ4BAAEC",
                     FileUniqueId = "AgADcOsAAhUdZAc",
@@ -129,7 +128,7 @@ public class PhotoMessageSerializationTests
                     Width = 1280,
                     Height = 1280,
                 }
-            }
+            ]
         };
 
         string? json = JsonConvert.SerializeObject(message);

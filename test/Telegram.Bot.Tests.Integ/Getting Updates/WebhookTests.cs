@@ -15,16 +15,9 @@ namespace Telegram.Bot.Tests.Integ.Getting_Updates;
 /// </remarks>
 [Collection(Constants.TestCollections.Webhook)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class WebhookTests : IDisposable
+public class WebhookTests(TestsFixture fixture) : IDisposable
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    public WebhookTests(TestsFixture fixture)
-    {
-        _fixture = fixture;
-    }
+    ITelegramBotClient BotClient => fixture.BotClient;
 
     /// <summary>
     /// Ensures that the webhooks are immediately disabled after each test case.
@@ -33,7 +26,7 @@ public class WebhookTests : IDisposable
     {
         Policy
             .Handle<TaskCanceledException>()
-            .WaitAndRetryAsync(new[] {TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(15)})
+            .WaitAndRetryAsync([TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(15)])
             .ExecuteAsync(() => BotClient.DeleteWebhookAsync())
             .GetAwaiter()
             .GetResult();
@@ -53,7 +46,7 @@ public class WebhookTests : IDisposable
         await BotClient.SetWebhookAsync(
             url: "https://www.t.me/",
             maxConnections: 5,
-            allowedUpdates: new[] {UpdateType.CallbackQuery, UpdateType.InlineQuery}
+            allowedUpdates: [UpdateType.CallbackQuery, UpdateType.InlineQuery]
         );
     }
 
@@ -75,7 +68,7 @@ public class WebhookTests : IDisposable
                 url: "https://www.telegram.org/",
                 certificate: new InputFileStream(stream),
                 maxConnections: 3,
-                allowedUpdates: Array.Empty<UpdateType>() // send all types of updates
+                allowedUpdates: [] // send all types of updates
             );
         }
 

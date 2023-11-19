@@ -8,18 +8,24 @@ namespace Telegram.Bot.Requests;
 /// in the group or a supergroup for this to work and must have the can_restrict_members admin rights.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="permissions">New default chat permissions</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetChatPermissionsRequest : RequestBase<bool>, IChatTargetable
+public class SetChatPermissionsRequest(ChatId chatId, ChatPermissions permissions)
+    : RequestBase<bool>("setChatPermissions"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New default chat permissions
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public ChatPermissions Permissions { get; }
+    public ChatPermissions Permissions { get; } = permissions;
 
     /// <summary>
     /// Pass <see langword="true"/> if chat permissions are set independently. Otherwise, the
@@ -33,18 +39,4 @@ public class SetChatPermissionsRequest : RequestBase<bool>, IChatTargetable
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? UseIndependentChatPermissions { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and new default permissions
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="permissions">New default chat permissions</param>
-    public SetChatPermissionsRequest(ChatId chatId, ChatPermissions permissions)
-        : base("setChatPermissions")
-    {
-        ChatId = chatId;
-        Permissions = permissions;
-    }
 }

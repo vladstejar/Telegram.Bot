@@ -19,7 +19,7 @@ public class BotCommandScopeTypeConverterTests
     public void Should_Convert_BotCommandScopeType_To_String(BotCommandScopeType botCommandScopeType, string value)
     {
         BotCommandScope botCommandScope = new(){ Type = botCommandScopeType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(botCommandScope);
 
@@ -37,7 +37,7 @@ public class BotCommandScopeTypeConverterTests
     public void Should_Convert_String_To_BotCommandScopeType(BotCommandScopeType botCommandScopeType, string value)
     {
         BotCommandScope expectedResult = new() { Type = botCommandScopeType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         BotCommandScope? result = JsonConvert.DeserializeObject<BotCommandScope>(jsonData);
 
@@ -48,7 +48,7 @@ public class BotCommandScopeTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_BotCommandScopeType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         BotCommandScope? result = JsonConvert.DeserializeObject<BotCommandScope>(jsonData);
         Assert.NotNull(result);

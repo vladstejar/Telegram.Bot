@@ -17,7 +17,7 @@ public class InputMediaTypeConverterTests
     public void Should_Convert_InputMediaType_To_String(InputMediaType inputMediaType, string value)
     {
         InputMedia inputMedia = new() { Type = inputMediaType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(inputMedia);
 
@@ -33,7 +33,7 @@ public class InputMediaTypeConverterTests
     public void Should_Convert_String_To_InputMediaType(InputMediaType inputMediaType, string value)
     {
         InputMedia expectedResult = new() { Type = inputMediaType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         InputMedia? result = JsonConvert.DeserializeObject<InputMedia>(jsonData);
 
@@ -44,7 +44,7 @@ public class InputMediaTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_InputMediaType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         InputMedia? result = JsonConvert.DeserializeObject<InputMedia>(jsonData);
 

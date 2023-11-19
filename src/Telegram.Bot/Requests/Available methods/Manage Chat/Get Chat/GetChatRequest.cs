@@ -9,24 +9,15 @@ namespace Telegram.Bot.Requests;
 /// one-on-one conversations, current username of a user, group or channel, etc.).
 /// Returns a <see cref="Chat"/> object on success.
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target supergroup or channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetChatRequest : RequestBase<Chat>, IChatTargetable
+public class GetChatRequest(ChatId chatId) : RequestBase<Chat>("getChat"), IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
     [JsonConverter(typeof(ChatIdConverter))]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target supergroup or channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    public GetChatRequest(ChatId chatId)
-        : base("getChat")
-    {
-        ChatId = chatId;
-    }
+    public ChatId ChatId { get; } = chatId;
 }

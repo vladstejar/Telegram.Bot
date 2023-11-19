@@ -10,16 +10,10 @@ namespace Telegram.Bot.Tests.Integ.Polls;
 [Collection(Constants.TestCollections.NativePolls)]
 [Trait(Constants.CategoryTraitName, Constants.InteractiveCategoryValue)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class QuizPollTests : IClassFixture<QuizPollTestsFixture>
+public class QuizPollTests(QuizPollTestsFixture classFixture) : IClassFixture<QuizPollTestsFixture>
 {
-    readonly QuizPollTestsFixture _classFixture;
-    TestsFixture Fixture => _classFixture.TestsFixture;
+    TestsFixture Fixture => classFixture.TestsFixture;
     ITelegramBotClient BotClient => Fixture.BotClient;
-
-    public QuizPollTests(QuizPollTestsFixture classFixture)
-    {
-        _classFixture = classFixture;
-    }
 
     [OrderedFact(
         "Should send public quiz poll",
@@ -30,7 +24,7 @@ public class QuizPollTests : IClassFixture<QuizPollTestsFixture>
         Message message = await Fixture.BotClient.SendPollAsync(
             chatId: Fixture.SupergroupChat,
             question: "How many silmarils were made in J. R. R. Tolkiens's Silmarillion?",
-            options: new [] { "One", "Ten", "Three" },
+            options: ["One", "Ten", "Three"],
             isAnonymous: false,
             type: PollType.Quiz,
             correctOptionId: 2, // "Three",
@@ -60,11 +54,11 @@ public class QuizPollTests : IClassFixture<QuizPollTestsFixture>
         Assert.Single(message.Poll.ExplanationEntities);
         Assert.Contains(
             message.Poll.ExplanationEntities,
-            entity => entity.Type == MessageEntityType.TextLink &&
-                      entity.Url == "https://en.wikipedia.org/wiki/Silmarils"
+            entity => entity.Type is MessageEntityType.TextLink &&
+                      entity.Url is "https://en.wikipedia.org/wiki/Silmarils"
         );
 
-        _classFixture.OriginalPollMessage = message;
+        classFixture.OriginalPollMessage = message;
     }
 
     [OrderedFact(
@@ -76,10 +70,10 @@ public class QuizPollTests : IClassFixture<QuizPollTestsFixture>
             "🗳 Choose any answer in the quiz above 👆"
         );
 
-        Poll poll = _classFixture.OriginalPollMessage.Poll;
+        Poll poll = classFixture.OriginalPollMessage.Poll;
 
         Update pollAnswerUpdates = await Fixture.UpdateReceiver.GetUpdateAsync(
-            update => update.PollAnswer?.OptionIds.Length == 1 &&
+            update => update.PollAnswer?.OptionIds.Length is 1 &&
                       update.PollAnswer.PollId == poll!.Id,
             updateTypes: UpdateType.PollAnswer
         );
@@ -94,7 +88,7 @@ public class QuizPollTests : IClassFixture<QuizPollTestsFixture>
             optionId => Assert.True(optionId < poll.Options.Length)
         );
 
-        _classFixture.PollAnswer = pollAnswer;
+        classFixture.PollAnswer = pollAnswer;
     }
 
     [OrderedFact(
@@ -108,14 +102,14 @@ public class QuizPollTests : IClassFixture<QuizPollTestsFixture>
         await Task.Delay(TimeSpan.FromSeconds(5));
 
         Poll closedPoll = await BotClient.StopPollAsync(
-            chatId: _classFixture.OriginalPollMessage.Chat,
-            messageId: _classFixture.OriginalPollMessage.MessageId
+            chatId: classFixture.OriginalPollMessage.Chat,
+            messageId: classFixture.OriginalPollMessage.MessageId
         );
 
-        Assert.Equal(_classFixture.OriginalPollMessage.Poll!.Id, closedPoll.Id);
+        Assert.Equal(classFixture.OriginalPollMessage.Poll!.Id, closedPoll.Id);
         Assert.True(closedPoll.IsClosed);
 
-        PollAnswer pollAnswer = _classFixture.PollAnswer;
+        PollAnswer pollAnswer = classFixture.PollAnswer;
 
         Assert.All(
             pollAnswer.OptionIds,

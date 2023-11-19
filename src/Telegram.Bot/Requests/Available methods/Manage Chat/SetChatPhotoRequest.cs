@@ -9,32 +9,24 @@ namespace Telegram.Bot.Requests;
 /// chats. The bot must be an administrator in the chat for this to work and must have the appropriate
 /// admin rights. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="photo">New chat photo, uploaded using multipart/form-data</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetChatPhotoRequest : FileRequestBase<bool>, IChatTargetable
+public class SetChatPhotoRequest(ChatId chatId, InputFileStream photo)
+    : FileRequestBase<bool>("setChatPhoto"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New chat photo, uploaded using multipart/form-data
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFileStream Photo { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and photo
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="photo">New chat photo, uploaded using multipart/form-data</param>
-    public SetChatPhotoRequest(ChatId chatId, InputFileStream photo)
-        : base("setChatPhoto")
-    {
-        ChatId = chatId;
-        Photo = photo;
-    }
+    public InputFileStream Photo { get; } = photo;
 
     /// <inheritdoc />
     public override HttpContent ToHttpContent()

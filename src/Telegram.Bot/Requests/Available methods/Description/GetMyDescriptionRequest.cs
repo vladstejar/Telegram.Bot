@@ -1,3 +1,4 @@
+// ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Requests;
 
 /// <summary>
@@ -6,18 +7,11 @@ namespace Telegram.Bot.Requests;
 /// Returns <see cref="BotDescription"/> on success.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetMyDescriptionRequest : RequestBase<BotDescription>
+public class GetMyDescriptionRequest() : RequestBase<BotDescription>("getMyDescription")
 {
     /// <summary>
     /// A two-letter ISO 639-1 language code or an empty string
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? LanguageCode { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public GetMyDescriptionRequest()
-        : base("getMyDescription")
-    { }
 }

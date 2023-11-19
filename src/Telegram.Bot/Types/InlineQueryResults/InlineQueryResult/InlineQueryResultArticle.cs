@@ -6,8 +6,12 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <summary>
 /// Represents a link to an article or web page.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="title">Title of the result</param>
+/// <param name="inputMessageContent">Content of the message to be sent</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultArticle : InlineQueryResult
+public class InlineQueryResultArticle(string id, string title, InputMessageContent inputMessageContent)
+    : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be article
@@ -19,13 +23,13 @@ public class InlineQueryResultArticle : InlineQueryResult
     /// Title of the result
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <summary>
     /// Content of the message to be sent
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputMessageContent InputMessageContent { get; }
+    public InputMessageContent InputMessageContent { get; } = inputMessageContent;
 
     /// <summary>
     /// Optional. URL of the result.
@@ -56,17 +60,4 @@ public class InlineQueryResultArticle : InlineQueryResult
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailHeight { get; set; }
-
-    /// <summary>
-    /// Initializes a new <see cref="InlineQueryResultArticle"/> object
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="title">Title of the result</param>
-    /// <param name="inputMessageContent">Content of the message to be sent</param>
-    public InlineQueryResultArticle(string id, string title, InputMessageContent inputMessageContent)
-        : base(id)
-    {
-        Title = title;
-        InputMessageContent = inputMessageContent;
-    }
 }

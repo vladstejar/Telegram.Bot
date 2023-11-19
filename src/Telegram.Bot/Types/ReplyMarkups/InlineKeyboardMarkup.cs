@@ -10,22 +10,25 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will display
 /// <i>unsupported message</i>.
 /// </remarks>
+/// <param name="inlineKeyboard">The inline keyboard.</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineKeyboardMarkup : IReplyMarkup
+[method: JsonConstructor]
+public class InlineKeyboardMarkup(IEnumerable<IEnumerable<InlineKeyboardButton>> inlineKeyboard)
+    : IReplyMarkup
 {
     /// <summary>
     /// Array of <see cref="InlineKeyboardButton"/> rows, each represented by an Array of
     /// <see cref="InlineKeyboardButton"/>.
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public IEnumerable<IEnumerable<InlineKeyboardButton>> InlineKeyboard { get; }
+    public IEnumerable<IEnumerable<InlineKeyboardButton>> InlineKeyboard { get; } = inlineKeyboard;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InlineKeyboardMarkup"/> class with only one keyboard button
     /// </summary>
     /// <param name="inlineKeyboardButton">Keyboard button</param>
     public InlineKeyboardMarkup(InlineKeyboardButton inlineKeyboardButton)
-        : this(new[] { inlineKeyboardButton })
+        : this([inlineKeyboardButton])
     { }
 
     /// <summary>
@@ -33,23 +36,14 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// </summary>
     /// <param name="inlineKeyboardRow">The inline keyboard row</param>
     public InlineKeyboardMarkup(IEnumerable<InlineKeyboardButton> inlineKeyboardRow)
-        : this(new[] { inlineKeyboardRow })
+        : this([inlineKeyboardRow])
     { }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="InlineKeyboardMarkup"/> class.
-    /// </summary>
-    /// <param name="inlineKeyboard">The inline keyboard.</param>
-    [JsonConstructor]
-    public InlineKeyboardMarkup(IEnumerable<IEnumerable<InlineKeyboardButton>> inlineKeyboard) =>
-        InlineKeyboard = inlineKeyboard;
 
     /// <summary>
     /// Generate an empty inline keyboard markup
     /// </summary>
     /// <returns>Empty inline keyboard markup</returns>
-    public static InlineKeyboardMarkup Empty() =>
-        new(Array.Empty<InlineKeyboardButton[]>());
+    public static InlineKeyboardMarkup Empty() => new([[]]);
 
     /// <summary>
     /// Generate an inline keyboard markup with one button

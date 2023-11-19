@@ -14,45 +14,36 @@ namespace Telegram.Bot.Requests;
 /// file via its <see cref="InputFileId"/> or specify a URL.
 /// On success the edited <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="messageId">Identifier of the message to edit</param>
+/// <param name="media">A new media content of the message</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditMessageMediaRequest : FileRequestBase<Message>, IChatTargetable
+public class EditMessageMediaRequest(ChatId chatId, int messageId, InputMedia media)
+    : FileRequestBase<Message>("editMessageMedia"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of the message to edit
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public int MessageId { get; }
+    public int MessageId { get; } = messageId;
 
     /// <summary>
     /// A new media content of the message
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputMedia Media { get; }
+    public InputMedia Media { get; } = media;
 
     /// <inheritdoc cref="Documentation.InlineReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId, messageId and new media
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="messageId">Identifier of the message to edit</param>
-    /// <param name="media">A new media content of the message</param>
-    public EditMessageMediaRequest(ChatId chatId, int messageId, InputMedia media)
-        : base("editMessageMedia")
-    {
-        ChatId = chatId;
-        MessageId = messageId;
-        Media = media;
-    }
 
     /// <inheritdoc />
     public override HttpContent? ToHttpContent()

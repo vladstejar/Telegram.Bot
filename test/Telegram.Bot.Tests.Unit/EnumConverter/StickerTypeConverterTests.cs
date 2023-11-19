@@ -33,7 +33,7 @@ public class StickerTypeConverterTests
     public void Should_Convert_StickerType_To_String(StickerType stickerType, string value)
     {
         Sticker sticker = new() { Type = stickerType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(sticker);
 
@@ -45,7 +45,7 @@ public class StickerTypeConverterTests
     public void Should_Convert_String_To_StickerType(StickerType stickerType, string value)
     {
         Sticker expectedResult = new() { Type = stickerType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         Sticker result = JsonConvert.DeserializeObject<Sticker>(jsonData)!;
 
@@ -55,7 +55,7 @@ public class StickerTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_StickerType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         Sticker result = JsonConvert.DeserializeObject<Sticker>(jsonData)!;
 

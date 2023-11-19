@@ -9,16 +9,9 @@ namespace Telegram.Bot.Tests.Integ.Sending_Messages;
 
 [Collection(Constants.TestCollections.SendVideoMessage)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class SendingVideoMessageTests
+public class SendingVideoMessageTests(TestsFixture fixture)
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    public SendingVideoMessageTests(TestsFixture fixture)
-    {
-        _fixture = fixture;
-    }
+    ITelegramBotClient BotClient => fixture.BotClient;
 
     [OrderedFact("Should send a video with caption")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendVideo)]
@@ -28,7 +21,7 @@ public class SendingVideoMessageTests
         await using (Stream stream = System.IO.File.OpenRead(Constants.PathToFile.Videos.MoonLanding))
         {
             message = await BotClient.SendVideoAsync(
-                chatId: _fixture.SupergroupChat.Id,
+                chatId: fixture.SupergroupChat.Id,
                 video: new InputFileStream(stream, "moon-landing.mp4"),
                 duration: 104,
                 width: 320,
@@ -65,7 +58,7 @@ public class SendingVideoMessageTests
         await using (Stream stream = System.IO.File.OpenRead(Constants.PathToFile.Videos.GoldenRatio))
         {
             message = await BotClient.SendVideoNoteAsync(
-                chatId:  _fixture.SupergroupChat.Id,
+                chatId:  fixture.SupergroupChat.Id,
                 videoNote: new InputFileStream(stream),
                 duration:  28,
                 length:  240
@@ -98,7 +91,7 @@ public class SendingVideoMessageTests
                     )
         {
             message = await BotClient.SendVideoAsync(
-                chatId: _fixture.SupergroupChat,
+                chatId: fixture.SupergroupChat,
                 video: new InputFileStream(stream1),
                 thumbnail: new InputFileStream(stream2, "thumb.jpg")
             );
@@ -125,7 +118,7 @@ public class SendingVideoMessageTests
                     )
         {
             message = await BotClient.SendVideoNoteAsync(
-                chatId:  _fixture.SupergroupChat.Id,
+                chatId:  fixture.SupergroupChat.Id,
                 videoNote: new InputFileStream(stream1),
                 thumbnail: new InputFileStream(stream2, "thumbnail.jpg")
             );

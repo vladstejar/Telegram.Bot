@@ -15,7 +15,7 @@ public class FileTypeConverterTests
     public void Should_Convert_FileType_To_String(FileType fileType, string value)
     {
         OnlineFile onlineFile = new() { FileType = fileType };
-        string expectedResult = @$"{{""file_type"":""{value}""}}";
+        string expectedResult = $$"""{"file_type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(onlineFile);
 
@@ -29,7 +29,7 @@ public class FileTypeConverterTests
     public void Should_Convert_String_To_FileType(FileType fileType, string value)
     {
         OnlineFile expectedResult = new() { FileType = fileType };
-        string jsonData = @$"{{""file_type"":""{value}""}}";
+        string jsonData = $$"""{"file_type":"{{value}}"}""";
 
         OnlineFile? result = JsonConvert.DeserializeObject<OnlineFile>(jsonData);
 
@@ -40,7 +40,7 @@ public class FileTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_FileType()
     {
-        string jsonData = @$"{{""file_type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"file_type":"{{int.MaxValue}}"}""";
 
         OnlineFile? result = JsonConvert.DeserializeObject<OnlineFile>(jsonData);
 

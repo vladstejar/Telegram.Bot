@@ -55,7 +55,8 @@ public abstract class BotCommandScope
         new() { ChatId = chatId };
 
     /// <summary>
-    /// Represents the <see cref="BotCommandScope">scope</see> of bot commands, covering a specific member of a group or supergroup chat.
+    /// Represents the <see cref="BotCommandScope">scope</see> of bot commands, covering a specific member
+    /// of a group or supergroup chat.
     /// </summary>
     /// <param name="chatId">
     /// Unique identifier for the target <see cref="Chat"/> or username of the target supergroup

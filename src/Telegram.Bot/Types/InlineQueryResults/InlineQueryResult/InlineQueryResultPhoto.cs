@@ -8,8 +8,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// Alternatively, you can use <see cref="InlineQueryResultPhoto.InputMessageContent"/> to send a message
 /// with the specified content instead of the photo.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="photoUrl">A valid URL of the photo. Photo size must not exceed 5MB.</param>
+/// <param name="thumbnailUrl">Optional. Url of the thumbnail for the result.</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultPhoto : InlineQueryResult
+public class InlineQueryResultPhoto(string id, string photoUrl, string thumbnailUrl) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be photo
@@ -21,11 +24,11 @@ public class InlineQueryResultPhoto : InlineQueryResult
     /// A valid URL of the photo. Photo must be in <b>jpeg</b> format. Photo size must not exceed 5MB
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string PhotoUrl { get; }
+    public string PhotoUrl { get; } = photoUrl;
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
     [JsonProperty(Required = Required.Always)]
-    public string ThumbnailUrl { get; }
+    public string ThumbnailUrl { get; } = thumbnailUrl;
 
     /// <summary>
     /// Optional. Width of the photo
@@ -66,17 +69,4 @@ public class InlineQueryResultPhoto : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query representing a link to a photo
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="photoUrl">A valid URL of the photo. Photo size must not exceed 5MB.</param>
-    /// <param name="thumbnailUrl">Optional. Url of the thumbnail for the result.</param>
-    public InlineQueryResultPhoto(string id, string photoUrl, string thumbnailUrl)
-        : base(id)
-    {
-        PhotoUrl = photoUrl;
-        ThumbnailUrl = thumbnailUrl;
-    }
 }

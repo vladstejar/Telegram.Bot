@@ -8,15 +8,16 @@ namespace Telegram.Bot.Requests;
 /// <a href="https://core.telegram.org/bots#commands"/> for more details about bot commands.
 /// Returns <see langword="true"/> on success
 /// </summary>
+/// <param name="commands">A list of bot commands to be set</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetMyCommandsRequest : RequestBase<bool>
+public class SetMyCommandsRequest(IEnumerable<BotCommand> commands) : RequestBase<bool>("setMyCommands")
 {
     /// <summary>
     /// A list of bot commands to be set as the list of the bot’s commands.
     /// At most 100 commands can be specified.
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public IEnumerable<BotCommand> Commands { get; }
+    public IEnumerable<BotCommand> Commands { get; } = commands;
 
     /// <summary>
     /// An object, describing scope of users for which the commands are relevant.
@@ -31,14 +32,4 @@ public class SetMyCommandsRequest : RequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? LanguageCode { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with commands
-    /// </summary>
-    /// <param name="commands">A list of bot commands to be set</param>
-    public SetMyCommandsRequest(IEnumerable<BotCommand> commands)
-        : base("setMyCommands")
-    {
-        Commands = commands;
-    }
 }

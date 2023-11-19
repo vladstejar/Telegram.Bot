@@ -8,7 +8,7 @@ namespace Telegram.Bot.Requests;
 /// will be shown to affected users. Returns <see langword="true"/> on success.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class DeleteMyCommandsRequest : RequestBase<bool>
+public class DeleteMyCommandsRequest() : RequestBase<bool>("deleteMyCommands")
 {
     /// <summary>
     /// An object, describing scope of users for which the commands are relevant.
@@ -24,11 +24,4 @@ public class DeleteMyCommandsRequest : RequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? LanguageCode { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public DeleteMyCommandsRequest()
-        : base("deleteMyCommands")
-    { }
 }

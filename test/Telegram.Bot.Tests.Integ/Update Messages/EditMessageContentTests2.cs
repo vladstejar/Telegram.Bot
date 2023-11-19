@@ -11,16 +11,9 @@ namespace Telegram.Bot.Tests.Integ.Update_Messages;
 
 [Collection(Constants.TestCollections.EditMessage2)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class EditMessageContentTests2
+public class EditMessageContentTests2(TestsFixture fixture)
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    public EditMessageContentTests2(TestsFixture fixture)
-    {
-        _fixture = fixture;
-    }
+    ITelegramBotClient BotClient => fixture.BotClient;
 
     [OrderedFact("Should edit a message's text")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
@@ -28,15 +21,14 @@ public class EditMessageContentTests2
     public async Task Should_Edit_Message_Text()
     {
         const string originalMessagePrefix = "original\n";
-        (MessageEntityType Type, string Value)[] entityValueMappings =
-        {
+        (MessageEntityType Type, string Value)[] entityValueMappings = [
             (MessageEntityType.Bold, "<b>bold</b>"),
             (MessageEntityType.Italic, "<i>italic</i>"),
-        };
+        ];
         string messageText = $"{originalMessagePrefix}{string.Join("\n", entityValueMappings.Select(tuple => tuple.Value))}";
 
         Message originalMessage = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: fixture.SupergroupChat.Id,
             text: messageText,
             parseMode: ParseMode.Html
         );
@@ -72,7 +64,7 @@ public class EditMessageContentTests2
     public async Task Should_Edit_Message_Markup()
     {
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: fixture.SupergroupChat.Id,
             text: "Inline keyboard will be updated shortly",
             replyMarkup: (InlineKeyboardMarkup)"Original markup"
         );
@@ -100,7 +92,7 @@ public class EditMessageContentTests2
         await using (Stream stream = System.IO.File.OpenRead(Constants.PathToFile.Photos.Bot))
         {
             originalMessage = await BotClient.SendPhotoAsync(
-                chatId: _fixture.SupergroupChat.Id,
+                chatId: fixture.SupergroupChat.Id,
                 photo: new InputFileStream(stream),
                 caption: "Message caption will be updated shortly"
             );

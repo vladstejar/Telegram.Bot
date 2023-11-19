@@ -11,7 +11,7 @@ namespace Telegram.Bot.Polling;
 [PublicAPI]
 public class DefaultUpdateReceiver : IUpdateReceiver
 {
-    static readonly Update[] EmptyUpdates = Array.Empty<Update>();
+    static readonly Update[] EmptyUpdates = [];
 
     readonly ITelegramBotClient _botClient;
     readonly ReceiverOptions? _receiverOptions;

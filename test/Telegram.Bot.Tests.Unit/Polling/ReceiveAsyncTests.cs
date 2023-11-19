@@ -25,7 +25,7 @@ public class ReceiveAsyncTests
             await Task.Delay(10, cancellationTokenSource.Token);
             if (update.Message.Text is "end")
             {
-                cancellationTokenSource.Cancel();
+                await cancellationTokenSource.CancelAsync();
             }
         }
 
@@ -85,7 +85,7 @@ public class ReceiveAsyncTests
 
         MockTelegramBotClient bot = new(new MockClientOptions
         {
-            Messages = new[] { "foo-bar", "baz", "quux" },
+            Messages = ["foo-bar", "baz", "quux"],
             HandleNegativeOffset = true
         });
 

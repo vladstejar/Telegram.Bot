@@ -23,7 +23,7 @@ public class ChatActionConverterTests
     public void Should_Convert_ChatAction_To_String(ChatAction chatAction, string value)
     {
         SendChatActionRequest sendChatActionRequest = new() { Type = chatAction };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(sendChatActionRequest);
 
@@ -45,7 +45,7 @@ public class ChatActionConverterTests
     public void Should_Convert_String_ToChatAction(ChatAction chatAction, string value)
     {
         SendChatActionRequest expectedResult = new() { Type = chatAction };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         SendChatActionRequest? result = JsonConvert.DeserializeObject<SendChatActionRequest>(jsonData);
 
@@ -56,7 +56,7 @@ public class ChatActionConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_ChatAction()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         SendChatActionRequest? result = JsonConvert.DeserializeObject<SendChatActionRequest>(jsonData);
 

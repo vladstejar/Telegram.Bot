@@ -9,11 +9,4 @@ namespace Telegram.Bot.Requests;
 /// minutes. Returns <see langword="true"/> on success. Requires no parameters.
 /// </summary>
 /// <a href="https://core.telegram.org/bots/api#logout"/>
-public class LogOutRequest : ParameterlessRequest<bool>
-{
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public LogOutRequest() : base("logOut")
-    { }
-}
+public class LogOutRequest() : ParameterlessRequest<bool>("logOut");

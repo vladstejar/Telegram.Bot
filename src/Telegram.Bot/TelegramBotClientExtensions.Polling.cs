@@ -56,8 +56,8 @@ public static partial class TelegramBotClientExtensions
     /// </param>
     public static void StartReceiving(
         this ITelegramBotClient botClient,
-        Func<ITelegramBotClient, Update, CancellationToken, Task> updateHandler,
-        Func<ITelegramBotClient, Exception, CancellationToken, Task> pollingErrorHandler,
+        AsyncUpdateHandler updateHandler,
+        AsyncPollingErrorHandler pollingErrorHandler,
         ReceiverOptions? receiverOptions = default,
         CancellationToken cancellationToken = default
     ) =>
@@ -87,8 +87,8 @@ public static partial class TelegramBotClientExtensions
     /// </param>
     public static void StartReceiving(
         this ITelegramBotClient botClient,
-        Action<ITelegramBotClient, Update, CancellationToken> updateHandler,
-        Action<ITelegramBotClient, Exception, CancellationToken> pollingErrorHandler,
+        UpdateHandler updateHandler,
+        PollingErrorHandler pollingErrorHandler,
         ReceiverOptions? receiverOptions = default,
         CancellationToken cancellationToken = default
     ) =>
@@ -207,13 +207,13 @@ public static partial class TelegramBotClientExtensions
     /// Starts receiving <see cref="Update"/>s on the ThreadPool, invoking
     /// <see cref="IUpdateHandler.HandleUpdateAsync"/> for each.
     /// <para>
-    /// This method will block if awaited. GetUpdates will be called AFTER the <paramref name="updateHandler"/>
+    /// This method will block if awaited. GetUpdates will be called AFTER the <paramref name="asyncUpdateHandler"/>
     /// returns
     /// </para>
     /// </summary>
     /// <param name="botClient">The <see cref="ITelegramBotClient"/> used for making GetUpdates calls</param>
-    /// <param name="updateHandler">Delegate used for processing <see cref="Update"/>s</param>
-    /// <param name="pollingErrorHandler">Delegate used for processing polling errors</param>
+    /// <param name="asyncUpdateHandler">Delegate used for processing <see cref="Update"/>s</param>
+    /// <param name="asyncPollingErrorHandler">Delegate used for processing polling errors</param>
     /// <param name="receiverOptions">Options used to configure getUpdates requests</param>
     /// <param name="cancellationToken">
     /// The <see cref="CancellationToken"/> with which you can stop receiving
@@ -224,16 +224,16 @@ public static partial class TelegramBotClientExtensions
     /// </returns>
     public static async Task ReceiveAsync(
         this ITelegramBotClient botClient,
-        Func<ITelegramBotClient, Update, CancellationToken, Task> updateHandler,
-        Func<ITelegramBotClient, Exception, CancellationToken, Task> pollingErrorHandler,
+        AsyncUpdateHandler asyncUpdateHandler,
+        AsyncPollingErrorHandler asyncPollingErrorHandler,
         ReceiverOptions? receiverOptions = default,
         CancellationToken cancellationToken = default
     ) =>
         await ReceiveAsync(
             botClient: botClient,
             updateHandler: new DefaultUpdateHandler(
-                updateHandler: updateHandler,
-                pollingErrorHandler: pollingErrorHandler
+                updateHandler: asyncUpdateHandler,
+                pollingErrorHandler: asyncPollingErrorHandler
             ),
             receiverOptions: receiverOptions,
             cancellationToken: cancellationToken
@@ -260,8 +260,8 @@ public static partial class TelegramBotClientExtensions
     /// </returns>
     public static async Task ReceiveAsync(
         this ITelegramBotClient botClient,
-        Action<ITelegramBotClient, Update, CancellationToken> updateHandler,
-        Action<ITelegramBotClient, Exception, CancellationToken> pollingErrorHandler,
+        UpdateHandler updateHandler,
+        PollingErrorHandler pollingErrorHandler,
         ReceiverOptions? receiverOptions = default,
         CancellationToken cancellationToken = default
     ) =>

@@ -8,17 +8,13 @@ namespace Telegram.Bot.Requests;
 /// chat for this to work and must have the <see cref="ChatAdministratorRights.CanManageTopics"/> administrator rights.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class UnhideGeneralForumTopicRequest : RequestBase<bool>, IChatTargetable
+public class UnhideGeneralForumTopicRequest(ChatId chatId)
+    : RequestBase<bool>("unhideGeneralForumTopic"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
-    public UnhideGeneralForumTopicRequest(ChatId chatId)
-        : base("unhideGeneralForumTopic") => ChatId = chatId;
+    public ChatId ChatId { get; } = chatId;
 }

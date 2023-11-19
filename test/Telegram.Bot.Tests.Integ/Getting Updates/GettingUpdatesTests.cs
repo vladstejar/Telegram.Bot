@@ -9,13 +9,9 @@ namespace Telegram.Bot.Tests.Integ.Getting_Updates;
 
 [Collection(Constants.TestCollections.GettingUpdates)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class GettingUpdatesTests
+public class GettingUpdatesTests(TestsFixture fixture)
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    public GettingUpdatesTests(TestsFixture fixture) => _fixture = fixture;
+    ITelegramBotClient BotClient => fixture.BotClient;
 
     [OrderedFact("Should pass API Token test with valid token")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.GetMe)]
@@ -64,6 +60,6 @@ public class GettingUpdatesTests
         Assert.NotNull(botUser);
         Assert.NotNull(botUser.Username);
         Assert.True(botUser.IsBot);
-        Assert.EndsWith("bot", botUser.Username!, StringComparison.OrdinalIgnoreCase);
+        Assert.EndsWith("bot", botUser.Username, StringComparison.OrdinalIgnoreCase);
     }
 }

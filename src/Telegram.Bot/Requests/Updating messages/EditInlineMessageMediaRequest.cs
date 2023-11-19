@@ -11,32 +11,23 @@ namespace Telegram.Bot.Requests;
 /// via its <see cref="InputFileId"/> or specify a URL. On success
 /// <see langword="true"/> is returned.
 /// </summary>
+/// <param name="inlineMessageId">Identifier of the inline message</param>
+/// <param name="media">A new media content of the message</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditInlineMessageMediaRequest : RequestBase<bool>
+public class EditInlineMessageMediaRequest(string inlineMessageId, InputMedia media)
+    : RequestBase<bool>("editMessageMedia")
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
     [JsonProperty(Required = Required.Always)]
-    public string InlineMessageId { get; }
+    public string InlineMessageId { get; } = inlineMessageId;
 
     /// <summary>
     /// A new media content of the message
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputMedia Media { get; }
+    public InputMedia Media { get; } = media;
 
     /// <inheritdoc cref="Documentation.InlineReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with inlineMessageId and new media
-    /// </summary>
-    /// <param name="inlineMessageId">Identifier of the inline message</param>
-    /// <param name="media">A new media content of the message</param>
-    public EditInlineMessageMediaRequest(string inlineMessageId, InputMedia media)
-        : base("editMessageMedia")
-    {
-        InlineMessageId = inlineMessageId;
-        Media = media;
-    }
 }

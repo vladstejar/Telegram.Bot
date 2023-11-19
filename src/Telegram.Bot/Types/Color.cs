@@ -120,7 +120,8 @@ public readonly record struct Color
     /// <param name="red"></param>
     /// <param name="green"></param>
     /// <param name="blue"></param>
-    public void Deconstruct(out int red, out int green, out int blue) => (red, green, blue) = (Red, Green, Blue);
+    public void Deconstruct(out int red, out int green, out int blue)
+        => (red, green, blue) = (Red, Green, Blue);
 
     /// <summary>
     /// Convert current <see cref="Color"/> instance to its numeric representation

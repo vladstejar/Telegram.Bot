@@ -110,21 +110,19 @@ public class ChatIdTests
 
     [Theory]
     [ClassData(typeof(ChatIdTestData))]
-    public void Should_Compare_ChatId_With_Equals_Operator(ChatId id1, ChatId id2, bool result)
-    {
+    public void Should_Compare_ChatId_With_Equals_Operator(ChatId id1, ChatId id2, bool result) =>
         Assert.Equal(id1 == id2, result);
-    }
 }
 
 public class ChatIdTestData : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
-        yield return new object[] { new ChatId(0), new ChatId(0), true };
-        yield return new object[] { new ChatId(50), new ChatId(50), true };
-        yield return new object[] { new ChatId(100), new ChatId(50), false };
-        yield return new object[] { new ChatId("@user"), new ChatId("@user"), true };
-        yield return new object[] { new ChatId(50), new ChatId("@50"), false };
+        yield return [new ChatId(0), new ChatId(0), true];
+        yield return [new ChatId(50), new ChatId(50), true];
+        yield return [new ChatId(100), new ChatId(50), false];
+        yield return [new ChatId("@user"), new ChatId("@user"), true];
+        yield return [new ChatId(50), new ChatId("@50"), false];
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

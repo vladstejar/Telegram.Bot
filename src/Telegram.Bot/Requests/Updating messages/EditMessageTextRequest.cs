@@ -9,24 +9,32 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to edit text and game messages. On success the edited <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="messageId">Identifier of the message to edit</param>
+/// <param name="text">New text of the message, 1-4096 characters after entities parsing</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditMessageTextRequest : RequestBase<Message>, IChatTargetable
+public class EditMessageTextRequest(ChatId chatId, int messageId, string text)
+    : RequestBase<Message>("editMessageText"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of the message to edit
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public int MessageId { get; }
+    public int MessageId { get; } = messageId;
 
     /// <summary>
     /// New text of the message, 1-4096 characters after entities parsing
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Text { get; }
+    public string Text { get; } = text;
 
     /// <inheritdoc cref="Documentation.ParseMode"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -45,21 +53,4 @@ public class EditMessageTextRequest : RequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId, messageId and text
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="messageId">Identifier of the message to edit</param>
-    /// <param name="text">New text of the message, 1-4096 characters after entities parsing</param>
-    public EditMessageTextRequest(ChatId chatId, int messageId, string text)
-        : base("editMessageText")
-    {
-        ChatId = chatId;
-        MessageId = messageId;
-        Text = text;
-    }
 }

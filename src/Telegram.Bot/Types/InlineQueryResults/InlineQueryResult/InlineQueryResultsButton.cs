@@ -5,14 +5,17 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// This object represents a button to be shown above inline query results.
 /// You <b>must</b> use exactly one of the optional fields.
 /// </summary>
+/// <param name="text">
+/// Label text on the button
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultsButton
+public class InlineQueryResultsButton(string text)
 {
     /// <summary>
     /// Label text on the button
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Text { get; }
+    public string Text { get; } = text;
 
     /// <summary>
     /// Optional. Description of the Web App that will be launched when the user presses
@@ -38,15 +41,4 @@ public class InlineQueryResultsButton
     /// </remarks>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? StartParameter { get; set; }
-
-    /// <summary>
-    /// Initializes a new <see cref="InlineQueryResultsButton"/> object
-    /// </summary>
-    /// <param name="text">
-    /// Label text on the button
-    /// </param>
-    public InlineQueryResultsButton(string text)
-    {
-        Text = text;
-    }
 }

@@ -10,22 +10,15 @@ namespace Telegram.Bot.Requests;
 /// '<see cref="ChatMemberAdministrator.CanEditMessages"/>' admin right in a channel.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class UnpinAllChatMessagesRequest : RequestBase<bool>, IChatTargetable
+public class UnpinAllChatMessagesRequest(ChatId chatId)
+    : RequestBase<bool>("unpinAllChatMessages"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    public UnpinAllChatMessagesRequest(ChatId chatId)
-        : base("unpinAllChatMessages")
-    {
-        ChatId = chatId;
-    }
+    public ChatId ChatId { get; } = chatId;
 }

@@ -13,56 +13,47 @@ namespace Telegram.Bot.Tests.Integ.Sending_Messages;
 
 [Collection(Constants.TestCollections.SendTextMessage)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
+public class TextMessageTests(TestsFixture testsFixture, TextMessageTests.Fixture classFixture)
+    : IClassFixture<TextMessageTests.Fixture>
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    readonly Fixture _classFixture;
-
-    public TextMessageTests(TestsFixture testsFixture, Fixture classFixture)
-    {
-        _fixture = testsFixture;
-        _classFixture = classFixture;
-    }
+    ITelegramBotClient BotClient => testsFixture.BotClient;
 
     [OrderedFact("Should send text message")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
     public async Task Should_Send_Text_Message()
     {
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             text: "Hello world!"
         );
 
         Assert.Equal("Hello world!", message.Text);
         Assert.Equal(MessageType.Text, message.Type);
-        Assert.Equal(_fixture.SupergroupChat.Id.ToString(), message.Chat.Id.ToString());
+        Assert.Equal(testsFixture.SupergroupChat.Id.ToString(), message.Chat.Id.ToString());
         Assert.InRange(message.Date, DateTime.UtcNow.AddSeconds(-10), DateTime.UtcNow.AddSeconds(2));
         Assert.NotNull(message.From);
-        Assert.Equal(_fixture.BotUser.Id, message.From.Id);
-        Assert.Equal(_fixture.BotUser.Username, message.From.Username);
+        Assert.Equal(testsFixture.BotUser.Id, message.From.Id);
+        Assert.Equal(testsFixture.BotUser.Username, message.From.Username);
 
         // getMe request returns more information than is present in received updates
-        Asserts.UsersEqual(_fixture.BotUser, message.From);
+        Asserts.UsersEqual(testsFixture.BotUser, message.From);
     }
 
     [OrderedFact("Should send text message to channel")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
     public async Task Should_Send_Text_Message_To_Channel()
     {
-        string text = $"Hello members of channel {_classFixture.ChannelChatId}";
+        string text = $"Hello members of channel {classFixture.ChannelChatId}";
 
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _classFixture.ChannelChatId,
+            chatId: classFixture.ChannelChatId,
             text: text
         );
 
         Assert.Equal(text, message.Text);
         Assert.Equal(MessageType.Text, message.Type);
-        Assert.Equal(_classFixture.ChannelChat.Id, message.Chat.Id);
-        Assert.Equal(_classFixture.ChannelChat.Username, message.Chat.Username);
+        Assert.Equal(classFixture.ChannelChat.Id, message.Chat.Id);
+        Assert.Equal(classFixture.ChannelChat.Username, message.Chat.Username);
     }
 
     [OrderedFact("Should forward a message to same chat")]
@@ -70,17 +61,17 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
     public async Task Should_Forward_Message()
     {
         Message message1 = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat,
+            chatId: testsFixture.SupergroupChat,
             text: "➡️ Message to be forwared ⬅️"
         );
 
         Message message2 = await BotClient.ForwardMessageAsync(
-            chatId: _fixture.SupergroupChat,
-            fromChatId: _fixture.SupergroupChat,
+            chatId: testsFixture.SupergroupChat,
+            fromChatId: testsFixture.SupergroupChat,
             messageId: message1.MessageId
         );
 
-        Asserts.UsersEqual(_fixture.BotUser, message2.ForwardFrom);
+        Asserts.UsersEqual(testsFixture.BotUser, message2.ForwardFrom);
         Assert.Null(message2.ForwardFromChat);
         Assert.Equal(default, message2.ForwardFromMessageId);
         Assert.Null(message2.ForwardSignature);
@@ -105,14 +96,14 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
             {MessageEntityType.TextLink, $"[inline url to Telegram.org]({url})"},
             {
                 MessageEntityType.TextMention,
-                $"[{_fixture.BotUser.GetSafeUsername()}](tg://user?id={_fixture.BotUser.Id})"
+                $"[{testsFixture.BotUser.GetSafeUsername()}](tg://user?id={testsFixture.BotUser.Id})"
             },
             {MessageEntityType.Code, @"inline ""`fixed-width code`"""},
             {MessageEntityType.Pre, "```pre-formatted fixed-width code block```"},
         };
 
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             text: string.Join("\n", entityValueMappings.Values),
             parseMode: ParseMode.Markdown,
             disableWebPagePreview: true
@@ -122,7 +113,7 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
         Assert.Equal(entityValueMappings.Keys, message.Entities.Select(e => e.Type));
         Assert.Equal(url, message.Entities.Single(e => e.Type == MessageEntityType.TextLink).Url);
         Asserts.UsersEqual(
-            _fixture.BotUser,
+            testsFixture.BotUser,
             message.Entities.Single(e => e.Type == MessageEntityType.TextMention).User
         );
     }
@@ -132,8 +123,7 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
     public async Task Should_Parse_HTML_Entities()
     {
         const string url = "https://telegram.org/";
-        (MessageEntityType Type, string Value)[] entityValueMappings =
-        {
+        (MessageEntityType Type, string Value)[] entityValueMappings = [
             (MessageEntityType.Bold, "<b>bold</b>"),
             (MessageEntityType.Bold, "<strong>&lt;strong&gt;</strong>"),
             (MessageEntityType.Italic, "<i>italic</i>"),
@@ -141,17 +131,17 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
             (MessageEntityType.TextLink, $@"<a href=""{url}"">inline url to Telegram.org</a>"),
             (
                 MessageEntityType.TextMention,
-                $@"<a href=""tg://user?id={_fixture.BotUser.Id}"">{_fixture.BotUser.Username}</a>"
+                $@"<a href=""tg://user?id={testsFixture.BotUser.Id}"">{testsFixture.BotUser.Username}</a>"
             ),
             (MessageEntityType.Code, @"inline <code>""fixed-width code""</code>"),
             (MessageEntityType.Pre, "<pre>pre-formatted fixed-width code block</pre>"),
             (MessageEntityType.Strikethrough, "<s>strikethrough</s>"),
             (MessageEntityType.Underline, "<u>underline</u>"),
             (MessageEntityType.Spoiler, "<tg-spoiler>spoiler</tg-spoiler>"),
-        };
+        ];
 
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             text: string.Join("\n", entityValueMappings.Select(tuple => tuple.Value)),
             parseMode: ParseMode.Html,
             disableWebPagePreview: true
@@ -162,10 +152,10 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
             entityValueMappings.Select(tuple => tuple.Type),
             message.Entities.Select(e => e.Type)
         );
-        Assert.Equal(url, message.Entities.Single(e => e.Type == MessageEntityType.TextLink).Url);
+        Assert.Equal(url, message.Entities.Single(e => e.Type is MessageEntityType.TextLink).Url);
         Asserts.UsersEqual(
-            _fixture.BotUser,
-            message.Entities.Single(e => e.Type == MessageEntityType.TextMention).User
+            testsFixture.BotUser,
+            message.Entities.Single(e => e.Type is MessageEntityType.TextMention).User
         );
     }
 
@@ -173,8 +163,7 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
     public async Task Should_Parse_Message_Entities_Into_Values()
     {
-        (MessageEntityType Type, string Value)[] entityValueMappings =
-        {
+        (MessageEntityType Type, string Value)[] entityValueMappings = [
             (MessageEntityType.PhoneNumber, "+38612345678"),
             (MessageEntityType.Cashtag, "$EUR"),
             (MessageEntityType.Hashtag, "#TelegramBots"),
@@ -182,11 +171,11 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
             (MessageEntityType.Url, "https://github.com/TelegramBots"),
             (MessageEntityType.Email, "security@telegram.org"),
             (MessageEntityType.BotCommand, "/test"),
-            (MessageEntityType.BotCommand, $"/test@{_fixture.BotUser.Username}"),
-        };
+            (MessageEntityType.BotCommand, $"/test@{testsFixture.BotUser.Username}"),
+        ];
 
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             text: string.Join("\n", entityValueMappings.Select(tuple => tuple.Value))
         );
 
@@ -211,7 +200,7 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
             {MessageEntityType.TextLink, $"[inline url to Telegram\\.org]({url})"},
             {
                 MessageEntityType.TextMention,
-                $"[{_fixture.BotUser.GetSafeUsername()}](tg://user?id={_fixture.BotUser.Id})"
+                $"[{testsFixture.BotUser.GetSafeUsername()}](tg://user?id={testsFixture.BotUser.Id})"
             },
             {MessageEntityType.Code, @"inline ""`fixed-width code`"""},
             {MessageEntityType.Pre, "```pre-formatted fixed-width code block```"},
@@ -221,7 +210,7 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
         };
 
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             text: string.Join("\n", entityValueMappings.Values),
             parseMode: ParseMode.MarkdownV2,
             disableWebPagePreview: true
@@ -229,10 +218,10 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
 
         Assert.NotNull(message.Entities);
         Assert.Equal(entityValueMappings.Keys, message.Entities.Select(e => e.Type));
-        Assert.Equal(url, message.Entities.Single(e => e.Type == MessageEntityType.TextLink).Url);
+        Assert.Equal(url, message.Entities.Single(e => e.Type is MessageEntityType.TextLink).Url);
         Asserts.UsersEqual(
-            _fixture.BotUser,
-            message.Entities.Single(e => e.Type == MessageEntityType.TextMention).User
+            testsFixture.BotUser,
+            message.Entities.Single(e => e.Type is MessageEntityType.TextMention).User
         );
     }
 
@@ -241,22 +230,22 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
     public async Task Should_Send_Message_With_Protected_Content()
     {
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             text: "This content is protected!",
             protectContent: true
         );
 
         Assert.Equal("This content is protected!", message.Text);
         Assert.Equal(MessageType.Text, message.Type);
-        Assert.Equal(_fixture.SupergroupChat.Id.ToString(), message.Chat.Id.ToString());
+        Assert.Equal(testsFixture.SupergroupChat.Id.ToString(), message.Chat.Id.ToString());
         Assert.InRange(message.Date, DateTime.UtcNow.AddSeconds(-10), DateTime.UtcNow.AddSeconds(2));
         Assert.NotNull(message.From);
-        Assert.Equal(_fixture.BotUser.Id, message.From.Id);
-        Assert.Equal(_fixture.BotUser.Username, message.From.Username);
+        Assert.Equal(testsFixture.BotUser.Id, message.From.Id);
+        Assert.Equal(testsFixture.BotUser.Username, message.From.Username);
         Assert.True(message.HasProtectedContent);
 
         // getMe request returns more information than is present in received updates
-        Asserts.UsersEqual(_fixture.BotUser, message.From);
+        Asserts.UsersEqual(testsFixture.BotUser, message.From);
     }
 
     [OrderedFact("Should send a message with protected content")]
@@ -264,7 +253,7 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
     public async Task Should_Receive_Error_Trying_Forward_A_Message__With_Protected_Content()
     {
         Message message = await BotClient.SendTextMessageAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             text: "This content is protected!",
             protectContent: true
         );
@@ -273,8 +262,8 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
 
         ApiRequestException exception = await Assert.ThrowsAsync<ApiRequestException>(
             async () => await BotClient.ForwardMessageAsync(
-                fromChatId: _fixture.SupergroupChat.Id,
-                chatId: _fixture.SupergroupChat.Id,
+                fromChatId: testsFixture.SupergroupChat.Id,
+                chatId: testsFixture.SupergroupChat.Id,
                 messageId: message.MessageId
             )
         );
@@ -282,10 +271,6 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
         Assert.Equal(400, exception.ErrorCode);
     }
 
-    public class Fixture : ChannelChatFixture
-    {
-        public Fixture(TestsFixture testsFixture)
-            : base(testsFixture, Constants.TestCollections.SendTextMessage)
-        { }
-    }
+    public class Fixture(TestsFixture testsFixture)
+        : ChannelChatFixture(testsFixture, Constants.TestCollections.SendTextMessage);
 }

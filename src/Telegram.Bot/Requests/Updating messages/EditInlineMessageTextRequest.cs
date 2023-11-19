@@ -9,18 +9,20 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to edit text and game messages. On success <see langword="true"/> is returned.
 /// </summary>
+/// <param name="inlineMessageId">Identifier of the inline message</param>
+/// <param name="text">New text of the message, 1-4096 characters after entities parsing</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditInlineMessageTextRequest : RequestBase<bool>
+public class EditInlineMessageTextRequest(string inlineMessageId, string text) : RequestBase<bool>("editMessageText")
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
     [JsonProperty(Required = Required.Always)]
-    public string InlineMessageId { get; }
+    public string InlineMessageId { get; } = inlineMessageId;
 
     /// <summary>
     /// New text of the message, 1-4096 characters after entities parsing
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Text { get; }
+    public string Text { get; } = text;
 
     /// <inheritdoc cref="Documentation.ParseMode"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -39,16 +41,4 @@ public class EditInlineMessageTextRequest : RequestBase<bool>
     /// <inheritdoc cref="Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with inlineMessageId and new text
-    /// </summary>
-    /// <param name="inlineMessageId">Identifier of the inline message</param>
-    /// <param name="text">New text of the message, 1-4096 characters after entities parsing</param>
-    public EditInlineMessageTextRequest(string inlineMessageId, string text)
-        : base("editMessageText")
-    {
-        InlineMessageId = inlineMessageId;
-        Text = text;
-    }
 }

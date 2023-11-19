@@ -32,7 +32,7 @@ public class MessageEntityTypeConverterTests
     public void Should_Convert_MessageEntityType_To_String(MessageEntityType messageEntityType, string value)
     {
         MessageEntity messageEntity = new() { Type = messageEntityType };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(messageEntity);
 
@@ -44,7 +44,7 @@ public class MessageEntityTypeConverterTests
     public void Should_Convert_String_To_MessageEntityType(MessageEntityType messageEntityType, string value)
     {
         MessageEntity expectedResult = new() { Type = messageEntityType };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         MessageEntity result = JsonConvert.DeserializeObject<MessageEntity>(jsonData)!;
 
@@ -54,7 +54,7 @@ public class MessageEntityTypeConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_MessageEntityType()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         MessageEntity result = JsonConvert.DeserializeObject<MessageEntity>(jsonData)!;
 

@@ -8,24 +8,20 @@ namespace Telegram.Bot.Requests;
 /// administrator in the chat for this to work and must have <see cref="ChatAdministratorRights.CanManageTopics"/>
 /// administrator rights. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
+/// <param name="name">New topic name, 1-128 characters</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditGeneralForumTopicRequest : RequestBase<bool>, IChatTargetable
+public class EditGeneralForumTopicRequest(ChatId chatId, string name)
+    : RequestBase<bool>("editGeneralForumTopic"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New topic name, 1-128 characters
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Name { get; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
-    /// <param name="name">New topic name, 1-128 characters</param>
-    public EditGeneralForumTopicRequest(ChatId chatId, string name)
-        : base("editGeneralForumTopic") => (ChatId, Name) = (chatId, name);
+    public string Name { get; } = name;
 }

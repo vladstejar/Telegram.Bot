@@ -11,12 +11,14 @@ namespace Telegram.Bot.Requests;
 /// Use this method to send an animated emoji that will display a random value. On success,
 /// the sent <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendDiceRequest : RequestBase<Message>, IChatTargetable
+public class SendDiceRequest(ChatId chatId) : RequestBase<Message>("sendDice"), IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -49,15 +51,4 @@ public class SendDiceRequest : RequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)</param>
-    public SendDiceRequest(ChatId chatId)
-        : base("sendDice")
-    {
-        ChatId = chatId;
-    }
 }

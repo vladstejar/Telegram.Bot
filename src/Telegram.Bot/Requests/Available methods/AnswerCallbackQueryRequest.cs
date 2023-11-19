@@ -12,14 +12,15 @@ namespace Telegram.Bot.Requests;
 /// must first create a game for your bot via <c>@BotFather</c> and accept the terms. Otherwise, you
 /// may use links like <c>t.me/your_bot? start = XXXX</c> that open your bot with a parameter.
 /// </remarks>
+/// <param name="callbackQueryId">Unique identifier for the query to be answered</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class AnswerCallbackQueryRequest : RequestBase<bool>
+public class AnswerCallbackQueryRequest(string callbackQueryId) : RequestBase<bool>("answerCallbackQuery")
 {
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string CallbackQueryId { get; }
+    public string CallbackQueryId { get; } = callbackQueryId;
 
     /// <summary>
     /// Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
@@ -53,14 +54,4 @@ public class AnswerCallbackQueryRequest : RequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? CacheTime { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with callbackQueryId
-    /// </summary>
-    /// <param name="callbackQueryId">Unique identifier for the query to be answered</param>
-    public AnswerCallbackQueryRequest(string callbackQueryId)
-        : base("answerCallbackQuery")
-    {
-        CallbackQueryId = callbackQueryId;
-    }
 }

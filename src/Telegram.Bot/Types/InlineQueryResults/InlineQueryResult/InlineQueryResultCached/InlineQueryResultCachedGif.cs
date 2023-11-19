@@ -9,8 +9,10 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// use <see cref="InlineQueryResultCachedGif.InputMessageContent"/> to send a message with
 /// specified content instead of the animation.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="gifFileId">A valid file identifier for the GIF file</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultCachedGif : InlineQueryResult
+public class InlineQueryResultCachedGif(string id, string gifFileId) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be GIF
@@ -22,7 +24,7 @@ public class InlineQueryResultCachedGif : InlineQueryResult
     /// A valid file identifier for the GIF file
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string GifFileId { get; }
+    public string GifFileId { get; } = gifFileId;
 
     /// <summary>
     /// Optional. Title for the result
@@ -45,15 +47,4 @@ public class InlineQueryResultCachedGif : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="gifFileId">A valid file identifier for the GIF file</param>
-    public InlineQueryResultCachedGif(string id, string gifFileId)
-        : base(id)
-    {
-        GifFileId = gifFileId;
-    }
 }

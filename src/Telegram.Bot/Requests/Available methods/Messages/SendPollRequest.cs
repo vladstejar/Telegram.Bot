@@ -10,12 +10,19 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to send a native poll. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="question">Poll question, 1-300 characters</param>
+/// <param name="options">A list of answer options, 2-10 strings 1-100 characters each</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendPollRequest : RequestBase<Message>, IChatTargetable
+public class SendPollRequest(ChatId chatId, string question, IEnumerable<string> options)
+    : RequestBase<Message>("sendPoll"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -27,13 +34,13 @@ public class SendPollRequest : RequestBase<Message>, IChatTargetable
     /// Poll question, 1-300 characters
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Question { get; }
+    public string Question { get; } = question;
 
     /// <summary>
     /// A list of answer options, 2-10 strings 1-100 characters each
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public IEnumerable<string> Options { get; }
+    public IEnumerable<string> Options { get; } = options;
 
     /// <summary>
     /// <see langword="true"/>, if the poll needs to be anonymous, defaults to <see langword="true"/>
@@ -122,20 +129,4 @@ public class SendPollRequest : RequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId, question and <see cref="PollOption"/>
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="question">Poll question, 1-300 characters</param>
-    /// <param name="options">A list of answer options, 2-10 strings 1-100 characters each</param>
-    public SendPollRequest(ChatId chatId, string question, IEnumerable<string> options)
-        : base("sendPoll")
-    {
-        ChatId = chatId;
-        Question = question;
-        Options = options;
-    }
 }

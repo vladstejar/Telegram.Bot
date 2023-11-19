@@ -8,18 +8,23 @@ namespace Telegram.Bot.Requests;
 /// Returns an error, if the new score is not greater than the user's current score in the chat and
 /// <see cref="Force"/> is <see langword="false"/>.
 /// </summary>
+/// <param name="userId">User identifier</param>
+/// <param name="score">New score, must be non-negative</param>
+/// <param name="inlineMessageId">Identifier of the inline message</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetInlineGameScoreRequest : RequestBase<bool>, IUserTargetable
+public class SetInlineGameScoreRequest(long userId, int score, string inlineMessageId)
+    : RequestBase<bool>("setGameScore"),
+      IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// New score, must be non-negative
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public int Score { get; }
+    public int Score { get; } = score;
 
     /// <summary>
     /// Pass <see langword="true"/>, if the high score is allowed to decrease. This can be useful when fixing mistakes
@@ -37,19 +42,5 @@ public class SetInlineGameScoreRequest : RequestBase<bool>, IUserTargetable
 
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
     [JsonProperty(Required = Required.Always)]
-    public string InlineMessageId { get; }
-
-    /// <summary>
-    /// Initializes a new request with userId, inlineMessageId and new score
-    /// </summary>
-    /// <param name="userId">User identifier</param>
-    /// <param name="score">New score, must be non-negative</param>
-    /// <param name="inlineMessageId">Identifier of the inline message</param>
-    public SetInlineGameScoreRequest(long userId, int score, string inlineMessageId)
-        : base("setGameScore")
-    {
-        UserId = userId;
-        Score = score;
-        InlineMessageId = inlineMessageId;
-    }
+    public string InlineMessageId { get; } = inlineMessageId;
 }

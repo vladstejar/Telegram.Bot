@@ -14,7 +14,7 @@ public class InputStickerSerializationTests
     {
         const string fileName = "myFile";
         InputFileStream inputFile = new(new MemoryStream(), fileName);
-        string[] emojiList = { "🙂" };
+        string[] emojiList = ["🙂"];
         InputSticker inputSticker = new(inputFile, emojiList);
 
         string json = JsonConvert.SerializeObject(inputSticker);
@@ -34,8 +34,8 @@ public class InputStickerSerializationTests
     {
         const string fileId = "This-is-a-file_id";
         InputFileId inputFileId = new(fileId);
-        string[] emojiList = new[] { "🙂" };
-        InputSticker inputStickerFileId = new InputSticker(inputFileId, emojiList);
+        string[] emojiList = ["🙂"];
+        InputSticker inputStickerFileId = new(inputFileId, emojiList);
 
         string json = JsonConvert.SerializeObject(inputStickerFileId);
         InputSticker? obj = JsonConvert.DeserializeObject<InputSticker>(json);
@@ -55,8 +55,8 @@ public class InputStickerSerializationTests
     {
         Uri url = new("http://github.org/TelegramBots");
         InputFileUrl inputFileUrl = new(url);
-        string[] emojiList = new[] { "🙂" };
-        InputSticker inputStickerFileUrl = new InputSticker(inputFileUrl, emojiList);
+        string[] emojiList = ["🙂"];
+        InputSticker inputStickerFileUrl = new(inputFileUrl, emojiList);
 
         string json = JsonConvert.SerializeObject(inputStickerFileUrl);
         InputSticker? obj = JsonConvert.DeserializeObject<InputSticker>(json);

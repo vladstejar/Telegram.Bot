@@ -9,8 +9,15 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// a message with the specified content instead of the file. Currently, only .PDF and .ZIP files
 /// can be sent using this method.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="documentUrl">A valid URL for the file</param>
+/// <param name="title">Title of the result</param>
+/// <param name="mimeType">
+/// Mime type of the content of the file, either “application/pdf” or “application/zip”
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultDocument : InlineQueryResult
+public class InlineQueryResultDocument(string id, string documentUrl, string title, string mimeType)
+    : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be document
@@ -22,7 +29,7 @@ public class InlineQueryResultDocument : InlineQueryResult
     /// Title for the result
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -40,13 +47,13 @@ public class InlineQueryResultDocument : InlineQueryResult
     /// A valid URL for the file
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string DocumentUrl { get; }
+    public string DocumentUrl { get; } = documentUrl;
 
     /// <summary>
     /// Mime type of the content of the file, either “application/pdf” or “application/zip”
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string MimeType { get; }
+    public string MimeType { get; } = mimeType;
 
     /// <summary>
     /// Optional. Short description of the result
@@ -69,21 +76,4 @@ public class InlineQueryResultDocument : InlineQueryResult
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailHeight { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="documentUrl">A valid URL for the file</param>
-    /// <param name="title">Title of the result</param>
-    /// <param name="mimeType">
-    /// Mime type of the content of the file, either “application/pdf” or “application/zip”
-    /// </param>
-    public InlineQueryResultDocument(string id, string documentUrl, string title, string mimeType)
-        : base(id)
-    {
-        DocumentUrl = documentUrl;
-        Title = title;
-        MimeType = mimeType;
-    }
 }

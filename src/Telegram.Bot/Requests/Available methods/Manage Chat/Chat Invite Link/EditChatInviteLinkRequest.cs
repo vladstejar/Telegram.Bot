@@ -9,18 +9,24 @@ namespace Telegram.Bot.Requests;
 /// in the chat for this to work and must have the appropriate admin rights. Returns the edited invite
 /// link as a <see cref="Types.ChatInviteLink"/> object.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="inviteLink">The invite link to edit</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class EditChatInviteLinkRequest : RequestBase<ChatInviteLink>, IChatTargetable
+public class EditChatInviteLinkRequest(ChatId chatId, string inviteLink)
+    : RequestBase<ChatInviteLink>("editChatInviteLink"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// The invite link to edit
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string InviteLink { get; }
+    public string InviteLink { get; } = inviteLink;
 
     /// <summary>
     /// Invite link name; 0-32 characters
@@ -43,23 +49,9 @@ public class EditChatInviteLinkRequest : RequestBase<ChatInviteLink>, IChatTarge
     public int? MemberLimit { get; set; }
 
     /// <summary>
-    /// Set to <see langword="true"/>, if users joining the chat via the link need to be approved by chat administrators.
-    /// If <see langword="true"/>, <see cref="MemberLimit"/> can't be specified
+    /// Set to <see langword="true"/>, if users joining the chat via the link need to be approved by chat
+    /// administrators. If <see langword="true"/>, <see cref="MemberLimit"/> can't be specified
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? CreatesJoinRequest { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and inviteLink
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="inviteLink">The invite link to edit</param>
-    public EditChatInviteLinkRequest(ChatId chatId, string inviteLink)
-        : base("editChatInviteLink")
-    {
-        ChatId = chatId;
-        InviteLink = inviteLink;
-    }
 }

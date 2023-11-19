@@ -8,32 +8,19 @@ namespace Telegram.Bot.Requests;
 /// Represents an API request
 /// </summary>
 /// <typeparam name="TResponse">Type of result expected in result</typeparam>
+/// <param name="methodName">Bot API method</param>
+/// <param name="method">HTTP method to use</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public abstract class RequestBase<TResponse> : IRequest<TResponse>
+public abstract class RequestBase<TResponse>(string methodName, HttpMethod? method = default)
+    : IRequest<TResponse>
 {
     /// <inheritdoc />
     [JsonIgnore]
-    public HttpMethod Method { get; }
+    public HttpMethod Method { get; } = method ?? HttpMethod.Post;
 
     /// <inheritdoc />
     [JsonIgnore]
-    public string MethodName { get; }
-
-    /// <summary>
-    /// Initializes an instance of request
-    /// </summary>
-    /// <param name="methodName">Bot API method</param>
-    protected RequestBase(string methodName)
-        : this(methodName, HttpMethod.Post)
-    { }
-
-    /// <summary>
-    /// Initializes an instance of request
-    /// </summary>
-    /// <param name="methodName">Bot API method</param>
-    /// <param name="method">HTTP method to use</param>
-    protected RequestBase(string methodName, HttpMethod method) =>
-        (MethodName, Method) = (methodName, method);
+    public string MethodName { get; } = methodName;
 
     /// <summary>
     /// Generate content of HTTP message

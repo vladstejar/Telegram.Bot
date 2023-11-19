@@ -16,7 +16,7 @@ public class MaskPositionPointConverterTests
     public void Should_Convert_MaskPositionPoint_To_String(MaskPositionPoint maskPositionPoint, string value)
     {
         MaskPosition maskPosition = new() { Point = maskPositionPoint };
-        string expectedResult = @$"{{""point"":""{value}""}}";
+        string expectedResult = $$"""{"point":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(maskPosition);
 
@@ -31,7 +31,7 @@ public class MaskPositionPointConverterTests
     public void Should_Convert_String_To_MaskPositionPoint(MaskPositionPoint maskPositionPoint, string value)
     {
         MaskPosition expectedResult = new() { Point = maskPositionPoint };
-        string jsonData = @$"{{""point"":""{value}""}}";
+        string jsonData = $$"""{"point":"{{value}}"}""";
 
         MaskPosition? result = JsonConvert.DeserializeObject<MaskPosition>(jsonData);
 
@@ -42,7 +42,7 @@ public class MaskPositionPointConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_MaskPositionPoint()
     {
-        string jsonData = @$"{{""point"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"point":"{{int.MaxValue}}"}""";
 
         MaskPosition? result = JsonConvert.DeserializeObject<MaskPosition>(jsonData);
 

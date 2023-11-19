@@ -10,16 +10,10 @@ namespace Telegram.Bot.Tests.Integ.Polls;
 [Collection(Constants.TestCollections.NativePolls)]
 [Trait(Constants.CategoryTraitName, Constants.InteractiveCategoryValue)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class PublicPollTests : IClassFixture<PublicPollTestsFixture>
+public class PublicPollTests(PublicPollTestsFixture classFixture) : IClassFixture<PublicPollTestsFixture>
 {
-    readonly PublicPollTestsFixture _classFixture;
-    TestsFixture Fixture => _classFixture.TestsFixture;
+    TestsFixture Fixture => classFixture.TestsFixture;
     ITelegramBotClient BotClient => Fixture.BotClient;
-
-    public PublicPollTests(PublicPollTestsFixture classFixture)
-    {
-        _classFixture = classFixture;
-    }
 
     [OrderedFact(
         "Should send public poll with multiple answers",
@@ -30,7 +24,7 @@ public class PublicPollTests : IClassFixture<PublicPollTestsFixture>
         Message message = await Fixture.BotClient.SendPollAsync(
             chatId: Fixture.SupergroupChat,
             question: "Pick your team",
-            options: new [] { "Aragorn", "Galadriel", "Frodo" },
+            options: ["Aragorn", "Galadriel", "Frodo"],
             isAnonymous: false,
             type: PollType.Regular,
             allowsMultipleAnswers: true
@@ -54,7 +48,7 @@ public class PublicPollTests : IClassFixture<PublicPollTestsFixture>
         Assert.Equal("Frodo", message.Poll.Options[2].Text);
         Assert.All(message.Poll.Options, option => Assert.Equal(0, option.VoterCount));
 
-        _classFixture.OriginalPollMessage = message;
+        classFixture.OriginalPollMessage = message;
     }
 
     [OrderedFact(
@@ -71,7 +65,7 @@ public class PublicPollTests : IClassFixture<PublicPollTestsFixture>
             updateTypes: UpdateType.PollAnswer
         );
 
-        Poll poll = _classFixture.OriginalPollMessage.Poll;
+        Poll poll = classFixture.OriginalPollMessage.Poll;
         PollAnswer pollAnswer = pollAnswerUpdate.PollAnswer;
 
         Assert.NotNull(pollAnswer);
@@ -82,7 +76,7 @@ public class PublicPollTests : IClassFixture<PublicPollTestsFixture>
             optionId => Assert.True(optionId < poll.Options.Length)
         );
 
-        _classFixture.PollAnswer = pollAnswer;
+        classFixture.PollAnswer = pollAnswer;
     }
 
     [OrderedFact(
@@ -96,14 +90,14 @@ public class PublicPollTests : IClassFixture<PublicPollTestsFixture>
         await Task.Delay(TimeSpan.FromSeconds(5));
 
         Poll closedPoll = await BotClient.StopPollAsync(
-            chatId: _classFixture.OriginalPollMessage.Chat,
-            messageId: _classFixture.OriginalPollMessage.MessageId
+            chatId: classFixture.OriginalPollMessage.Chat,
+            messageId: classFixture.OriginalPollMessage.MessageId
         );
 
-        Assert.Equal(_classFixture.OriginalPollMessage.Poll!.Id, closedPoll.Id);
+        Assert.Equal(classFixture.OriginalPollMessage.Poll!.Id, closedPoll.Id);
         Assert.True(closedPoll.IsClosed);
 
-        PollAnswer pollAnswer = _classFixture.PollAnswer;
+        PollAnswer pollAnswer = classFixture.PollAnswer;
 
         Assert.All(
             pollAnswer.OptionIds,

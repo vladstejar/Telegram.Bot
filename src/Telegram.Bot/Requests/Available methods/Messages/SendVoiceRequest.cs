@@ -14,12 +14,22 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Message"/> is returned. Bots can currently send voice messages of up to 50 MB in size,
 /// this limit may be changed in the future.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="voice">
+/// Audio file to send. Pass a <see cref="InputFileId"/> as String to send a file
+/// that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram
+/// to get a file from the Internet, or upload a new one using multipart/form-data
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendVoiceRequest : FileRequestBase<Message>, IChatTargetable
+public class SendVoiceRequest(ChatId chatId, InputFile voice)
+    : FileRequestBase<Message>("sendVoice"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -33,7 +43,7 @@ public class SendVoiceRequest : FileRequestBase<Message>, IChatTargetable
     /// a file from the Internet, or upload a new one using multipart/form-data
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFile Voice { get; }
+    public InputFile Voice { get; } = voice;
 
     /// <summary>
     /// Voice message caption, 0-1024 characters after entities parsing
@@ -75,29 +85,11 @@ public class SendVoiceRequest : FileRequestBase<Message>, IChatTargetable
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
 
-    /// <summary>
-    /// Initializes a new request with chatId and voice
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="voice">
-    /// Audio file to send. Pass a <see cref="InputFileId"/> as String to send a file
-    /// that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram
-    /// to get a file from the Internet, or upload a new one using multipart/form-data
-    /// </param>
-    public SendVoiceRequest(ChatId chatId, InputFile voice)
-        : base("sendVoice")
-    {
-        ChatId = chatId;
-        Voice = voice;
-    }
-
     /// <inheritdoc />
     public override HttpContent? ToHttpContent() =>
         Voice switch
         {
-            InputFileStream voice => ToMultipartFormDataContent(fileParameterName: "voice", inputFile: voice),
+            InputFileStream voiceFile => ToMultipartFormDataContent(fileParameterName: "voice", inputFile: voiceFile),
             _               => base.ToHttpContent()
         };
 }

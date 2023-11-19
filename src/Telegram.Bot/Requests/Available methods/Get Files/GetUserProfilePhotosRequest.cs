@@ -7,12 +7,15 @@ namespace Telegram.Bot.Requests;
 /// Use this method to get a list of profile pictures for a user. Returns a
 /// <see cref="UserProfilePhotos"/> object.
 /// </summary>
+/// <param name="userId">Unique identifier of the target user</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetUserProfilePhotosRequest : RequestBase<UserProfilePhotos>, IUserTargetable
+public class GetUserProfilePhotosRequest(long userId)
+    : RequestBase<UserProfilePhotos>("getUserProfilePhotos"),
+      IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// Sequential number of the first photo to be returned. By default, all photos are returned
@@ -25,14 +28,4 @@ public class GetUserProfilePhotosRequest : RequestBase<UserProfilePhotos>, IUser
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? Limit { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with userId
-    /// </summary>
-    /// <param name="userId">Unique identifier of the target user</param>
-    public GetUserProfilePhotosRequest(long userId)
-        : base("getUserProfilePhotos")
-    {
-        UserId = userId;
-    }
 }

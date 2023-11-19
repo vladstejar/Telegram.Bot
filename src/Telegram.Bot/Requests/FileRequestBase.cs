@@ -10,26 +10,12 @@ namespace Telegram.Bot.Requests;
 /// Represents an API request with a file
 /// </summary>
 /// <typeparam name="TResponse">Type of result expected in result</typeparam>
+/// <param name="methodName">Bot API method</param>
+/// <param name="method">HTTP method to use</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public abstract class FileRequestBase<TResponse> : RequestBase<TResponse>
+public abstract class FileRequestBase<TResponse>(string methodName, HttpMethod? method = default)
+    : RequestBase<TResponse>(methodName, method)
 {
-    /// <summary>
-    /// Initializes an instance of request
-    /// </summary>
-    /// <param name="methodName">Bot API method</param>
-    protected FileRequestBase(string methodName)
-        : base(methodName)
-    { }
-
-    /// <summary>
-    /// Initializes an instance of request
-    /// </summary>
-    /// <param name="methodName">Bot API method</param>
-    /// <param name="method">HTTP method to use</param>
-    protected FileRequestBase(string methodName, HttpMethod method)
-        : base(methodName, method)
-    { }
-
     /// <summary>
     /// Generate multipart form data content
     /// </summary>
@@ -41,9 +27,7 @@ public abstract class FileRequestBase<TResponse> : RequestBase<TResponse>
         InputFileStream inputFile)
     {
         if (inputFile is null or { Content: null })
-        {
             throw new ArgumentNullException(nameof(inputFile), $"{nameof(inputFile)} or it's content is null");
-        }
 
         return GenerateMultipartFormDataContent(fileParameterName)
             .AddContentIfInputFile(media: inputFile, name: fileParameterName);
@@ -64,10 +48,8 @@ public abstract class FileRequestBase<TResponse> : RequestBase<TResponse>
             .Where(prop => exceptPropertyNames.Contains(prop.Name, StringComparer.InvariantCulture) is false)
             .Select(prop => (name: prop.Name, content: new StringContent(prop.Value.ToString())));
 
-        foreach (var strContent in stringContents)
-        {
-            multipartContent.Add(content: strContent.content, name: strContent.name);
-        }
+        foreach (var (name, content) in stringContents)
+            multipartContent.Add(content: content, name: name);
 
         return multipartContent;
     }

@@ -11,16 +11,23 @@ namespace Telegram.Bot.Requests;
 /// administrator in the chat for this to work and must have the appropriate admin rights.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="userId">Unique identifier of the target user</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class BanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
+public class BanChatMemberRequest(ChatId chatId, long userId)
+    : RequestBase<bool>("banChatMember"),
+      IChatTargetable,
+      IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// Date when the user will be unbanned. If user is banned for more than 366 days or less
@@ -38,18 +45,4 @@ public class BanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTar
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? RevokeMessages { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and userId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="userId">Unique identifier of the target user</param>
-    public BanChatMemberRequest(ChatId chatId, long userId)
-        : base("banChatMember")
-    {
-        ChatId = chatId;
-        UserId = userId;
-    }
 }

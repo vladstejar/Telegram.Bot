@@ -13,26 +13,18 @@ namespace Telegram.Bot.Requests;
 /// on each side. Will also return the top three users if the user and his neighbors are not among them.
 /// Please note that this behavior is subject to change.
 /// </remarks>
+/// <param name="userId">User identifier</param>
+/// <param name="inlineMessageId">Identifier of the inline message</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetInlineGameHighScoresRequest : RequestBase<GameHighScore[]>, IUserTargetable
+public class GetInlineGameHighScoresRequest(long userId, string inlineMessageId)
+    : RequestBase<GameHighScore[]>("getGameHighScores"),
+      IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
     [JsonProperty(Required = Required.Always)]
-    public string InlineMessageId { get; }
-
-    /// <summary>
-    /// Initializes a new request with userId and inlineMessageId
-    /// </summary>
-    /// <param name="userId">User identifier</param>
-    /// <param name="inlineMessageId">Identifier of the inline message</param>
-    public GetInlineGameHighScoresRequest(long userId, string inlineMessageId)
-        : base("getGameHighScores")
-    {
-        UserId = userId;
-        InlineMessageId = inlineMessageId;
-    }
+    public string InlineMessageId { get; } = inlineMessageId;
 }

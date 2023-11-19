@@ -6,26 +6,12 @@ namespace Telegram.Bot.Requests;
 /// Represents a request that doesn't require any parameters
 /// </summary>
 /// <typeparam name="TResult"></typeparam>
+/// <param name="methodName">Name of request method</param>
+/// <param name="method">HTTP request method</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class ParameterlessRequest<TResult> : RequestBase<TResult>
+public class ParameterlessRequest<TResult>(string methodName, HttpMethod? method = default)
+    : RequestBase<TResult>(methodName, method)
 {
-    /// <summary>
-    /// Initializes an instance of <see cref="ParameterlessRequest{TResult}"/>
-    /// </summary>
-    /// <param name="methodName">Name of request method</param>
-    public ParameterlessRequest(string methodName)
-        : base(methodName)
-    { }
-
-    /// <summary>
-    /// Initializes an instance of <see cref="ParameterlessRequest{TResult}"/>
-    /// </summary>
-    /// <param name="methodName">Name of request method</param>
-    /// <param name="method">HTTP request method</param>
-    public ParameterlessRequest(string methodName, HttpMethod method)
-        : base(methodName, method)
-    { }
-
     /// <inheritdoc cref="RequestBase{TResponse}.ToHttpContent"/>
     public override HttpContent? ToHttpContent() =>
         IsWebhookResponse

@@ -4,14 +4,17 @@ namespace Telegram.Bot.Types.Payments;
 /// This object represents a portion of the price for goods or services.
 /// </summary>
 /// <a href="https://core.telegram.org/bots/api#labeledprice"/>
+/// <param name="label">Portion label</param>
+/// <param name="amount">Price of the product</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class LabeledPrice
+[method: JsonConstructor]
+public class LabeledPrice(string label, int amount)
 {
     /// <summary>
     /// Portion label
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Label { get; set; }
+    public string Label { get; set; } = label;
 
     /// <summary>
     /// Price of the product in the <i>smallest units</i> of the
@@ -24,17 +27,5 @@ public class LabeledPrice
     /// </para>
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public int Amount { get; set; }
-
-    /// <summary>
-    /// Initializes an instance of <see cref="LabeledPrice"/>
-    /// </summary>
-    /// <param name="label">Portion label</param>
-    /// <param name="amount">Price of the product</param>
-    [JsonConstructor]
-    public LabeledPrice(string label, int amount)
-    {
-        Label = label;
-        Amount = amount;
-    }
+    public int Amount { get; set; } = amount;
 }

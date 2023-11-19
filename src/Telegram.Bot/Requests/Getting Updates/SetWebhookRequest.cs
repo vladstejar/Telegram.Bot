@@ -33,14 +33,17 @@ namespace Telegram.Bot.Requests;
 /// <a href="https://core.telegram.org/bots/webhooks">amazing guide to Webhooks</a>.
 /// </remarks>
 /// </summary>
+/// <param name="url">
+/// HTTPS url to send updates to. Use an empty string to remove webhook integration
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetWebhookRequest : FileRequestBase<bool>
+public class SetWebhookRequest(string url) : FileRequestBase<bool>("setWebhook")
 {
     /// <summary>
     /// HTTPS URL to send updates to. Use an empty string to remove webhook integration
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Url { get; }
+    public string Url { get; } = url;
 
     /// <summary>
     /// Upload your public key certificate so that the root certificate in use can be checked. See
@@ -93,16 +96,6 @@ public class SetWebhookRequest : FileRequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? SecretToken { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with uri
-    /// </summary>
-    /// <param name="url">
-    /// HTTPS url to send updates to. Use an empty string to remove webhook integration
-    /// </param>
-    public SetWebhookRequest(string url)
-        : base("setWebhook") =>
-        Url = url;
 
     /// <inheritdoc cref="RequestBase{TResponse}.ToHttpContent"/>
     public override HttpContent? ToHttpContent() =>

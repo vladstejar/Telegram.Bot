@@ -8,8 +8,13 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// you can use <see cref="InlineQueryResultLocation.InputMessageContent"/> to send a message with
 /// the specified content instead of the location.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="latitude">Latitude of the location in degrees</param>
+/// <param name="longitude">Longitude of the location in degrees</param>
+/// <param name="title">Title of the result</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultLocation : InlineQueryResult
+public class InlineQueryResultLocation(string id, double latitude, double longitude, string title)
+    : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be location
@@ -19,17 +24,17 @@ public class InlineQueryResultLocation : InlineQueryResult
 
     /// <inheritdoc cref="Documentation.Latitude" />
     [JsonProperty(Required = Required.Always)]
-    public double Latitude { get; }
+    public double Latitude { get; } = latitude;
 
     /// <inheritdoc cref="Documentation.Longitude" />
     [JsonProperty(Required = Required.Always)]
-    public double Longitude { get; }
+    public double Longitude { get; } = longitude;
 
     /// <summary>
     /// Location title
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <summary>
     /// Optional. The radius of uncertainty for the location, measured in meters; 0-1500
@@ -72,19 +77,4 @@ public class InlineQueryResultLocation : InlineQueryResult
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailHeight { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="latitude">Latitude of the location in degrees</param>
-    /// <param name="longitude">Longitude of the location in degrees</param>
-    /// <param name="title">Title of the result</param>
-    public InlineQueryResultLocation(string id, double latitude, double longitude, string title)
-        : base(id)
-    {
-        Latitude = latitude;
-        Longitude = longitude;
-        Title = title;
-    }
 }

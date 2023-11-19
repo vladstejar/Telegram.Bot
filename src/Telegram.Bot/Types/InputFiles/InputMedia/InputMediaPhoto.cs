@@ -6,8 +6,9 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents a photo to be sent
 /// </summary>
-public class InputMediaPhoto :
-    InputMedia,
+/// <param name="media">File to send</param>
+public class InputMediaPhoto(InputFile media) :
+    InputMedia(media),
     IAlbumInputMedia
 {
     /// <inheritdoc />
@@ -19,12 +20,4 @@ public class InputMediaPhoto :
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? HasSpoiler { get; set; }
-
-    /// <summary>
-    /// Initializes a new photo media to send with an <see cref="InputFile"/>
-    /// </summary>
-    /// <param name="media">File to send</param>
-    public InputMediaPhoto(InputFile media)
-        : base(media)
-    { }
 }

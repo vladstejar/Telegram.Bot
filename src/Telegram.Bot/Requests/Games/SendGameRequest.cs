@@ -7,14 +7,21 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to send a game. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat</param>
+/// <param name="gameShortName">
+/// Short name of the game, serves as the unique identifier for the game. Set up your games via
+/// <a href="https://t.me/botfather">@BotFather</a>
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendGameRequest : RequestBase<Message>, IChatTargetable
+public class SendGameRequest(long chatId, string gameShortName)
+    : RequestBase<Message>("sendGame"),
+      IChatTargetable
 {
     /// <summary>
     /// Unique identifier for the target chat
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public long ChatId { get; }
+    public long ChatId { get; } = chatId;
 
     /// <inheritdoc />
     ChatId IChatTargetable.ChatId => ChatId;
@@ -30,7 +37,7 @@ public class SendGameRequest : RequestBase<Message>, IChatTargetable
     /// via <a href="https://t.me/botfather">@BotFather</a>
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string GameShortName { get; }
+    public string GameShortName { get; } = gameShortName;
 
     /// <inheritdoc cref="Abstractions.Documentation.DisableNotification"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -51,19 +58,4 @@ public class SendGameRequest : RequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.InlineReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and gameShortName
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat</param>
-    /// <param name="gameShortName">
-    /// Short name of the game, serves as the unique identifier for the game. Set up your games via
-    /// <a href="https://t.me/botfather">@BotFather</a>
-    /// </param>
-    public SendGameRequest(long chatId, string gameShortName)
-        : base("sendGame")
-    {
-        ChatId = chatId;
-        GameShortName = gameShortName;
-    }
 }

@@ -10,20 +10,23 @@ namespace Telegram.Bot.Requests;
 /// <remarks>
 /// No more than <b>50</b> results per query are allowed.
 /// </remarks>
+/// <param name="inlineQueryId">Unique identifier for the answered query</param>
+/// <param name="results">An array of results for the inline query</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class AnswerInlineQueryRequest : RequestBase<bool>
+public class AnswerInlineQueryRequest(string inlineQueryId, IEnumerable<InlineQueryResult> results)
+    : RequestBase<bool>("answerInlineQuery")
 {
     /// <summary>
     /// Unique identifier for the answered query
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string InlineQueryId { get; }
+    public string InlineQueryId { get; } = inlineQueryId;
 
     /// <summary>
     /// An array of results for the inline query
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public IEnumerable<InlineQueryResult> Results { get; }
+    public IEnumerable<InlineQueryResult> Results { get; } = results;
 
     /// <summary>
     /// The maximum amount of time in seconds that the result of the
@@ -52,16 +55,4 @@ public class AnswerInlineQueryRequest : RequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineQueryResultsButton? Button { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with inlineQueryId and an array of <see cref="InlineQueryResult"/>
-    /// </summary>
-    /// <param name="inlineQueryId">Unique identifier for the answered query</param>
-    /// <param name="results">An array of results for the inline query</param>
-    public AnswerInlineQueryRequest(string inlineQueryId, IEnumerable<InlineQueryResult> results)
-        : base("answerInlineQuery")
-    {
-        InlineQueryId = inlineQueryId;
-        Results = results;
-    }
 }

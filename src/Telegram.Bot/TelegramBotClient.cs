@@ -16,12 +16,21 @@ namespace Telegram.Bot;
 /// <summary>
 /// A client to use the Telegram Bot API
 /// </summary>
+/// <remarks>
+/// Create a new <see cref="TelegramBotClient"/> instance.
+/// </remarks>
+/// <param name="options">Configuration for <see cref="TelegramBotClient" /></param>
+/// <param name="httpClient">A custom <see cref="HttpClient"/></param>
+/// <exception cref="ArgumentNullException">
+/// Thrown if <paramref name="options"/> is <c>null</c>
+/// </exception>
 [PublicAPI]
-public class TelegramBotClient : ITelegramBotClient
+public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? httpClient = default)
+    : ITelegramBotClient
 {
-    readonly TelegramBotClientOptions _options;
+    readonly TelegramBotClientOptions _options = options ?? throw new ArgumentNullException(nameof(options));
 
-    readonly HttpClient _httpClient;
+    readonly HttpClient _httpClient = httpClient ?? new HttpClient();
 
     /// <inheritdoc/>
     public long? BotId => _options.BotId;
@@ -54,31 +63,13 @@ public class TelegramBotClient : ITelegramBotClient
     /// <summary>
     /// Create a new <see cref="TelegramBotClient"/> instance.
     /// </summary>
-    /// <param name="options">Configuration for <see cref="TelegramBotClient" /></param>
-    /// <param name="httpClient">A custom <see cref="HttpClient"/></param>
-    /// <exception cref="ArgumentNullException">
-    /// Thrown if <paramref name="options"/> is <c>null</c>
-    /// </exception>
-    public TelegramBotClient(
-        TelegramBotClientOptions options,
-        HttpClient? httpClient = default)
-    {
-        _options = options ?? throw new ArgumentNullException(nameof(options));
-        _httpClient = httpClient ?? new HttpClient();
-    }
-
-    /// <summary>
-    /// Create a new <see cref="TelegramBotClient"/> instance.
-    /// </summary>
     /// <param name="token"></param>
     /// <param name="httpClient">A custom <see cref="HttpClient"/></param>
     /// <exception cref="ArgumentException">
     /// Thrown if <paramref name="token"/> format is invalid
     /// </exception>
-    public TelegramBotClient(
-        string token,
-        HttpClient? httpClient = null) :
-        this(new TelegramBotClientOptions(token), httpClient)
+    public TelegramBotClient(string token, HttpClient? httpClient = null)
+        : this(new TelegramBotClientOptions(token), httpClient)
     { }
 
     /// <inheritdoc />
@@ -203,7 +194,7 @@ public class TelegramBotClient : ITelegramBotClient
             return true;
         }
         catch (ApiRequestException e)
-            when (e.ErrorCode == 401)
+            when (e.ErrorCode is 401)
         {
             return false;
         }

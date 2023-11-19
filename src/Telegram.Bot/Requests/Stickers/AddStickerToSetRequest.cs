@@ -20,56 +20,46 @@ namespace Telegram.Bot.Requests;
 /// </list>
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="userId">
+/// User identifier
+/// </param>
+/// <param name="name">
+/// Sticker set name
+/// </param>
+/// <param name="sticker">
+/// A JSON-serialized object with information about the added sticker.
+/// If exactly the same sticker had already been added to the set, then the set isn't changed.
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class AddStickerToSetRequest : FileRequestBase<bool>, IUserTargetable
+public class AddStickerToSetRequest(
+    long userId,
+    string name,
+    InputSticker sticker)
+        : FileRequestBase<bool>("addStickerToSet"),
+          IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// Sticker set name
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Name { get; }
+    public string Name { get; } = name;
 
     /// <summary>
     /// A JSON-serialized object with information about the added sticker.
     /// If exactly the same sticker had already been added to the set, then the set isn't changed.
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputSticker Sticker { get; }
-
-    /// <summary>
-    /// Initializes a new request with userId, name and sticker
-    /// </summary>
-    /// <param name="userId">
-    /// User identifier
-    /// </param>
-    /// <param name="name">
-    /// Sticker set name
-    /// </param>
-    /// <param name="sticker">
-    /// A JSON-serialized object with information about the added sticker.
-    /// If exactly the same sticker had already been added to the set, then the set isn't changed.
-    /// </param>
-    public AddStickerToSetRequest(
-        long userId,
-        string name,
-        InputSticker sticker)
-        : base("addStickerToSet")
-    {
-        UserId = userId;
-        Name = name;
-        Sticker = sticker;
-    }
+    public InputSticker Sticker { get; } = sticker;
 
     /// <inheritdoc />
-    public override HttpContent? ToHttpContent()
-        =>
+    public override HttpContent? ToHttpContent() =>
         Sticker.Sticker switch
         {
-            InputFileStream sticker => ToMultipartFormDataContent(fileParameterName: sticker.FileName!, inputFile: sticker),
-            _                       => base.ToHttpContent()
+            InputFileStream stickerFile => ToMultipartFormDataContent(fileParameterName: stickerFile.FileName!, inputFile: stickerFile),
+            _                           => base.ToHttpContent()
         };
 }

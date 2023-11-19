@@ -6,12 +6,4 @@ namespace Telegram.Bot.Requests;
 /// about the bot in form of a <see cref="User"/> object.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetMeRequest : ParameterlessRequest<User>
-{
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public GetMeRequest()
-        : base("getMe")
-    { }
-}
+public class GetMeRequest() : ParameterlessRequest<User>("getMe");

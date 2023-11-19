@@ -6,7 +6,7 @@ namespace Telegram.Bot.Requests;
 /// Returns <see cref="MenuButton"/> on success.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetChatMenuButtonRequest : RequestBase<MenuButton>
+public class GetChatMenuButtonRequest() : RequestBase<MenuButton>("getChatMenuButton")
 {
     /// <summary>
     /// Optional. Unique identifier for the target private chat. If not specified, default bot’s menu button
@@ -14,11 +14,4 @@ public class GetChatMenuButtonRequest : RequestBase<MenuButton>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public long? ChatId { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public GetChatMenuButtonRequest()
-        : base("getChatMenuButton")
-    { }
 }

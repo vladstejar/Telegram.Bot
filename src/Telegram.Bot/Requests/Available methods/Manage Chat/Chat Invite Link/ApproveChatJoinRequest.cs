@@ -8,30 +8,23 @@ namespace Telegram.Bot.Requests;
 /// work and must have the <see cref="ChatPermissions.CanInviteUsers"/> administrator right.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="userId">Unique identifier of the target user</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class ApproveChatJoinRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
+public class ApproveChatJoinRequest(ChatId chatId, long userId)
+    : RequestBase<bool>("approveChatJoinRequest"),
+      IChatTargetable,
+      IUserTargetable
 {
     /// <inheritdoc/>
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier of the target user
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and userId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="userId">Unique identifier of the target user</param>
-    public ApproveChatJoinRequest(ChatId chatId, long userId)
-        : base("approveChatJoinRequest")
-    {
-        ChatId = chatId;
-        UserId = userId;
-    }
+    public long UserId { get; } = userId;
 }

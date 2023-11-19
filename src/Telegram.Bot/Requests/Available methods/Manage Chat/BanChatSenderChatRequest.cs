@@ -10,18 +10,26 @@ namespace Telegram.Bot.Requests;
 /// an administrator in the supergroup or channel for this to work and must have the appropriate administrator
 /// rights. Returns <see langword="true"/> on success
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+/// </param>
+/// <param name="senderChatId">
+/// Unique identifier of the target sender chat
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class BanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
+public class BanChatSenderChatRequest(ChatId chatId, long senderChatId)
+    : RequestBase<bool>("banChatSenderChat"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier of the target sender chat
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public long SenderChatId { get; }
+    public long SenderChatId { get; } = senderChatId;
 
     /// <summary>
     /// Date when the sender chat will be unbanned, unix time. If the chat is banned for more than 366 days or
@@ -30,20 +38,4 @@ public class BanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
     [JsonConverter(typeof(UnixDateTimeConverter))]
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public DateTime? UntilDate { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and senderChatId
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    /// </param>
-    /// <param name="senderChatId">
-    /// Unique identifier of the target sender chat
-    /// </param>
-    public BanChatSenderChatRequest(ChatId chatId, long senderChatId)
-        : base("banChatSenderChat")
-    {
-        ChatId = chatId;
-        SenderChatId = senderChatId;
-    }
 }

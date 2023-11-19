@@ -8,8 +8,18 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultVenue.InputMessageContent"/> to send a message with the specified
 /// content instead of the venue.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="latitude">Latitude of the location in degrees</param>
+/// <param name="longitude">Longitude of the location in degrees</param>
+/// <param name="title">Title of the result</param>
+/// <param name="address">Address of the venue</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultVenue : InlineQueryResult
+public class InlineQueryResultVenue(
+    string id,
+    double latitude,
+    double longitude,
+    string title,
+    string address) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be venue
@@ -19,23 +29,23 @@ public class InlineQueryResultVenue : InlineQueryResult
 
     /// <inheritdoc cref="Documentation.Latitude" />
     [JsonProperty(Required = Required.Always)]
-    public double Latitude { get; }
+    public double Latitude { get; } = latitude;
 
     /// <inheritdoc cref="Documentation.Longitude" />
     [JsonProperty(Required = Required.Always)]
-    public double Longitude { get; }
+    public double Longitude { get; } = longitude;
 
     /// <summary>
     /// Title of the venue
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <summary>
     /// Address of the venue
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Address { get; }
+    public string Address { get; } = address;
 
     /// <summary>
     /// Optional. Foursquare identifier of the venue if known
@@ -78,25 +88,4 @@ public class InlineQueryResultVenue : InlineQueryResult
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailHeight { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="latitude">Latitude of the location in degrees</param>
-    /// <param name="longitude">Longitude of the location in degrees</param>
-    /// <param name="title">Title of the result</param>
-    /// <param name="address">Address of the venue</param>
-    public InlineQueryResultVenue(
-        string id,
-        double latitude,
-        double longitude,
-        string title,
-        string address) : base(id)
-    {
-        Latitude = latitude;
-        Longitude = longitude;
-        Title = title;
-        Address = address;
-    }
 }

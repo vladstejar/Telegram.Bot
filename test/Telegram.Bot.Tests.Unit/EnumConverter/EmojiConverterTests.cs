@@ -18,7 +18,7 @@ public class EmojiConverterTests
     public void Should_Convert_Emoji_To_String(Emoji emoji, string value)
     {
         Dice dice = new() { Emoji = emoji };
-        string expectedResult = @$"{{""emoji"":""{value}""}}";
+        string expectedResult = $$"""{"emoji":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(dice);
 
@@ -35,7 +35,7 @@ public class EmojiConverterTests
     public void Should_Convert_String_To_Emoji(Emoji emoji, string value)
     {
         Dice expectedResult = new() { Emoji = emoji };
-        string jsonData = @$"{{""emoji"":""{value}""}}";
+        string jsonData = $$"""{"emoji":"{{value}}"}""";
 
         Dice? result = JsonConvert.DeserializeObject<Dice>(jsonData);
 
@@ -46,7 +46,7 @@ public class EmojiConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_Emoji()
     {
-        string jsonData = @$"{{""emoji"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"emoji":"{{int.MaxValue}}"}""";
 
         Dice? result = JsonConvert.DeserializeObject<Dice>(jsonData);
 

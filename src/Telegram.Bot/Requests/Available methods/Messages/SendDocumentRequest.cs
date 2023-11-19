@@ -13,12 +13,25 @@ namespace Telegram.Bot.Requests;
 /// is returned. Bots can currently send files of any type of up to 50 MB in size,
 /// this limit may be changed in the future.
 /// </summary>
+/// <remarks>
+/// Initializes a new request with chatId and document
+/// </remarks>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="document">
+/// File to send. Pass a <see cref="InputFileId"/> as string to send a file that
+/// exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram
+/// to get a file from the Internet, or upload a new one using multipart/form-data
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendDocumentRequest : FileRequestBase<Message>, IChatTargetable
+public class SendDocumentRequest(ChatId chatId, InputFile document)
+    : FileRequestBase<Message>("sendDocument"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -32,7 +45,7 @@ public class SendDocumentRequest : FileRequestBase<Message>, IChatTargetable
     /// to get a file from the Internet, or upload a new one using multipart/form-data
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFile Document { get; }
+    public InputFile Document { get; } = document;
 
     /// <inheritdoc cref="Abstractions.Documentation.Thumbnail"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -78,24 +91,6 @@ public class SendDocumentRequest : FileRequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and document
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="document">
-    /// File to send. Pass a <see cref="InputFileId"/> as string to send a file that
-    /// exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram
-    /// to get a file from the Internet, or upload a new one using multipart/form-data
-    /// </param>
-    public SendDocumentRequest(ChatId chatId, InputFile document)
-        : base("sendDocument")
-    {
-        ChatId = chatId;
-        Document = document;
-    }
 
     /// <inheritdoc />
     public override HttpContent? ToHttpContent() =>

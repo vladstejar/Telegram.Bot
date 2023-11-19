@@ -6,18 +6,11 @@ namespace Telegram.Bot.Requests;
 /// Returns <see cref="BotName"/> on success.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetMyNameRequest : RequestBase<BotName>
+public class GetMyNameRequest() : RequestBase<BotName>("getMyName")
 {
     /// <summary>
     /// A two-letter ISO 639-1 language code or an empty string
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? LanguageCode { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public GetMyNameRequest()
-        : base("getMyName")
-    { }
 }

@@ -11,19 +11,10 @@ namespace Telegram.Bot.Tests.Integ.Sending_Messages;
 
 [Collection(Constants.TestCollections.AlbumMessage)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class AlbumMessageTests : IClassFixture<EntitiesFixture<Message>>
+public class AlbumMessageTests(TestsFixture testsFixture, EntitiesFixture<Message> classFixture)
+    : IClassFixture<EntitiesFixture<Message>>
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly EntitiesFixture<Message> _classFixture;
-
-    readonly TestsFixture _fixture;
-
-    public AlbumMessageTests(TestsFixture testsFixture, EntitiesFixture<Message> classFixture)
-    {
-        _fixture = testsFixture;
-        _classFixture = classFixture;
-    }
+    ITelegramBotClient BotClient => testsFixture.BotClient;
 
     [OrderedFact("Should upload 2 photos with captions and send them in an album")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMediaGroup)]
@@ -48,7 +39,7 @@ public class AlbumMessageTests : IClassFixture<EntitiesFixture<Message>>
             };
 
             messages = await BotClient.SendMediaGroupAsync(
-                chatId: _fixture.SupergroupChat.Id,
+                chatId: testsFixture.SupergroupChat.Id,
                 media: inputMedia,
                 disableNotification: true
             );
@@ -64,7 +55,7 @@ public class AlbumMessageTests : IClassFixture<EntitiesFixture<Message>>
         Assert.Equal("Logo", messages[0].Caption);
         Assert.Equal("Bot", messages[1].Caption);
 
-        _classFixture.Entities = messages.ToList();
+        classFixture.Entities = messages.ToList();
     }
 
     [OrderedFact("Should send an album with 3 photos using their file_id")]
@@ -72,18 +63,17 @@ public class AlbumMessageTests : IClassFixture<EntitiesFixture<Message>>
     public async Task Should_Send_3_Photos_Album_Using_FileId()
     {
         // Take file_id of photos uploaded in previous test case
-        string[] fileIds = _classFixture.Entities
+        string[] fileIds = classFixture.Entities
             .Select(msg => msg.Photo!.First().FileId)
             .ToArray();
 
         Message[] messages = await BotClient.SendMediaGroupAsync(
-            chatId: _fixture.SupergroupChat.Id,
-            media: new IAlbumInputMedia[]
-            {
+            chatId: testsFixture.SupergroupChat.Id,
+            media: [
                 new InputMediaPhoto(new InputFileId(fileIds[0])),
                 new InputMediaPhoto(new InputFileId(fileIds[1])),
                 new InputMediaPhoto(new InputFileId(fileIds[0])),
-            }
+            ]
         );
 
         Assert.Equal(3, messages.Length);
@@ -95,15 +85,14 @@ public class AlbumMessageTests : IClassFixture<EntitiesFixture<Message>>
     public async Task Should_Send_Photo_Album_Using_Url()
     {
         // ToDo add exception: Bad Request: failed to get HTTP URL content
-        int replyToMessageId = _classFixture.Entities.First().MessageId;
+        int replyToMessageId = classFixture.Entities.First().MessageId;
 
         Message[] messages = await BotClient.SendMediaGroupAsync(
-            chatId: _fixture.SupergroupChat.Id,
-            media: new IAlbumInputMedia[]
-            {
+            chatId: testsFixture.SupergroupChat.Id,
+            media: [
                 new InputMediaPhoto(new InputFileUrl("https://cdn.pixabay.com/photo/2017/06/20/19/22/fuchs-2424369_640.jpg")),
                 new InputMediaPhoto(new InputFileUrl("https://cdn.pixabay.com/photo/2017/04/11/21/34/giraffe-2222908_640.jpg")),
-            },
+            ],
             replyToMessageId: replyToMessageId
         );
 
@@ -148,7 +137,7 @@ public class AlbumMessageTests : IClassFixture<EntitiesFixture<Message>>
             };
 
             messages = await BotClient.SendMediaGroupAsync(
-                chatId: _fixture.SupergroupChat.Id,
+                chatId: testsFixture.SupergroupChat.Id,
                 media: inputMedia
             );
         }
@@ -199,7 +188,7 @@ public class AlbumMessageTests : IClassFixture<EntitiesFixture<Message>>
         };
 
         Message[] messages = await BotClient.SendMediaGroupAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             media: inputMedia
         );
 
@@ -238,7 +227,7 @@ public class AlbumMessageTests : IClassFixture<EntitiesFixture<Message>>
         };
 
         Message[] messages = await BotClient.SendMediaGroupAsync(
-            chatId: _fixture.SupergroupChat.Id,
+            chatId: testsFixture.SupergroupChat.Id,
             media: inputMedia
         );
 

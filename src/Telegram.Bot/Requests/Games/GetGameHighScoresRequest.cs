@@ -13,18 +13,24 @@ namespace Telegram.Bot.Requests;
 /// on each side. Will also return the top three users if the user and his neighbors are not among
 /// them. Please note that this behavior is subject to change.
 /// </remarks>
+/// <param name="userId">Target user id</param>
+/// <param name="chatId">Unique identifier for the target chat</param>
+/// <param name="messageId">Identifier of the sent message</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class GetGameHighScoresRequest : RequestBase<GameHighScore[]>, IUserTargetable, IChatTargetable
+public class GetGameHighScoresRequest(long userId, long chatId, int messageId)
+    : RequestBase<GameHighScore[]>("getGameHighScores"),
+      IUserTargetable,
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// Unique identifier for the target chat
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public long ChatId { get; }
+    public long ChatId { get; } = chatId;
 
     /// <inheritdoc />
     ChatId IChatTargetable.ChatId => ChatId;
@@ -33,19 +39,5 @@ public class GetGameHighScoresRequest : RequestBase<GameHighScore[]>, IUserTarge
     /// Identifier of the sent message
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public int MessageId { get; }
-
-    /// <summary>
-    /// Initializes a new request with userId, chatId and messageId
-    /// </summary>
-    /// <param name="userId">Target user id</param>
-    /// <param name="chatId">Unique identifier for the target chat</param>
-    /// <param name="messageId">Identifier of the sent message</param>
-    public GetGameHighScoresRequest(long userId, long chatId, int messageId)
-        : base("getGameHighScores")
-    {
-        UserId = userId;
-        ChatId = chatId;
-        MessageId = messageId;
-    }
+    public int MessageId { get; } = messageId;
 }

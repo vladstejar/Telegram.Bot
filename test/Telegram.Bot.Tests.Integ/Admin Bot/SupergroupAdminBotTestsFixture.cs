@@ -19,7 +19,7 @@ public class SupergroupAdminBotTestsFixture : AsyncLifetimeFixture
     public SupergroupAdminBotTestsFixture(TestsFixture testsFixture)
     {
         TestsFixture = testsFixture;
-        PinnedMessages = new(3);
+        PinnedMessages = [];
 
         AddLifetime(
             initialize: async () =>

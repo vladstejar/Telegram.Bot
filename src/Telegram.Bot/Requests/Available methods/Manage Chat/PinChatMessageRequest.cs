@@ -10,34 +10,26 @@ namespace Telegram.Bot.Requests;
 /// '<see cref="ChatMemberAdministrator.CanEditMessages"/>' admin right in a channel.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="messageId">Identifier of a message to pin</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class PinChatMessageRequest : RequestBase<bool>, IChatTargetable
+public class PinChatMessageRequest(ChatId chatId, int messageId)
+    : RequestBase<bool>("pinChatMessage"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of a message to pin
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public int MessageId { get; }
+    public int MessageId { get; } = messageId;
 
     /// <inheritdoc cref="Abstractions.Documentation.DisableNotification"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? DisableNotification { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and messageId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="messageId">Identifier of a message to pin</param>
-    public PinChatMessageRequest(ChatId chatId, int messageId)
-        : base("pinChatMessage")
-    {
-        ChatId = chatId;
-        MessageId = messageId;
-    }
 }

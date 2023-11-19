@@ -11,12 +11,19 @@ namespace Telegram.Bot.Requests;
 /// audio files can be only grouped in an album with messages of the same type. On success, an array
 /// of <see cref="Message"/>s that were sent is returned.
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="media">An array describing messages to be sent, must include 2-10 items</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendMediaGroupRequest : FileRequestBase<Message[]>, IChatTargetable
+public class SendMediaGroupRequest(ChatId chatId, IEnumerable<IAlbumInputMedia> media)
+    : FileRequestBase<Message[]>("sendMediaGroup"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -28,7 +35,7 @@ public class SendMediaGroupRequest : FileRequestBase<Message[]>, IChatTargetable
     /// An array describing messages to be sent, must include 2-10 items
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public IEnumerable<IAlbumInputMedia> Media { get; }
+    public IEnumerable<IAlbumInputMedia> Media { get; } = media;
 
     /// <inheritdoc cref="Abstractions.Documentation.DisableNotification"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -46,21 +53,6 @@ public class SendMediaGroupRequest : FileRequestBase<Message[]>, IChatTargetable
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? AllowSendingWithoutReply { get; set; }
 
-    /// <summary>
-    /// Initializes a request with chatId and media
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="media">An array describing messages to be sent, must include 2-10 items</param>
-    public SendMediaGroupRequest(ChatId chatId, IEnumerable<IAlbumInputMedia> media)
-        : base("sendMediaGroup")
-    {
-        ChatId = chatId;
-        Media = media;
-    }
-
     /// <inheritdoc />
     public override HttpContent ToHttpContent()
     {
@@ -69,14 +61,10 @@ public class SendMediaGroupRequest : FileRequestBase<Message[]>, IChatTargetable
         foreach (var mediaItem in Media)
         {
             if (mediaItem is InputMedia { Media: InputFileStream file })
-            {
                 multipartContent.AddContentIfInputFile(file, file.FileName!);
-            }
 
             if (mediaItem is IInputMediaThumb { Thumbnail: InputFileStream thumbnail })
-            {
                 multipartContent.AddContentIfInputFile(thumbnail, thumbnail.FileName!);
-            }
         }
 
         return multipartContent;

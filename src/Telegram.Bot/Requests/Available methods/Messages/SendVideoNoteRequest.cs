@@ -11,12 +11,22 @@ namespace Telegram.Bot.Requests;
 /// Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method
 /// to send video messages. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="videoNote">
+/// Video note to send. Pass a <see cref="InputFileId"/> as String to send a video
+/// note that exists on the Telegram servers (recommended) or upload a new video using
+/// multipart/form-data. Sending video notes by a URL is currently unsupported
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SendVideoNoteRequest : FileRequestBase<Message>, IChatTargetable
+public class SendVideoNoteRequest(ChatId chatId, InputFile videoNote)
+    : FileRequestBase<Message>("sendVideoNote"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
@@ -30,7 +40,7 @@ public class SendVideoNoteRequest : FileRequestBase<Message>, IChatTargetable
     /// multipart/form-data. Sending video notes by a URL is currently unsupported
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFile VideoNote { get; }
+    public InputFile VideoNote { get; } = videoNote;
 
     /// <summary>
     /// Duration of sent video in seconds
@@ -67,24 +77,6 @@ public class SendVideoNoteRequest : FileRequestBase<Message>, IChatTargetable
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and videoNote
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="videoNote">
-    /// Video note to send. Pass a <see cref="InputFileId"/> as String to send a video
-    /// note that exists on the Telegram servers (recommended) or upload a new video using
-    /// multipart/form-data. Sending video notes by a URL is currently unsupported
-    /// </param>
-    public SendVideoNoteRequest(ChatId chatId, InputFile videoNote)
-        : base("sendVideoNote")
-    {
-        ChatId = chatId;
-        VideoNote = videoNote;
-    }
 
     /// <inheritdoc />
     public override HttpContent? ToHttpContent() =>

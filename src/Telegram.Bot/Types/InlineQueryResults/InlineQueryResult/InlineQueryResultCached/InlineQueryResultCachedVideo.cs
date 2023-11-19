@@ -9,8 +9,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultCachedVideo.InputMessageContent"/> to send a message with
 /// the specified content instead of the video.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="videoFileId">A valid file identifier for the video file</param>
+/// <param name="title">Title of the result</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultCachedVideo : InlineQueryResult
+public class InlineQueryResultCachedVideo(string id, string videoFileId, string title) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be video
@@ -22,13 +25,13 @@ public class InlineQueryResultCachedVideo : InlineQueryResult
     /// A valid file identifier for the video file
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string VideoFileId { get; }
+    public string VideoFileId { get; } = videoFileId;
 
     /// <summary>
     /// Title for the result
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <summary>
     /// Optional. Short description of the result
@@ -51,17 +54,4 @@ public class InlineQueryResultCachedVideo : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="videoFileId">A valid file identifier for the video file</param>
-    /// <param name="title">Title of the result</param>
-    public InlineQueryResultCachedVideo(string id, string videoFileId, string title)
-        : base(id)
-    {
-        VideoFileId = videoFileId;
-        Title = title;
-    }
 }

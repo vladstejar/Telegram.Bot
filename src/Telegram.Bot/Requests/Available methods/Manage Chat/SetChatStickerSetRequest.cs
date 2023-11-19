@@ -9,30 +9,22 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Chat.CanSetStickerSet"/> optionally returned in <see cref="GetChatRequest"/> requests to
 /// check if the bot can use this method. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="stickerSetName">Name of the sticker set to be set as the group sticker set</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetChatStickerSetRequest : RequestBase<bool>, IChatTargetable
+public class SetChatStickerSetRequest(ChatId chatId, string stickerSetName)
+    : RequestBase<bool>("setChatStickerSet"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Name of the sticker set to be set as the group sticker set
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string StickerSetName { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and new stickerSetName
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="stickerSetName">Name of the sticker set to be set as the group sticker set</param>
-    public SetChatStickerSetRequest(ChatId chatId, string stickerSetName)
-        : base("setChatStickerSet")
-    {
-        ChatId = chatId;
-        StickerSetName = stickerSetName;
-    }
+    public string StickerSetName { get; } = stickerSetName;
 }

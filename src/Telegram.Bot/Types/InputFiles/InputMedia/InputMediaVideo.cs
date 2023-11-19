@@ -6,9 +6,10 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents a video to be sent
 /// </summary>
+/// <param name="media">File to send</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InputMediaVideo :
-    InputMedia,
+public class InputMediaVideo(InputFile media) :
+    InputMedia(media),
     IInputMediaThumb,
     IAlbumInputMedia
 {
@@ -49,12 +50,4 @@ public class InputMediaVideo :
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? HasSpoiler { get; set; }
-
-    /// <summary>
-    /// Initializes a new video media to send with an <see cref="InputFile"/>
-    /// </summary>
-    /// <param name="media">File to send</param>
-    public InputMediaVideo(InputFile media)
-        : base(media)
-    { }
 }

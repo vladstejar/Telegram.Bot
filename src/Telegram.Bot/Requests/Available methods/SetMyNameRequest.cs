@@ -5,7 +5,7 @@ namespace Telegram.Bot.Requests;
 /// Use this method to change the bot's name. Returns <see langword="true"/> on success.
 /// </summary>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetMyNameRequest : RequestBase<bool>
+public class SetMyNameRequest() : RequestBase<bool>("setMyName")
 {
     /// <summary>
     /// New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.
@@ -19,11 +19,4 @@ public class SetMyNameRequest : RequestBase<bool>
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? LanguageCode { get; set; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    public SetMyNameRequest()
-        : base("setMyName")
-    { }
 }

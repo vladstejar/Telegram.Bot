@@ -18,7 +18,7 @@ public class ChatMemberStatusConverterTests
     public void Should_Convert_ChatMemberStatus_To_String(ChatMemberStatus chatMemberStatus, string value)
     {
         ChatMember chatMember = new() { Type = chatMemberStatus };
-        string expectedResult = @$"{{""type"":""{value}""}}";
+        string expectedResult = $$"""{"type":"{{value}}"}""";
 
         string result = JsonConvert.SerializeObject(chatMember);
 
@@ -35,7 +35,7 @@ public class ChatMemberStatusConverterTests
     public void Should_Convert_String_To_ChatMemberStatus(ChatMemberStatus chatMemberStatus, string value)
     {
         ChatMember expectedResult = new() { Type = chatMemberStatus };
-        string jsonData = @$"{{""type"":""{value}""}}";
+        string jsonData = $$"""{"type":"{{value}}"}""";
 
         ChatMember? result = JsonConvert.DeserializeObject<ChatMember>(jsonData);
 
@@ -46,7 +46,7 @@ public class ChatMemberStatusConverterTests
     [Fact]
     public void Should_Return_Zero_For_Incorrect_ChatMemberStatus()
     {
-        string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
+        string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
         ChatMember? result = JsonConvert.DeserializeObject<ChatMember>(jsonData);
 

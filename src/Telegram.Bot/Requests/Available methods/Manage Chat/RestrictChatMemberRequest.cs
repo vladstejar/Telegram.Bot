@@ -9,22 +9,30 @@ namespace Telegram.Bot.Requests;
 /// supergroup for this to work and must have the appropriate admin rights. Pass <see langword="true"/>
 /// for all permissions to lift restrictions from a user. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
+/// <param name="userId">Unique identifier of the target user</param>
+/// <param name="permissions">New user permissions</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class RestrictChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
+public class RestrictChatMemberRequest(ChatId chatId, long userId, ChatPermissions permissions)
+    : RequestBase<bool>("restrictChatMember"),
+      IChatTargetable,
+      IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// New user permissions
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public ChatPermissions Permissions { get; }
+    public ChatPermissions Permissions { get; } = permissions;
 
     /// <summary>
     /// Pass <see langword="true"/> if chat permissions are set independently. Otherwise, the
@@ -47,20 +55,4 @@ public class RestrictChatMemberRequest : RequestBase<bool>, IChatTargetable, IUs
     [JsonConverter(typeof(UnixDateTimeConverter))]
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public DateTime? UntilDate { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId, userId and new user permissions
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    /// <param name="userId">Unique identifier of the target user</param>
-    /// <param name="permissions">New user permissions</param>
-    public RestrictChatMemberRequest(ChatId chatId, long userId, ChatPermissions permissions)
-        : base("restrictChatMember")
-    {
-        ChatId = chatId;
-        UserId = userId;
-        Permissions = permissions;
-    }
 }

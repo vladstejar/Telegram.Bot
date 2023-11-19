@@ -10,16 +10,9 @@ namespace Telegram.Bot.Tests.Integ.Sending_Messages;
 
 [Collection(Constants.TestCollections.SendAnimationMessage)]
 [TestCaseOrderer(Constants.TestCaseOrderer, Constants.AssemblyName)]
-public class AnimationMessageTests
+public class AnimationMessageTests(TestsFixture fixture)
 {
-    ITelegramBotClient BotClient => _fixture.BotClient;
-
-    readonly TestsFixture _fixture;
-
-    public AnimationMessageTests(TestsFixture fixture)
-    {
-        _fixture = fixture;
-    }
+    ITelegramBotClient BotClient => fixture.BotClient;
 
     [OrderedFact("Should send an animation with caption")]
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendAnimation)]
@@ -29,7 +22,7 @@ public class AnimationMessageTests
         await using (Stream stream = System.IO.File.OpenRead(Constants.PathToFile.Animation.Earth))
         {
             message = await BotClient.SendAnimationAsync(
-                chatId: _fixture.SupergroupChat.Id,
+                chatId: fixture.SupergroupChat.Id,
                 animation: new InputFileStream(stream),
                 duration: 4,
                 width: 400,
@@ -76,7 +69,7 @@ public class AnimationMessageTests
                     )
         {
             message = await BotClient.SendAnimationAsync(
-                chatId: _fixture.SupergroupChat,
+                chatId: fixture.SupergroupChat,
                 animation: new InputFileStream(stream1, "earth.gif"),
                 thumbnail: new InputFileStream(stream2, "thumb.jpg")
             );

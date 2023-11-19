@@ -8,32 +8,24 @@ namespace Telegram.Bot.Requests;
 /// administrator for this to work and must have the appropriate administrator rights. Returns <see langword="true"/>
 /// on success
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+/// </param>
+/// <param name="senderChatId">
+/// Unique identifier of the target sender chat
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class UnbanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
+public class UnbanChatSenderChatRequest(ChatId chatId, long senderChatId)
+    : RequestBase<bool>("unbanChatSenderChat"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier of the target sender chat
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public long SenderChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId and senderChatId
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-    /// </param>
-    /// <param name="senderChatId">
-    /// Unique identifier of the target sender chat
-    /// </param>
-    public UnbanChatSenderChatRequest(ChatId chatId, long senderChatId)
-        : base("unbanChatSenderChat")
-    {
-        ChatId = chatId;
-        SenderChatId = senderChatId;
-    }
+    public long SenderChatId { get; } = senderChatId;
 }

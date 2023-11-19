@@ -9,18 +9,22 @@ namespace Telegram.Bot.Requests;
 /// The format of the thumbnail file must match the format of the stickers in the set.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="name">Sticker set name</param>
+/// <param name="userId">User identifier of the sticker set owner</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetStickerSetThumbnailRequest : FileRequestBase<bool>, IUserTargetable
+public class SetStickerSetThumbnailRequest(string name, long userId)
+    : FileRequestBase<bool>("setStickerSetThumbnail"),
+      IUserTargetable
 {
     /// <summary>
     /// Sticker set name
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Name { get; }
+    public string Name { get; } = name;
 
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// A <b>.WEBP</b> or <b>.PNG</b> image with the thumbnail, must be up to 128 kilobytes in size and have
@@ -35,18 +39,6 @@ public class SetStickerSetThumbnailRequest : FileRequestBase<bool>, IUserTargeta
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputFile? Thumbnail { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with sticker and position
-    /// </summary>
-    /// <param name="name">Sticker set name</param>
-    /// <param name="userId">User identifier of the sticker set owner</param>
-    public SetStickerSetThumbnailRequest(string name, long userId)
-        : base("setStickerSetThumbnail")
-    {
-        Name = name;
-        UserId = userId;
-    }
 
     /// <inheritdoc />
     public override HttpContent? ToHttpContent() =>

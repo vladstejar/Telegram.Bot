@@ -9,8 +9,11 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultMpeg4Gif.InputMessageContent"/> to send a message with the specified
 /// content instead of the animation.
 /// </summary>
+/// <param name="id">Unique identifier of this result</param>
+/// <param name="mpeg4Url">A valid URL for the MP4 file. File size must not exceed 1MB.</param>
+/// <param name="thumbnailUrl">Url of the thumbnail for the result.</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class InlineQueryResultMpeg4Gif : InlineQueryResult
+public class InlineQueryResultMpeg4Gif(string id, string mpeg4Url, string thumbnailUrl) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be mpeg4_gif
@@ -22,7 +25,7 @@ public class InlineQueryResultMpeg4Gif : InlineQueryResult
     /// A valid URL for the MP4 file. File size must not exceed 1MB
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Mpeg4Url { get; }
+    public string Mpeg4Url { get; } = mpeg4Url;
 
     /// <summary>
     /// Optional. Video width
@@ -46,7 +49,7 @@ public class InlineQueryResultMpeg4Gif : InlineQueryResult
     /// URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string ThumbnailUrl { get; }
+    public string ThumbnailUrl { get; } = thumbnailUrl;
 
     /// <summary>
     /// Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”,
@@ -76,17 +79,4 @@ public class InlineQueryResultMpeg4Gif : InlineQueryResult
     /// <inheritdoc cref="Documentation.InputMessageContent" />
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
-
-    /// <summary>
-    /// Initializes a new inline query result
-    /// </summary>
-    /// <param name="id">Unique identifier of this result</param>
-    /// <param name="mpeg4Url">A valid URL for the MP4 file. File size must not exceed 1MB.</param>
-    /// <param name="thumbnailUrl">Url of the thumbnail for the result.</param>
-    public InlineQueryResultMpeg4Gif(string id, string mpeg4Url, string thumbnailUrl)
-        : base(id)
-    {
-        Mpeg4Url = mpeg4Url;
-        ThumbnailUrl = thumbnailUrl;
-    }
 }

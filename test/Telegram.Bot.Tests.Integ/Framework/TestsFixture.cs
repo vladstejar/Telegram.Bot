@@ -112,15 +112,6 @@ public class TestsFixture : IDisposable
         ChatType chatType,
         CancellationToken cancellationToken = default)
     {
-        bool IsMatch(Update u) =>
-        (
-            u.Message?.Chat.Type == chatType &&
-            u.Message.Text?.StartsWith("/test", StringComparison.OrdinalIgnoreCase) == true
-        ) || (
-            ChatType.Channel == chatType &&
-            ChatType.Channel == u.Message?.ForwardFromChat?.Type
-        );
-
         var updates = await UpdateReceiver.GetUpdatesAsync(
             IsMatch,
             updateTypes: UpdateType.Message,
@@ -134,20 +125,19 @@ public class TestsFixture : IDisposable
         return chatType == ChatType.Channel
             ? update.Message?.ForwardFromChat
             : update.Message?.Chat;
+
+        bool IsMatch(Update u) =>
+        (
+            u.Message?.Chat.Type == chatType &&
+            u.Message.Text?.StartsWith("/test", StringComparison.OrdinalIgnoreCase) is true
+        ) || (
+            ChatType.Channel == chatType &&
+            ChatType.Channel == u.Message?.ForwardFromChat?.Type
+        );
     }
 
     public async Task<Chat> GetChatFromAdminAsync()
     {
-        static bool IsMatch(Update u) => u is
-        {
-            Message:
-            {
-                Type: MessageType.Contact,
-                ForwardFrom: not null,
-                NewChatMembers.Length: > 0,
-            }
-        };
-
         var update = await UpdateReceiver.GetUpdateAsync(IsMatch, updateTypes: UpdateType.Message);
 
         await UpdateReceiver.DiscardNewUpdatesAsync();
@@ -156,11 +146,21 @@ public class TestsFixture : IDisposable
         {
             { Contact.UserId: {} id } => id,
             { ForwardFrom.Id: var id } => id,
-            { NewChatMembers: { Length: 1 } members } => members[0].Id,
+            { NewChatMembers: [var member]} => member.Id,
             _ => throw new InvalidOperationException()
         };
 
         return await BotClient.GetChatAsync(userId!);
+
+        static bool IsMatch(Update u) => u is
+        {
+            Message:
+            {
+                Type: MessageType.Contact,
+                ForwardFrom: not null,
+                NewChatMembers: [..]
+            }
+        };
     }
 
     async Task InitAsync()

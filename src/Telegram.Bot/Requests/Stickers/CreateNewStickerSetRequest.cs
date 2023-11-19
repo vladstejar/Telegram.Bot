@@ -12,12 +12,37 @@ namespace Telegram.Bot.Requests;
 /// The bot will be able to edit the sticker set thus created.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="userId">
+/// User identifier of sticker set owner
+/// </param>
+/// <param name="name">
+/// Short name of sticker set, to be used in <c>t.me/addstickers/</c> URLs (e.g., <i>animals</i>).
+/// Can contain only english letters, digits and underscores. Must begin with a letter, can't
+/// contain consecutive underscores and must end in <i>"_by_&lt;bot username&gt;"</i>.
+/// <i>&lt;bot_username&gt;</i> is case insensitive. 1-64 characters
+/// </param>
+/// <param name="title">
+/// Sticker set title, 1-64 characters
+/// </param>
+/// <param name="stickers">
+/// A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
+/// </param>
+/// <param name="stickerFormat">
+/// Format of stickers in the set.
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
+public class CreateNewStickerSetRequest(
+    long userId,
+    string name,
+    string title,
+    IEnumerable<InputSticker> stickers,
+    StickerFormat stickerFormat)
+        : FileRequestBase<bool>("createNewStickerSet"),
+          IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// Short name of sticker set, to be used in <c>t.me/addstickers/</c> URLs (e.g., <i>animals</i>).
@@ -26,25 +51,25 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// <i>&lt;bot_username&gt;</i> is case insensitive. 1-64 characters
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Name { get; }
+    public string Name { get; } = name;
 
     /// <summary>
     /// Sticker set title, 1-64 characters
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public string Title { get; }
+    public string Title { get; } = title;
 
     /// <summary>
     /// A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public IEnumerable<InputSticker> Stickers { get; }
+    public IEnumerable<InputSticker> Stickers { get; } = stickers;
 
     /// <summary>
     /// Format of stickers in the set.
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public StickerFormat StickerFormat { get; }
+    public StickerFormat StickerFormat { get; } = stickerFormat;
 
     /// <summary>
     /// Type of stickers in the set.
@@ -62,54 +87,14 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? NeedsRepainting { get; set; }
 
-    /// <summary>
-    /// Initializes a new request with userId, name, title, stickers and stickerFormat
-    /// </summary>
-    /// <param name="userId">
-    /// User identifier of sticker set owner
-    /// </param>
-    /// <param name="name">
-    /// Short name of sticker set, to be used in <c>t.me/addstickers/</c> URLs (e.g., <i>animals</i>).
-    /// Can contain only english letters, digits and underscores. Must begin with a letter, can't
-    /// contain consecutive underscores and must end in <i>"_by_&lt;bot username&gt;"</i>.
-    /// <i>&lt;bot_username&gt;</i> is case insensitive. 1-64 characters
-    /// </param>
-    /// <param name="title">
-    /// Sticker set title, 1-64 characters
-    /// </param>
-    /// <param name="stickers">
-    /// A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
-    /// </param>
-    /// <param name="stickerFormat">
-    /// Format of stickers in the set.
-    /// </param>
-    public CreateNewStickerSetRequest(
-        long userId,
-        string name,
-        string title,
-        IEnumerable<InputSticker> stickers,
-        StickerFormat stickerFormat)
-        : base("createNewStickerSet")
-    {
-        UserId = userId;
-        Name = name;
-        Title = title;
-        Stickers = stickers;
-        StickerFormat = stickerFormat;
-    }
-
     /// <inheritdoc/>
     public override HttpContent ToHttpContent()
     {
         var multipartContent = GenerateMultipartFormDataContent();
 
         foreach (var inputSticker in Stickers)
-        {
             if (inputSticker is { Sticker: InputFileStream file })
-            {
                 multipartContent.AddContentIfInputFile(file, file.FileName!);
-            }
-        }
 
         return multipartContent;
     }

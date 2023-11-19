@@ -8,17 +8,13 @@ namespace Telegram.Bot.Requests;
 /// chat for this to work and must have the <see cref="ChatAdministratorRights.CanManageTopics"/> administrator rights.
 /// The topic will be automatically closed if it was open. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class HideGeneralForumTopicRequest : RequestBase<bool>, IChatTargetable
+public class HideGeneralForumTopicRequest(ChatId chatId)
+    : RequestBase<bool>("hideGeneralForumTopic"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
-    public HideGeneralForumTopicRequest(ChatId chatId)
-        : base("hideGeneralForumTopic") => ChatId = chatId;
+    public ChatId ChatId { get; } = chatId;
 }

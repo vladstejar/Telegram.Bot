@@ -9,22 +9,15 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Types.Chat.CanSetStickerSet"/> optionally returned in <see cref="GetChatRequest"/>
 /// requests to check if the bot can use this method. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class DeleteChatStickerSetRequest : RequestBase<bool>, IChatTargetable
+public class DeleteChatStickerSetRequest(ChatId chatId)
+    : RequestBase<bool>("deleteChatStickerSet"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request with chatId
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    public DeleteChatStickerSetRequest(ChatId chatId)
-        : base("deleteChatStickerSet")
-    {
-        ChatId = chatId;
-    }
+    public ChatId ChatId { get; } = chatId;
 }

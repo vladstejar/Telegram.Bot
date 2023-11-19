@@ -8,29 +8,20 @@ namespace Telegram.Bot.Requests;
 /// The bot must be an administrator in the chat for this to work and must have the
 /// appropriate admin rights. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">
+/// Unique identifier for the target chat or username of the target channel
+/// (in the format <c>@channelusername</c>)
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class SetChatDescriptionRequest : RequestBase<bool>, IChatTargetable
+public class SetChatDescriptionRequest(ChatId chatId) : RequestBase<bool>("setChatDescription"), IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
+    public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New chat Description, 0-255 characters
     /// </summary>
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Description { get; set; }
-
-    /// <summary>
-    /// Initializes a new request with chatId
-    /// </summary>
-    /// <param name="chatId">
-    /// Unique identifier for the target chat or username of the target channel
-    /// (in the format <c>@channelusername</c>)
-    /// </param>
-    public SetChatDescriptionRequest(ChatId chatId)
-        : base("setChatDescription")
-    {
-        ChatId = chatId;
-    }
 }

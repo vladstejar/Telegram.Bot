@@ -12,44 +12,35 @@ namespace Telegram.Bot.Requests;
 /// methods (the file can be used multiple times).
 /// Returns the uploaded <see cref="File"/> on success.
 /// </summary>
+/// <param name="userId">
+/// User identifier of sticker file owner
+/// </param>
+/// <param name="sticker">
+/// A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format.
+/// </param>
+/// <param name="stickerFormat">
+/// Format of the sticker
+/// </param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class UploadStickerFileRequest : FileRequestBase<File>, IUserTargetable
+public class UploadStickerFileRequest(long userId, InputFileStream sticker, StickerFormat stickerFormat)
+    : FileRequestBase<File>("uploadStickerFile"),
+      IUserTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public long UserId { get; }
+    public long UserId { get; } = userId;
 
     /// <summary>
     /// A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format.
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public InputFileStream Sticker { get; }
+    public InputFileStream Sticker { get; } = sticker;
 
     /// <summary>
     /// Format of the sticker
     /// </summary>
     [JsonProperty(Required = Required.Always)]
-    public StickerFormat StickerFormat { get; }
-
-    /// <summary>
-    /// Initializes a new request with userId, sticker and stickerFormat
-    /// </summary>
-    /// <param name="userId">
-    /// User identifier of sticker file owner
-    /// </param>
-    /// <param name="sticker">
-    /// A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format.
-    /// </param>
-    /// <param name="stickerFormat">
-    /// Format of the sticker
-    /// </param>
-    public UploadStickerFileRequest(long userId, InputFileStream sticker, StickerFormat stickerFormat)
-        : base("uploadStickerFile")
-    {
-        UserId = userId;
-        Sticker = sticker;
-        StickerFormat = stickerFormat;
-    }
+    public StickerFormat StickerFormat { get; } = stickerFormat;
 
     /// <inheritdoc />
     public override HttpContent? ToHttpContent()

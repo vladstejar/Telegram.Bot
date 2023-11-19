@@ -8,17 +8,13 @@ namespace Telegram.Bot.Requests;
 /// the chat for this to work and must have the <see cref="ChatAdministratorRights.CanManageTopics"/> administrator
 /// rights. Returns <see langword="true"/> on success.
 /// </summary>
+/// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-public class CloseGeneralForumTopicRequest : RequestBase<bool>, IChatTargetable
+public class CloseGeneralForumTopicRequest(ChatId chatId)
+    : RequestBase<bool>("closeGeneralForumTopic"),
+      IChatTargetable
 {
     /// <inheritdoc />
     [JsonProperty(Required = Required.Always)]
-    public ChatId ChatId { get; }
-
-    /// <summary>
-    /// Initializes a new request
-    /// </summary>
-    /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
-    public CloseGeneralForumTopicRequest(ChatId chatId)
-        : base("closeGeneralForumTopic") => ChatId = chatId;
+    public ChatId ChatId { get; } = chatId;
 }
