@@ -129,7 +129,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
             var failedApiResponse = await httpResponse
                 .DeserializeContentAsync<ApiResponse>(
                     guard: response =>
-                        response.ErrorCode == default ||
+                        response.ErrorCode is 0 ||
                         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
                         response.Description is null
                 )
@@ -140,7 +140,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
 
         var apiResponse = await httpResponse
             .DeserializeContentAsync<ApiResponse<TResponse>>(
-                guard: response => response.Ok == false ||
+                guard: response => !response.Ok ||
                                    response.Result is null
             )
             .ConfigureAwait(false);
@@ -225,7 +225,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
             var failedApiResponse = await httpResponse
                 .DeserializeContentAsync<ApiResponse>(
                     guard: response =>
-                        response.ErrorCode == default ||
+                        response.ErrorCode is 0 ||
                         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
                         response.Description is null
                 )

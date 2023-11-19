@@ -229,13 +229,13 @@ public class TestsFixture : IDisposable
         var text = string.Format(textFormat, name);
 
         chatId ??= SupergroupChat.Id;
-        if (instructions != default)
+        if (instructions is not null)
         {
             text += $"\n\n{string.Format(Constants.InstructionsMessageFormat, instructions)}";
         }
 
         IReplyMarkup replyMarkup = switchInlineQuery
-            ? (InlineKeyboardMarkup)InlineKeyboardButton.WithSwitchInlineQueryCurrentChat("Start inline query")
+            ? new InlineKeyboardMarkup(InlineKeyboardButton.WithSwitchInlineQueryCurrentChat("Start inline query"))
             : default;
 
         var task = BotClient.SendTextMessageAsync(

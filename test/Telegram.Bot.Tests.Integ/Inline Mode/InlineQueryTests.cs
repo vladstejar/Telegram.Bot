@@ -23,9 +23,11 @@ public class InlineQueryTests(TestsFixture fixture)
     public async Task Should_Answer_Inline_Query_With_Article()
     {
         await fixture.SendTestInstructionsAsync(
-            "1. Start an inline query\n" +
-            "2. Wait for bot to answer it\n" +
-            "3. Choose the answer",
+            """
+            1. Start an inline query
+            2. Wait for bot to answer it
+            3. Choose the answer
+            """,
             startInlineQuery: true
         );
 
@@ -69,9 +71,11 @@ public class InlineQueryTests(TestsFixture fixture)
     public async Task Should_Get_Message_From_Inline_Query_With_ViaBot()
     {
         await fixture.SendTestInstructionsAsync(
-            "1. Start an inline query\n" +
-            "2. Wait for bot to answer it\n" +
-            "3. Choose the answer",
+            """
+            1. Start an inline query
+            2. Wait for bot to answer it
+            3. Choose the answer
+            """,
             startInlineQuery: true
         );
 

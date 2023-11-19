@@ -78,7 +78,7 @@ public class ChatInfoTests(TestsFixture fixture)
         Assert.IsType<ChatMemberOwner>(memberCreator);
 
         ChatMember memberBot = Assert.Single(chatAdmins, _ => _.User.IsBot);
-        Debug.Assert(memberBot != null);
+        Debug.Assert(memberBot is not null);
 
         Assert.True(2 <= chatAdmins.Length); // at least, Bot and the Creator
         Asserts.UsersEqual(fixture.BotUser, memberBot.User);
