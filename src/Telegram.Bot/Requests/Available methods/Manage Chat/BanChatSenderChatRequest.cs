@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Converters;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Requests.Abstractions;
 
 // ReSharper disable once CheckNamespace
@@ -16,19 +16,16 @@ namespace Telegram.Bot.Requests;
 /// <param name="senderChatId">
 /// Unique identifier of the target sender chat
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class BanChatSenderChatRequest(ChatId chatId, long senderChatId)
     : RequestBase<bool>("banChatSenderChat"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier of the target sender chat
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public long SenderChatId { get; } = senderChatId;
 
     /// <summary>
@@ -36,6 +33,5 @@ public class BanChatSenderChatRequest(ChatId chatId, long senderChatId)
     /// less than 30 seconds from the current time they are considered to be banned forever.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public DateTime? UntilDate { get; set; }
 }

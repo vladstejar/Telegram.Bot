@@ -1,38 +1,41 @@
 using System.IO;
-using Newtonsoft.Json.Linq;
 
 namespace Telegram.Bot.Converters;
 
 internal class InputFileConverter : JsonConverter<InputFile?>
 {
-    public override void WriteJson(JsonWriter writer, InputFile? value, JsonSerializer serializer)
+    public override InputFile? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        writer.WriteValue(value switch
-        {
-            InputFileId file     => file.Id,
-            InputFileUrl file    => file.Url,
-            InputFileStream file => $"attach://{file.FileName}",
-            _                    => throw new NotSupportedException("File Type not supported"),
-        });
-    }
+        if (!JsonElement.TryParseValue(ref reader, out var element))
+            throw new JsonException();
 
-    public override InputFile? ReadJson(
-        JsonReader reader,
-        Type objectType,
-        InputFile? existingValue,
-        bool hasExistingValue,
-        JsonSerializer serializer)
-    {
-        var value = JToken.ReadFrom(reader).Value<string>();
+        var value = element.ToString();
 
-        if (value is null) { return null; }
+        if (value is null)
+            return null;
         if (value.StartsWith("attach://", StringComparison.OrdinalIgnoreCase))
-        {
             return new InputFileStream(Stream.Null, value.Substring(9));
-        }
 
         return Uri.TryCreate(value, UriKind.Absolute, out var url)
             ? new InputFileUrl(url)
             : new InputFileId(value);
+    }
+
+    public override void Write(Utf8JsonWriter writer, InputFile? value, JsonSerializerOptions options)
+    {
+        switch (value)
+        {
+            case InputFileId file:
+                writer.WriteStringValue(file.Id);
+                break;
+            case InputFileUrl file:
+                writer.WriteStringValue(file.Url.ToString());
+                break;
+            case InputFileStream file:
+                writer.WriteStringValue($"attach://{file.FileName}");
+                break;
+            default:
+                throw new NotSupportedException("File Type not supported");
+        }
     }
 }

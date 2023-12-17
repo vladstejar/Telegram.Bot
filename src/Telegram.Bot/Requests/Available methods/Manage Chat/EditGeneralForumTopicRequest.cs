@@ -10,18 +10,15 @@ namespace Telegram.Bot.Requests;
 /// </summary>
 /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 /// <param name="name">New topic name, 1-128 characters</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class EditGeneralForumTopicRequest(ChatId chatId, string name)
     : RequestBase<bool>("editGeneralForumTopic"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New topic name, 1-128 characters
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Name { get; } = name;
 }

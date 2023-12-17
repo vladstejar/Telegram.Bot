@@ -11,32 +11,27 @@ namespace Telegram.Bot.Requests;
 /// </summary>
 /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 /// <param name="name">Topic name</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class CreateForumTopicRequest(ChatId chatId, string name)
     : RequestBase<ForumTopic>("createForumTopic"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Topic name, 1-128 characters
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Name { get; } = name;
 
     /// <summary>
     /// Optional. Color of the topic icon in RGB format. Currently, must be one of 0x6FB9F0, 0xFFD67E, 0xCB86DB,
     /// 0x8EEE98, 0xFF93B2, or 0xFB6F5F
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     [JsonConverter(typeof(NullableColorConverter))]
     public Color? IconColor { get; set; }
 
     /// <summary>
     /// Optional. Unique identifier of the custom emoji shown as the topic icon.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? IconCustomEmojiId { get; set; }
 }

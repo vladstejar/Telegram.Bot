@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Telegram.Bot.Types.Enums;
 
 // ReSharper disable once CheckNamespace
@@ -12,46 +13,38 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="id">Unique identifier of this result</param>
 /// <param name="videoFileId">A valid file identifier for the video file</param>
 /// <param name="title">Title of the result</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultCachedVideo(string id, string videoFileId, string title) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be video
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Video;
 
     /// <summary>
     /// A valid file identifier for the video file
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string VideoFileId { get; } = videoFileId;
 
     /// <summary>
     /// Title for the result
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 
     /// <summary>
     /// Optional. Short description of the result
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Description { get; set; }
 
     /// <inheritdoc cref="Documentation.Caption" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 }

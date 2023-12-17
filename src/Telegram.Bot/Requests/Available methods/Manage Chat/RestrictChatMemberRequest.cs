@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Converters;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Requests.Abstractions;
 
 // ReSharper disable once CheckNamespace
@@ -14,24 +14,20 @@ namespace Telegram.Bot.Requests;
 /// </param>
 /// <param name="userId">Unique identifier of the target user</param>
 /// <param name="permissions">New user permissions</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class RestrictChatMemberRequest(ChatId chatId, long userId, ChatPermissions permissions)
     : RequestBase<bool>("restrictChatMember"),
       IChatTargetable,
       IUserTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 
     /// <summary>
     /// New user permissions
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public ChatPermissions Permissions { get; } = permissions;
 
     /// <summary>
@@ -44,7 +40,6 @@ public class RestrictChatMemberRequest(ChatId chatId, long userId, ChatPermissio
     /// permissions; the <see cref="ChatPermissions.CanSendPolls"/> permission will imply the
     /// <see cref="ChatPermissions.CanSendMessages"/> permission.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? UseIndependentChatPermissions { get; set; }
 
     /// <summary>
@@ -53,6 +48,5 @@ public class RestrictChatMemberRequest(ChatId chatId, long userId, ChatPermissio
     /// be restricted forever.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public DateTime? UntilDate { get; set; }
 }

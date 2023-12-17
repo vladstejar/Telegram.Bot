@@ -10,18 +10,15 @@ namespace Telegram.Bot.Requests;
 /// </summary>
 /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 /// <param name="messageThreadId">Unique identifier for the target message thread of the forum topic</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class UnpinAllForumTopicMessagesRequest(ChatId chatId, int messageThreadId)
     : RequestBase<bool>("unpinAllForumTopicMessages"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread of the forum topic
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int MessageThreadId { get; } = messageThreadId;
 }

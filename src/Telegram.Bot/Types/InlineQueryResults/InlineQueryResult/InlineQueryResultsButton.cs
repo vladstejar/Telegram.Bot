@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 // ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Types.InlineQueryResults;
 
@@ -8,13 +10,12 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="text">
 /// Label text on the button
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultsButton(string text)
 {
     /// <summary>
     /// Label text on the button
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Text { get; } = text;
 
     /// <summary>
@@ -23,7 +24,6 @@ public class InlineQueryResultsButton(string text)
     /// the method <see href="https://core.telegram.org/bots/webapps#initializing-web-apps">switchInlineQuery</see>
     /// inside the Web App.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public WebAppInfo? WebApp { get; set; }
 
     /// <summary>
@@ -39,6 +39,6 @@ public class InlineQueryResultsButton(string text)
     /// the bot can offer a switch_inline button so that the user can easily return to the chat
     /// where they wanted to use the bot's inline capabilities.
     /// </remarks>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public string? StartParameter { get; set; }
 }

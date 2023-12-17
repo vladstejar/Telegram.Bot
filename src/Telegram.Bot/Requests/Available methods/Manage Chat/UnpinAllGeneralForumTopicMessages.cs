@@ -9,12 +9,10 @@ namespace Telegram.Bot.Requests;
 /// Returns <see langword="true"/> on success.
 /// </summary>
 /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class UnpinAllGeneralForumTopicMessages(ChatId chatId)
     : RequestBase<bool>("unpinAllGeneralForumTopicMessages"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 }

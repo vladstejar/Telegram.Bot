@@ -30,7 +30,6 @@ namespace Telegram.Bot.Requests;
 /// A JSON-serialized object with information about the added sticker.
 /// If exactly the same sticker had already been added to the set, then the set isn't changed.
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class AddStickerToSetRequest(
     long userId,
     string name,
@@ -39,20 +38,17 @@ public class AddStickerToSetRequest(
           IUserTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 
     /// <summary>
     /// Sticker set name
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Name { get; } = name;
 
     /// <summary>
     /// A JSON-serialized object with information about the added sticker.
     /// If exactly the same sticker had already been added to the set, then the set isn't changed.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputSticker Sticker { get; } = sticker;
 
     /// <inheritdoc />

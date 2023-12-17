@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Telegram.Bot.Types.Enums;
 
 // ReSharper disable once CheckNamespace
@@ -15,65 +16,53 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="mimeType">
 /// Mime type of the content of the file, either “application/pdf” or “application/zip”
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultDocument(string id, string documentUrl, string title, string mimeType)
     : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be document
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Document;
 
     /// <summary>
     /// Title for the result
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <summary>
     /// A valid URL for the file
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string DocumentUrl { get; } = documentUrl;
 
     /// <summary>
     /// Mime type of the content of the file, either “application/pdf” or “application/zip”
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string MimeType { get; } = mimeType;
 
     /// <summary>
     /// Optional. Short description of the result
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Description { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? ThumbnailUrl { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailWidth" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailWidth { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailHeight { get; set; }
 }

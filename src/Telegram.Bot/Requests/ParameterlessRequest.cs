@@ -8,7 +8,6 @@ namespace Telegram.Bot.Requests;
 /// <typeparam name="TResult"></typeparam>
 /// <param name="methodName">Name of request method</param>
 /// <param name="method">HTTP request method</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class ParameterlessRequest<TResult>(string methodName, HttpMethod? method = default)
     : RequestBase<TResult>(methodName, method)
 {

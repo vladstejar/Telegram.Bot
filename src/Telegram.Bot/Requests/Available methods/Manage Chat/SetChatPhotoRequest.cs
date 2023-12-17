@@ -13,19 +13,16 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="photo">New chat photo, uploaded using multipart/form-data</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetChatPhotoRequest(ChatId chatId, InputFileStream photo)
     : FileRequestBase<bool>("setChatPhoto"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New chat photo, uploaded using multipart/form-data
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputFileStream Photo { get; } = photo;
 
     /// <inheritdoc />

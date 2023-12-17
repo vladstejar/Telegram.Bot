@@ -1,5 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -12,32 +13,19 @@ namespace Telegram.Bot.Polling;
 /// <summary>
 /// Supports asynchronous iteration over <see cref="Update"/>s
 /// </summary>
+/// <param name="botClient">The <see cref="ITelegramBotClient"/> used for making GetUpdates calls</param>
+/// <param name="receiverOptions"></param>
+/// <param name="pollingErrorHandler">
+/// The function used to handle <see cref="Exception"/>s thrown by ReceiveUpdates
+/// </param>
 [PublicAPI]
-public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
+public class BlockingUpdateReceiver(
+    ITelegramBotClient botClient,
+    ReceiverOptions? receiverOptions = default,
+    Func<Exception, CancellationToken, Task>? pollingErrorHandler = default)
+        : IAsyncEnumerable<Update>
 {
-    readonly ReceiverOptions? _receiverOptions;
-    readonly ITelegramBotClient _botClient;
-    readonly Func<Exception, CancellationToken, Task>? _pollingErrorHandler;
-
     int _inProcess;
-
-    /// <summary>
-    /// Constructs a new <see cref="BlockingUpdateReceiver"/> for the specified <see cref="ITelegramBotClient"/>
-    /// </summary>
-    /// <param name="botClient">The <see cref="ITelegramBotClient"/> used for making GetUpdates calls</param>
-    /// <param name="receiverOptions"></param>
-    /// <param name="pollingErrorHandler">
-    /// The function used to handle <see cref="Exception"/>s thrown by ReceiveUpdates
-    /// </param>
-    public BlockingUpdateReceiver(
-        ITelegramBotClient botClient,
-        ReceiverOptions? receiverOptions = default,
-        Func<Exception, CancellationToken, Task>? pollingErrorHandler = default)
-    {
-        _botClient = botClient ?? throw new ArgumentNullException(nameof(botClient));
-        _receiverOptions = receiverOptions;
-        _pollingErrorHandler = pollingErrorHandler;
-    }
 
     /// <summary>
     /// Gets the <see cref="IAsyncEnumerator{Update}"/>. This method may only be called once.
@@ -52,35 +40,28 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
             throw new InvalidOperationException($"{nameof(GetAsyncEnumerator)} may only be called once");
         }
 
-        return new Enumerator(receiver: this, cancellationToken);
+        return new Enumerator(botClient, this, cancellationToken, receiverOptions, pollingErrorHandler);
     }
 
-    class Enumerator : IAsyncEnumerator<Update>
+    class Enumerator(
+        ITelegramBotClient botClient,
+        BlockingUpdateReceiver receiver,
+        CancellationToken cancellationToken,
+        ReceiverOptions? receiverOptions = default,
+        Func<Exception, CancellationToken, Task>? pollingErrorHandler = default) : IAsyncEnumerator<Update>
     {
-        readonly BlockingUpdateReceiver _receiver;
-        readonly CancellationTokenSource _cts;
-        readonly CancellationToken _token;
-        readonly UpdateType[]? _allowedUpdates;
-        readonly int? _limit;
+        readonly CancellationTokenSource _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, default);
+        readonly UpdateType[]? _allowedUpdates = receiverOptions?.AllowedUpdates;
+        readonly int? _limit = receiverOptions?.Limit ?? default;
 
         Update[] _updateArray = [];
         int _updateIndex;
-        int _messageOffset;
+        int _messageOffset = receiverOptions?.Offset ?? 0;
         bool _updatesThrown;
-
-        public Enumerator(BlockingUpdateReceiver receiver, CancellationToken cancellationToken)
-        {
-            _receiver = receiver;
-            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, default);
-            _token = _cts.Token;
-            _messageOffset = receiver._receiverOptions?.Offset ?? 0;
-            _limit = receiver._receiverOptions?.Limit ?? default;
-            _allowedUpdates = receiver._receiverOptions?.AllowedUpdates;
-        }
 
         public ValueTask<bool> MoveNextAsync()
         {
-            _token.ThrowIfCancellationRequested();
+            _cts.Token.ThrowIfCancellationRequested();
 
             _updateIndex += 1;
 
@@ -93,15 +74,15 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
         {
             var shouldThrowPendingUpdates = (
                 _updatesThrown,
-                _receiver._receiverOptions?.ThrowPendingUpdates ?? false
+                receiverOptions?.ThrowPendingUpdates ?? false
             );
 
             if (shouldThrowPendingUpdates is (false, true))
             {
                 try
                 {
-                    _messageOffset = await _receiver._botClient
-                        .ThrowOutPendingUpdatesAsync(_token)
+                    _messageOffset = await botClient
+                        .ThrowOutPendingUpdatesAsync(_cts.Token)
                         .ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
@@ -121,16 +102,16 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
             {
                 try
                 {
-                    _updateArray = await _receiver._botClient
+                    _updateArray = await botClient
                         .MakeRequestAsync(
                             new GetUpdatesRequest
                             {
                                 Offset = _messageOffset,
-                                Timeout = (int) _receiver._botClient.Timeout.TotalSeconds,
+                                Timeout = (int) botClient.Timeout.TotalSeconds,
                                 Limit = _limit,
                                 AllowedUpdates = _allowedUpdates,
                             },
-                            cancellationToken: _token
+                            cancellationToken: _cts.Token
                         )
                         .ConfigureAwait(false);
                 }
@@ -138,9 +119,9 @@ public class BlockingUpdateReceiver : IAsyncEnumerable<Update>
                 {
                     throw;
                 }
-                catch (Exception ex) when (_receiver._pollingErrorHandler is not null)
+                catch (Exception ex) when (pollingErrorHandler is not null)
                 {
-                    await _receiver._pollingErrorHandler(ex, _token).ConfigureAwait(false);
+                    await pollingErrorHandler(ex, _cts.Token).ConfigureAwait(false);
                 }
             }
 

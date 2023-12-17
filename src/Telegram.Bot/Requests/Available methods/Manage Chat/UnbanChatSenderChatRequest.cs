@@ -14,18 +14,15 @@ namespace Telegram.Bot.Requests;
 /// <param name="senderChatId">
 /// Unique identifier of the target sender chat
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class UnbanChatSenderChatRequest(ChatId chatId, long senderChatId)
     : RequestBase<bool>("unbanChatSenderChat"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier of the target sender chat
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public long SenderChatId { get; } = senderChatId;
 }

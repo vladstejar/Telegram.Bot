@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Telegram.Bot.Types.Enums;
 
 // ReSharper disable once CheckNamespace
@@ -11,62 +12,51 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="id">Unique identifier of this result</param>
 /// <param name="photoUrl">A valid URL of the photo. Photo size must not exceed 5MB.</param>
 /// <param name="thumbnailUrl">Optional. Url of the thumbnail for the result.</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultPhoto(string id, string photoUrl, string thumbnailUrl) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be photo
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Photo;
 
     /// <summary>
     /// A valid URL of the photo. Photo must be in <b>jpeg</b> format. Photo size must not exceed 5MB
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string PhotoUrl { get; } = photoUrl;
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    [JsonProperty(Required = Required.Always)]
     public string ThumbnailUrl { get; } = thumbnailUrl;
 
     /// <summary>
     /// Optional. Width of the photo
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? PhotoWidth { get; set; }
 
     /// <summary>
     /// Optional. Height of the photo
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? PhotoHeight { get; set; }
 
     /// <summary>
     /// Optional. Title for the result
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Title { get; set; }
 
     /// <summary>
     /// Optional. Short description of the result
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Description { get; set; }
 
     /// <inheritdoc cref="Documentation.Caption" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 }

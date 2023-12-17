@@ -13,21 +13,18 @@ namespace Telegram.Bot.Requests;
 /// </summary>
 /// <param name="inlineMessageId">Identifier of the inline message</param>
 /// <param name="media">A new media content of the message</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class EditInlineMessageMediaRequest(string inlineMessageId, InputMedia media)
     : RequestBase<bool>("editMessageMedia")
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
-    [JsonProperty(Required = Required.Always)]
     public string InlineMessageId { get; } = inlineMessageId;
 
     /// <summary>
     /// A new media content of the message
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputMedia Media { get; } = media;
 
     /// <inheritdoc cref="Documentation.InlineReplyMarkup"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
 }

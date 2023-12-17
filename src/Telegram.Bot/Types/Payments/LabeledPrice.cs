@@ -6,14 +6,12 @@ namespace Telegram.Bot.Types.Payments;
 /// <a href="https://core.telegram.org/bots/api#labeledprice"/>
 /// <param name="label">Portion label</param>
 /// <param name="amount">Price of the product</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 [method: JsonConstructor]
 public class LabeledPrice(string label, int amount)
 {
     /// <summary>
     /// Portion label
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Label { get; set; } = label;
 
     /// <summary>
@@ -26,6 +24,5 @@ public class LabeledPrice(string label, int amount)
     /// of digits past the decimal point for each currency (2 for the majority of currencies).
     /// </para>
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int Amount { get; set; } = amount;
 }

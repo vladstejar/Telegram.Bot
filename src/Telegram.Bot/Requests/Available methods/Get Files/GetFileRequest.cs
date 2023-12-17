@@ -1,4 +1,7 @@
 // ReSharper disable once CheckNamespace
+
+using JetBrains.Annotations;
+
 namespace Telegram.Bot.Requests;
 
 /// <summary>
@@ -15,12 +18,11 @@ namespace Telegram.Bot.Requests;
 /// <see cref="TelegramBotClientExtensions.GetInfoAndDownloadFileAsync"/> methods to download the file
 /// </remarks>
 /// <param name="fileId">File identifier to get info about</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class GetFileRequest(string fileId) : RequestBase<File>("getFile")
 {
     /// <summary>
     /// File identifier to get info about
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string FileId { get; } = fileId;
 }

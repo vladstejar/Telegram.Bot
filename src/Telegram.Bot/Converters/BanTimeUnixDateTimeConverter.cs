@@ -1,33 +1,30 @@
-﻿using Newtonsoft.Json.Converters;
-
-namespace Telegram.Bot.Converters;
+﻿namespace Telegram.Bot.Converters;
 
 internal class BanTimeUnixDateTimeConverter : UnixDateTimeConverter
 {
-    public override object? ReadJson(
-        JsonReader reader,
-         Type objectType,
-         object? existingValue,
-         JsonSerializer serializer)
+    public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var nonNullable = Nullable.GetUnderlyingType(objectType) is null;
-
-        return reader.TokenType is JsonToken.Integer && reader.Value is 0L
+        var nonNullable = Nullable.GetUnderlyingType(typeToConvert) is null;
+        return reader.TokenType is JsonTokenType.Number &&
+               reader.GetInt64() is 0L
             ? nonNullable
-                ? default
+                ? 0L
                 : null
-            : base.ReadJson(reader, objectType, existingValue, serializer);
+            : base.Read(ref reader, typeToConvert, options);
     }
 
-    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
     {
-        if (value is null || value.Equals(default(DateTime)))
+        switch (value)
         {
-            writer.WriteValue(0);
-        }
-        else
-        {
-            base.WriteJson(writer, value, serializer);
+            case null:
+            case DateTime dateTime when dateTime == default:
+            case DateTimeOffset dateTimeOffset when dateTimeOffset == default:
+                writer.WriteNumberValue(0);
+                break;
+            default:
+                base.Write(writer, value, options);
+                break;
         }
     }
 }

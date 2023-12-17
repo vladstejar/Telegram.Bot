@@ -7,12 +7,10 @@ namespace Telegram.Bot.Requests;
 /// <param name="sticker">
 /// <see cref="InputFileId">File identifier</see> of the sticker
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class DeleteStickerFromSetRequest(InputFileId sticker) : RequestBase<bool>("deleteStickerFromSet")
 {
     /// <summary>
     /// <see cref="InputFileId">File identifier</see> of the sticker
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputFileId Sticker { get; } = sticker;
 }

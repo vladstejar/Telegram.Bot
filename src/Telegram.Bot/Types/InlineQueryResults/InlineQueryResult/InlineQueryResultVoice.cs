@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Telegram.Bot.Types.Enums;
 
 // ReSharper disable once CheckNamespace
@@ -12,46 +13,38 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="id">Unique identifier of this result</param>
 /// <param name="voiceUrl">A valid URL for the voice recording</param>
 /// <param name="title">Title of the result</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultVoice(string id, string voiceUrl, string title) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be voice
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Voice;
 
     /// <summary>
     /// A valid URL for the voice recording
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string VoiceUrl { get; } = voiceUrl;
 
     /// <summary>
     /// Recording title
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <summary>
     /// Optional. Recording duration in seconds
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? VoiceDuration { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 }

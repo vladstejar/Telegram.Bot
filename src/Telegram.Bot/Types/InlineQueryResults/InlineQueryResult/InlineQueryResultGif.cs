@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Telegram.Bot.Types.Enums;
 
 // ReSharper disable once CheckNamespace
@@ -12,71 +13,59 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="id">Unique identifier of this result</param>
 /// <param name="gifUrl">Width of the GIF</param>
 /// <param name="thumbnailUrl">Url of the thumbnail for the result.</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultGif(string id, string gifUrl, string thumbnailUrl) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be GIF
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Gif;
 
     /// <summary>
     /// A valid URL for the GIF file. File size must not exceed 1MB
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string GifUrl { get; } = gifUrl;
 
     /// <summary>
     /// Optional. Width of the GIF.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? GifWidth { get; set; }
 
     /// <summary>
     /// Optional. Height of the GIF.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? GifHeight { get; set; }
 
     /// <summary>
     /// Optional. Duration of the GIF.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? GifDuration { get; set; }
 
     /// <summary>
     /// URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string ThumbnailUrl { get; } = thumbnailUrl;
 
     /// <summary>
     /// Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”,
     /// or “video/mp4”. Defaults to “image/jpeg”
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? ThumbnailMimeType { get; set; }
 
     /// <summary>
     /// Optional. Title for the result
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Title { get; set; }
 
     /// <inheritdoc cref="Documentation.Caption" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 }

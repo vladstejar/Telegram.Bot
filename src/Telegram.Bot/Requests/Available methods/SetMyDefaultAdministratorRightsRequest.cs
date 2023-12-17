@@ -6,20 +6,17 @@ namespace Telegram.Bot.Requests;
 /// administrator to groups or channels. These rights will be suggested to users, but they are free to
 /// modify the list before adding the bot. Returns <see langword="true"/> on success.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetMyDefaultAdministratorRightsRequest() : RequestBase<bool>("setMyDefaultAdministratorRights")
 {
     /// <summary>
     /// Optional. An object describing new default administrator rights. If not specified, the default administrator
     /// rights will be cleared.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ChatAdministratorRights? Rights { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true"/> to change the default administrator rights of the bot in channels. Otherwise,
     /// the default administrator rights of the bot for groups and supergroups will be changed.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? ForChannels { get; set; }
 }

@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace Telegram.Bot.Types;
 
 /// <summary>
@@ -5,7 +7,7 @@ namespace Telegram.Bot.Types;
 /// attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by
 /// the method <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">requestWriteAccess</a>.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class WriteAccessAllowed
 {
     /// <summary>
@@ -13,19 +15,16 @@ public class WriteAccessAllowed
     /// from a Web App sent by the method
     /// <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? FromRequest { get; set; }
 
     /// <summary>
     /// Optional. Name of the Web App which was launched from a link
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? WebAppName { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the access was granted when the bot was added
     /// to the attachment or side menu
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? FromAttachmentMenu  { get; set; }
 }

@@ -20,29 +20,25 @@ namespace Telegram.Bot.Requests;
 /// </param>
 /// <param name="messageId">Identifier of the message to edit</param>
 /// <param name="media">A new media content of the message</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class EditMessageMediaRequest(ChatId chatId, int messageId, InputMedia media)
     : FileRequestBase<Message>("editMessageMedia"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of the message to edit
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int MessageId { get; } = messageId;
 
     /// <summary>
     /// A new media content of the message
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputMedia Media { get; } = media;
 
     /// <inheritdoc cref="Documentation.InlineReplyMarkup"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
 
     /// <inheritdoc />

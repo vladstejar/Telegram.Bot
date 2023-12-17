@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Telegram.Bot.Requests.Abstractions;
 
 // ReSharper disable once CheckNamespace
@@ -24,18 +25,16 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="messageId">Identifier of the message to delete</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class DeleteMessageRequest(ChatId chatId, int messageId)
     : RequestBase<bool>("deleteMessage"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of the message to delete
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int MessageId { get; } = messageId;
 }

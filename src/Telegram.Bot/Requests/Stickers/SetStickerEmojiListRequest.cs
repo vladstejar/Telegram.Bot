@@ -9,19 +9,16 @@ namespace Telegram.Bot.Requests;
 /// </summary>
 /// <param name="sticker"><see cref="InputFileId">File identifier</see> of the sticker</param>
 /// <param name="emojiList">A JSON-serialized list of 1-20 emoji associated with the sticker</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetStickerEmojiListRequest(InputFileId sticker, IEnumerable<string> emojiList)
     : RequestBase<bool>("setStickerEmojiList")
 {
     /// <summary>
     /// <see cref="InputFileId">File identifier</see> of the sticker
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputFileId Sticker { get; } = sticker;
 
     /// <summary>
     /// A JSON-serialized list of 1-20 emoji associated with the sticker
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public IEnumerable<string> EmojiList { get; } = emojiList;
 }

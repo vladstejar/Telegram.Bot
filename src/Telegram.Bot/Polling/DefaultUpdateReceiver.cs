@@ -8,27 +8,20 @@ namespace Telegram.Bot.Polling;
 /// <summary>
 /// A simple <see cref="IUpdateReceiver"/>> implementation that requests new updates and handles them sequentially
 /// </summary>
+/// <remarks>
+/// Constructs a new <see cref="DefaultUpdateReceiver"/> with the specified <see cref="ITelegramBotClient"/>>
+/// instance and optional <see cref="ReceiverOptions"/>
+/// </remarks>
+/// <param name="botClient">The <see cref="ITelegramBotClient"/> used for making GetUpdates calls</param>
+/// <param name="receiverOptions">Options used to configure getUpdates requests</param>
 [PublicAPI]
-public class DefaultUpdateReceiver : IUpdateReceiver
+public class DefaultUpdateReceiver(
+    ITelegramBotClient botClient,
+    ReceiverOptions? receiverOptions = default) : IUpdateReceiver
 {
     static readonly Update[] EmptyUpdates = [];
 
-    readonly ITelegramBotClient _botClient;
-    readonly ReceiverOptions? _receiverOptions;
-
-    /// <summary>
-    /// Constructs a new <see cref="DefaultUpdateReceiver"/> with the specified <see cref="ITelegramBotClient"/>>
-    /// instance and optional <see cref="ReceiverOptions"/>
-    /// </summary>
-    /// <param name="botClient">The <see cref="ITelegramBotClient"/> used for making GetUpdates calls</param>
-    /// <param name="receiverOptions">Options used to configure getUpdates requests</param>
-    public DefaultUpdateReceiver(
-        ITelegramBotClient botClient,
-        ReceiverOptions? receiverOptions = default)
-    {
-        _botClient = botClient ?? throw new ArgumentNullException(nameof(botClient));
-        _receiverOptions = receiverOptions;
-    }
+    readonly ITelegramBotClient _botClient = botClient ?? throw new ArgumentNullException(nameof(botClient));
 
     /// <inheritdoc />
     public async Task ReceiveAsync(
@@ -37,12 +30,12 @@ public class DefaultUpdateReceiver : IUpdateReceiver
     {
         if (updateHandler is null) { throw new ArgumentNullException(nameof(updateHandler)); }
 
-        var allowedUpdates = _receiverOptions?.AllowedUpdates;
-        var limit = _receiverOptions?.Limit ?? default;
-        var messageOffset = _receiverOptions?.Offset ?? 0;
-        var emptyUpdates = EmptyUpdates;
+        var allowedUpdates = receiverOptions?.AllowedUpdates;
+        var limit = receiverOptions?.Limit ?? default;
+        var messageOffset = receiverOptions?.Offset ?? 0;
+        Update[] emptyUpdates = EmptyUpdates;
 
-        if (_receiverOptions?.ThrowPendingUpdates is true)
+        if (receiverOptions?.ThrowPendingUpdates is true)
         {
             try
             {

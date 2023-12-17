@@ -78,7 +78,7 @@ public class GamesTests(TestsFixture fixture, GamesFixture classFixture) : IClas
         int newScore = oldScore + 1 + new Random().Next(3);
 
         await fixture.SendTestInstructionsAsync(
-            $"Changing score from {oldScore} to {newScore} for {classFixture.Player.Username!.Replace("_", @"\_")}."
+            $"Changing score from {oldScore} to {newScore} for {classFixture.Player.GetSafeUsername()}."
         );
 
         await BotClient.SetGameScoreAsync(

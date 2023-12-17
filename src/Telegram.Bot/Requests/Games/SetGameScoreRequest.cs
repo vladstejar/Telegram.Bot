@@ -12,40 +12,34 @@ namespace Telegram.Bot.Requests;
 /// <param name="score">New score, must be non-negative</param>
 /// <param name="chatId">Unique identifier for the target chat</param>
 /// <param name="messageId">Identifier of the sent message</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetGameScoreRequest(long userId, int score, long chatId, int messageId)
     : RequestBase<Message>("setGameScore"),
       IUserTargetable,
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 
     /// <summary>
     /// New score, must be non-negative
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int Score { get; } = score;
 
     /// <summary>
     /// Pass <see langword="true"/>, if the high score is allowed to decrease. This can be useful when fixing mistakes
     /// or banning cheaters.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? Force { get; set; }
 
     /// <summary>
     /// Pass <see langword="true"/>, if the game message should not be automatically edited to include
     /// the current scoreboard
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? DisableEditMessage { get; set; }
 
     /// <summary>
     /// Unique identifier for the target chat
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public long ChatId { get; } = chatId;
 
     /// <inheritdoc />
@@ -54,6 +48,5 @@ public class SetGameScoreRequest(long userId, int score, long chatId, int messag
     /// <summary>
     /// Identifier of the sent message
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int MessageId { get; } = messageId;
 }

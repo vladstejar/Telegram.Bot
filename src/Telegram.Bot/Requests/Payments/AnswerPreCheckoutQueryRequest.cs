@@ -17,21 +17,18 @@ namespace Telegram.Bot.Requests;
 /// our amazing black T-shirts while you were busy filling out your payment details. Please
 /// choose a different color or garment!"). Telegram will display this message to the user.
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class AnswerPreCheckoutQueryRequest(string preCheckoutQueryId, string? errorMessage = default)
     : RequestBase<bool>("answerPreCheckoutQuery")
 {
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string PreCheckoutQueryId { get; } = preCheckoutQueryId;
 
     /// <summary>
     /// Specify <see langword="true"/> if everything is alright (goods are available, etc.) and the
     /// bot is ready to proceed with the order. Use <see langword="false"/> if there are any problems.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public bool Ok { get; } = errorMessage is null;
 
     /// <summary>
@@ -40,6 +37,5 @@ public class AnswerPreCheckoutQueryRequest(string preCheckoutQueryId, string? er
     /// the last of our amazing black T-shirts while you were busy filling out your payment details.
     /// Please choose a different color or garment!"). Telegram will display this message to the user.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? ErrorMessage { get; } = errorMessage;
 }

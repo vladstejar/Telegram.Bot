@@ -1,8 +1,11 @@
-﻿namespace Telegram.Bot.Requests.Abstractions;
+﻿using JetBrains.Annotations;
+
+namespace Telegram.Bot.Requests.Abstractions;
 
 /// <summary>
 /// Represents a request having <see cref="ChatId"/> parameter
 /// </summary>
+[PublicAPI]
 public interface IChatTargetable
 {
     /// <summary>

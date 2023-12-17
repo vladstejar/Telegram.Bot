@@ -8,5 +8,5 @@ namespace Telegram.Bot.Requests;
 /// bot is launched. Returns <see langword="true"/> on success. Requires no parameters.
 /// </summary>
 /// <a href="https://core.telegram.org/bots/api#close"/>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+
 public class CloseRequest() : ParameterlessRequest<bool>("close");

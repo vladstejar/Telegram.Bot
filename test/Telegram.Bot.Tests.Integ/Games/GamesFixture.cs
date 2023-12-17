@@ -5,8 +5,6 @@ using Telegram.Bot.Tests.Integ.Framework;
 using Telegram.Bot.Tests.Integ.Framework.Fixtures;
 using Telegram.Bot.Types;
 
-#nullable disable
-
 namespace Telegram.Bot.Tests.Integ.Games;
 
 /// <summary>
@@ -41,7 +39,7 @@ public class GamesFixture : AsyncLifetimeFixture
                 catch (ApiRequestException e)
                 {
                     throw new ArgumentException(
-                        $@"Bot doesn't have game: ""{GameShortName}"". Make sure you set up a game with @BotFather.",
+                        $"""Bot doesn't have game: "{GameShortName}". Make sure you set up a game with @BotFather.""",
                         e
                     );
                 }

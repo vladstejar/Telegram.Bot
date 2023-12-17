@@ -12,16 +12,13 @@ namespace Telegram.Bot.Requests;
 /// Unique identifier for the target chat or username of the target channel
 /// (in the format <c>@channelusername</c>)
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetChatDescriptionRequest(ChatId chatId) : RequestBase<bool>("setChatDescription"), IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New chat Description, 0-255 characters
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Description { get; set; }
 }

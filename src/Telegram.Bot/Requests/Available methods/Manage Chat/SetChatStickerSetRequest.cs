@@ -13,18 +13,15 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="stickerSetName">Name of the sticker set to be set as the group sticker set</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetChatStickerSetRequest(ChatId chatId, string stickerSetName)
     : RequestBase<bool>("setChatStickerSet"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Name of the sticker set to be set as the group sticker set
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string StickerSetName { get; } = stickerSetName;
 }

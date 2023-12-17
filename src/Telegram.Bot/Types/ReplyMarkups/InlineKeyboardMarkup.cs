@@ -11,7 +11,6 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// <i>unsupported message</i>.
 /// </remarks>
 /// <param name="inlineKeyboard">The inline keyboard.</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 [method: JsonConstructor]
 public class InlineKeyboardMarkup(IEnumerable<IEnumerable<InlineKeyboardButton>> inlineKeyboard)
     : IReplyMarkup
@@ -20,7 +19,6 @@ public class InlineKeyboardMarkup(IEnumerable<IEnumerable<InlineKeyboardButton>>
     /// Array of <see cref="InlineKeyboardButton"/> rows, each represented by an Array of
     /// <see cref="InlineKeyboardButton"/>.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public IEnumerable<IEnumerable<InlineKeyboardButton>> InlineKeyboard { get; } = inlineKeyboard;
 
     /// <summary>

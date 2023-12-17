@@ -75,7 +75,7 @@ public static partial class TelegramBotClientExtensions
                     Offset = offset,
                     Limit = limit,
                     Timeout = timeout,
-                    AllowedUpdates = allowedUpdates
+                    AllowedUpdates = allowedUpdates,
                 },
                 cancellationToken
             )

@@ -19,19 +19,16 @@ namespace Telegram.Bot.Requests;
 /// note that exists on the Telegram servers (recommended) or upload a new video using
 /// multipart/form-data. Sending video notes by a URL is currently unsupported
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SendVideoNoteRequest(ChatId chatId, InputFile videoNote)
     : FileRequestBase<Message>("sendVideoNote"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? MessageThreadId { get; set; }
 
     /// <summary>
@@ -39,43 +36,34 @@ public class SendVideoNoteRequest(ChatId chatId, InputFile videoNote)
     /// note that exists on the Telegram servers (recommended) or upload a new video using
     /// multipart/form-data. Sending video notes by a URL is currently unsupported
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputFile VideoNote { get; } = videoNote;
 
     /// <summary>
     /// Duration of sent video in seconds
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? Duration { get; set; }
 
     /// <summary>
     /// Video width and height, i.e. diameter of the video message
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? Length { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.Thumbnail"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputFile? Thumbnail { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.DisableNotification"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? DisableNotification { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ProtectContent"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? ProtectContent { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyToMessageId"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ReplyToMessageId { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.AllowSendingWithoutReply"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? AllowSendingWithoutReply { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
 
     /// <inheritdoc />

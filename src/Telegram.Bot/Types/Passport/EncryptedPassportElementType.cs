@@ -69,5 +69,5 @@ public enum EncryptedPassportElementType
     /// <summary>
     /// Email
     /// </summary>
-    Email
+    Email,
 }

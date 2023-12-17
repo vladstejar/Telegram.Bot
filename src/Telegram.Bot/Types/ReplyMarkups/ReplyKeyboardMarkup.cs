@@ -8,7 +8,6 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// Represents a custom keyboard with reply options
 /// </summary>
 /// <param name="keyboard">The keyboard.</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 [method: JsonConstructor]
 public class ReplyKeyboardMarkup(IEnumerable<IEnumerable<KeyboardButton>> keyboard)
     : ReplyMarkupBase
@@ -16,14 +15,12 @@ public class ReplyKeyboardMarkup(IEnumerable<IEnumerable<KeyboardButton>> keyboa
     /// <summary>
     /// Array of button rows, each represented by an Array of KeyboardButton objects
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public IEnumerable<IEnumerable<KeyboardButton>> Keyboard { get; set; } = keyboard;
 
     /// <summary>
     /// Optional. Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to
     /// <see langword="false"/>, in which case the custom keyboard can be hidden and opened with a keyboard icon.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? IsPersistent { get; set; }
 
     /// <summary>
@@ -31,7 +28,6 @@ public class ReplyKeyboardMarkup(IEnumerable<IEnumerable<KeyboardButton>> keyboa
     /// if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the
     /// same height as the app's standard keyboard.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? ResizeKeyboard { get; set; }
 
     /// <summary>
@@ -39,13 +35,11 @@ public class ReplyKeyboardMarkup(IEnumerable<IEnumerable<KeyboardButton>> keyboa
     /// available, but clients will automatically display the usual letter-keyboard in the chat – the user can press
     /// a special button in the input field to see the custom keyboard again. Defaults to false.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? OneTimeKeyboard { get; set; }
 
     /// <summary>
     /// Optional. The placeholder to be shown in the input field when the keyboard is active; 1-64 characters
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? InputFieldPlaceholder { get; set; }
 
     /// <summary>

@@ -42,10 +42,11 @@ internal static class HttpResponseMessageExtensions
             {
                 contentStream = await httpResponse.Content
                     .ReadAsStreamAsync()
-                    .ConfigureAwait(continueOnCapturedContext: false);
+                    .ConfigureAwait(false);
 
-                deserializedObject = contentStream
-                    .DeserializeJsonFromStream<T>();
+                deserializedObject = await contentStream
+                    .DeserializeJsonFromStreamAsync<T>()
+                    .ConfigureAwait(false);
             }
             catch (Exception exception)
             {

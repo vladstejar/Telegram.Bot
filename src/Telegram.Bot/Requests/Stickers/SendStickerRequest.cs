@@ -21,19 +21,16 @@ namespace Telegram.Bot.Requests;
 /// Video stickers can only be sent by a <see cref="InputFileId"/>.
 /// Animated stickers can't be sent via an HTTP URL.
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SendStickerRequest(ChatId chatId, InputFile sticker)
     : FileRequestBase<Message>("sendSticker"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? MessageThreadId { get; set; }
 
     /// <summary>
@@ -44,33 +41,30 @@ public class SendStickerRequest(ChatId chatId, InputFile sticker)
     /// Video stickers can only be sent by a <see cref="InputFileId"/>.
     /// Animated stickers can't be sent via an HTTP URL.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputFile Sticker { get; } = sticker;
 
     /// <summary>
     /// Optional. Emoji associated with the sticker; only for just uploaded stickers
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Emoji { get; set; }
 
     /// <inheritdoc cref="Documentation.DisableNotification"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public bool? DisableNotification { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ProtectContent"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? ProtectContent { get; set; }
 
     /// <inheritdoc cref="Documentation.ReplyToMessageId"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public int? ReplyToMessageId { get; set; }
 
     /// <inheritdoc cref="Documentation.AllowSendingWithoutReply"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public bool? AllowSendingWithoutReply { get; set; }
 
     /// <inheritdoc cref="Documentation.ReplyMarkup"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public IReplyMarkup? ReplyMarkup { get; set; }
 
     /// <inheritdoc />

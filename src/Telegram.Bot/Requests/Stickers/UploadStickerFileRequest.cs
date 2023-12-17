@@ -21,25 +21,21 @@ namespace Telegram.Bot.Requests;
 /// <param name="stickerFormat">
 /// Format of the sticker
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class UploadStickerFileRequest(long userId, InputFileStream sticker, StickerFormat stickerFormat)
     : FileRequestBase<File>("uploadStickerFile"),
       IUserTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 
     /// <summary>
     /// A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputFileStream Sticker { get; } = sticker;
 
     /// <summary>
     /// Format of the sticker
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public StickerFormat StickerFormat { get; } = stickerFormat;
 
     /// <inheritdoc />

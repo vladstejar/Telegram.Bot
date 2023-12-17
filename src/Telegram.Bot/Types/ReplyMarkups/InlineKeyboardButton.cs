@@ -4,12 +4,10 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// This object represents one button of an inline keyboard. You <b>must</b> use exactly one of the optional fields.
 /// </summary>
 /// <param name="text">Label text on the button</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 [method: JsonConstructor]
 public class InlineKeyboardButton(string text) : IKeyboardButton
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public string Text { get; set; } = text;
 
     /// <summary>
@@ -17,14 +15,12 @@ public class InlineKeyboardButton(string text) : IKeyboardButton
     /// <c>tg://user?id=&lt;user_id&gt;</c> can be used to mention a user by their ID without using a username,
     /// if this is allowed by their privacy settings.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Url { get; set; }
 
     /// <summary>
     /// Optional. Data to be sent in a <see cref="CallbackQuery">callback query</see> to the bot when button
     /// is pressed, 1-64 bytes
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? CallbackData { get; set; }
 
     /// <summary>
@@ -32,14 +28,12 @@ public class InlineKeyboardButton(string text) : IKeyboardButton
     /// be able to send an arbitrary message on behalf of the user using the request
     /// <see cref="Requests.AnswerWebAppQueryRequest"/>. Available only in private chats between a user and the bot.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public WebAppInfo? WebApp { get; set; }
 
     /// <summary>
     /// Optional. An HTTP URL used to automatically authorize the user. Can be used as a replacement for the
     /// <a href="https://core.telegram.org/widgets/login">Telegram Login Widget</a>.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public LoginUrl? LoginUrl { get; set; }
 
     /// <summary>
@@ -54,7 +48,7 @@ public class InlineKeyboardButton(string text) : IKeyboardButton
     /// actions – in this case the user will be automatically returned to the chat they switched from, skipping the
     /// chat selection screen.
     /// </remarks>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public string? SwitchInlineQuery { get; set; }
 
     /// <summary>
@@ -65,14 +59,13 @@ public class InlineKeyboardButton(string text) : IKeyboardButton
     /// This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting
     /// something from multiple options.
     /// </remarks>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public string? SwitchInlineQueryCurrentChat { get; set; }
 
     /// <summary>
     /// Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type,
     /// open that chat and insert the bot's username and the specified inline query in the input field
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public SwitchInlineQueryChosenChat? SwitchInlineQueryChosenChat { get; set; }
 
     /// <summary>
@@ -81,7 +74,7 @@ public class InlineKeyboardButton(string text) : IKeyboardButton
     /// <remarks>
     /// <b>NOTE:</b> This type of button <b>must</b> always be the first button in the first row.
     /// </remarks>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public CallbackGame? CallbackGame { get; set; }
 
     /// <summary>
@@ -91,7 +84,7 @@ public class InlineKeyboardButton(string text) : IKeyboardButton
     /// <remarks>
     /// <b>NOTE:</b> This type of button <b>must</b> always be the first button in the first row.
     /// </remarks>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public bool? Pay { get; set; }
 
     /// <summary>

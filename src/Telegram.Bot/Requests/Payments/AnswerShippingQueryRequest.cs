@@ -10,26 +10,22 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Types.Update"/> with a <see cref="Types.Update.ShippingQuery"/> field to the
 /// bot. Use this method to reply to shipping queries. On success, <see langword="true"/> is returned.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class AnswerShippingQueryRequest : RequestBase<bool>
 {
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string ShippingQueryId { get; }
 
     /// <summary>
     /// Specify <see langword="true"/> if delivery to the specified address is possible and <see langword="false"/>
     /// if there are any problems (for example, if delivery to the specified address is not possible)
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public bool Ok { get; }
 
     /// <summary>
     /// Required if <see cref="Ok"/> is <see langword="true"/>. An array of available shipping options.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IEnumerable<ShippingOption>? ShippingOptions { get; }
 
     /// <summary>
@@ -37,7 +33,6 @@ public class AnswerShippingQueryRequest : RequestBase<bool>
     /// why it is impossible to complete the order (e.g. "Sorry, delivery to your desired address
     /// is unavailable'). Telegram will display this message to the user.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? ErrorMessage { get; }
 
     /// <summary>

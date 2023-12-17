@@ -6,13 +6,11 @@ namespace Telegram.Bot.Types;
 /// This object contains information about the user whose identifier was shared with the bot using a
 /// <see cref="KeyboardButtonRequestUser"/> button.
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class UserShared
 {
     /// <summary>
     /// Identifier of the request
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int RequestId { get; set; }
 
     /// <summary>
@@ -22,6 +20,5 @@ public class UserShared
     /// access to the user and could be unable to use this identifier, unless the user is already known to the bot by
     /// some other means.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; set; }
 }

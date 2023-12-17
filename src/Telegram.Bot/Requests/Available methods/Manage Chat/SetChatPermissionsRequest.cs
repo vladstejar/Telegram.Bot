@@ -12,19 +12,16 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="permissions">New default chat permissions</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetChatPermissionsRequest(ChatId chatId, ChatPermissions permissions)
     : RequestBase<bool>("setChatPermissions"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New default chat permissions
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public ChatPermissions Permissions { get; } = permissions;
 
     /// <summary>
@@ -37,6 +34,5 @@ public class SetChatPermissionsRequest(ChatId chatId, ChatPermissions permission
     /// permissions; the <see cref="ChatPermissions.CanSendPolls"/> permission will imply the
     /// <see cref="ChatPermissions.CanSendMessages"/> permission.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? UseIndependentChatPermissions { get; set; }
 }

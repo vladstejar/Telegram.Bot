@@ -26,19 +26,16 @@ namespace Telegram.Bot.Requests;
 /// <param name="action">
 /// Type of action to broadcast. Choose one, depending on what the user is about to receive
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SendChatActionRequest(ChatId chatId, ChatAction action)
     : RequestBase<bool>("sendChatAction"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread; supergroups only
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? MessageThreadId { get; set; }
 
     /// <summary>
@@ -53,6 +50,5 @@ public class SendChatActionRequest(ChatId chatId, ChatAction action)
     /// <see cref="ChatAction.RecordVideoNote"/> or <see cref="ChatAction.UploadVideoNote"/> for
     /// <see cref="SendVideoNoteRequest">video notes</see>
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public ChatAction Action { get; } = action;
 }

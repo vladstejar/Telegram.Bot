@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Telegram.Bot.Types.Enums;
 
 // ReSharper disable once CheckNamespace
@@ -11,52 +12,43 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="id">Unique identifier of this result</param>
 /// <param name="audioUrl">A valid URL for the audio file</param>
 /// <param name="title">Title of the result</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultAudio(string id, string audioUrl, string title) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be audio
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Audio;
 
     /// <summary>
     /// A valid URL for the audio file
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string AudioUrl { get; } = audioUrl;
 
     /// <summary>
     /// Title
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <summary>
     /// Optional. Performer
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Performer { get; set; }
 
     /// <summary>
     /// Optional. Audio duration in seconds
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? AudioDuration { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 }

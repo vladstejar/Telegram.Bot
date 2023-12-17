@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
+using JetBrains.Annotations;
 using Telegram.Bot.Types.Enums;
 
 // ReSharper disable once CheckNamespace
@@ -36,27 +37,24 @@ namespace Telegram.Bot.Requests;
 /// <param name="url">
 /// HTTPS url to send updates to. Use an empty string to remove webhook integration
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class SetWebhookRequest(string url) : FileRequestBase<bool>("setWebhook")
 {
     /// <summary>
     /// HTTPS URL to send updates to. Use an empty string to remove webhook integration
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Url { get; } = url;
 
     /// <summary>
     /// Upload your public key certificate so that the root certificate in use can be checked. See
     /// our <a href="https://core.telegram.org/bots/self-signed">self-signed guide</a> for details
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputFileStream? Certificate { get; set; }
 
     /// <summary>
     /// The fixed IP address which will be used to send webhook requests instead of the
     /// IP address resolved through DNS
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? IpAddress { get; set; }
 
     /// <summary>
@@ -64,7 +62,6 @@ public class SetWebhookRequest(string url) : FileRequestBase<bool>("setWebhook")
     /// delivery, 1-100. Defaults to <i>40</i>. Use lower values to limit the load on your
     /// bot's server, and higher values to increase your bot's throughput.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? MaxConnections { get; set; }
 
     /// <summary>
@@ -80,13 +77,12 @@ public class SetWebhookRequest(string url) : FileRequestBase<bool>("setWebhook")
     /// Please note that this parameter doesn't affect updates created before the call to the
     /// <see cref="SetWebhookRequest"/>, so unwanted updates may be received for a short period of time.
     /// </remarks>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public IEnumerable<UpdateType>? AllowedUpdates { get; set; }
 
     /// <summary>
     /// Pass <see langword="true"/> to drop all pending updates
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? DropPendingUpdates { get; set; }
 
     /// <summary>
@@ -94,7 +90,6 @@ public class SetWebhookRequest(string url) : FileRequestBase<bool>("setWebhook")
     /// 1-256 characters. Only characters <c>A-Z</c>, <c>a-z</c>, <c>0-9</c>, <c>_</c> and <c>-</c>
     /// are allowed. The header is useful to ensure that the request comes from a webhook set by you.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? SecretToken { get; set; }
 
     /// <inheritdoc cref="RequestBase{TResponse}.ToHttpContent"/>

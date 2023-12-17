@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using JetBrains.Annotations;
 
 // ReSharper disable once UnusedTypeParameter
 namespace Telegram.Bot.Requests.Abstractions;
@@ -6,6 +7,7 @@ namespace Telegram.Bot.Requests.Abstractions;
 /// <summary>
 /// Represents a request to Bot API
 /// </summary>
+[PublicAPI]
 public interface IRequest
 {
     /// <summary>

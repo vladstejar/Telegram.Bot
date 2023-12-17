@@ -12,18 +12,15 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="title">New chat title, 1-255 characters</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetChatTitleRequest(ChatId chatId, string title)
     : RequestBase<bool>("setChatTitle"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// New chat title, 1-255 characters
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 }

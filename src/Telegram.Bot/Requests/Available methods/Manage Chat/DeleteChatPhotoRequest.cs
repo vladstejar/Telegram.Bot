@@ -11,12 +11,10 @@ namespace Telegram.Bot.Requests;
 /// <param name="chatId">Unique identifier for the target chat or username of the target channel
 /// (in the format <c>@channelusername</c>)
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class DeleteChatPhotoRequest(ChatId chatId)
     : RequestBase<bool>("deleteChatPhoto"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 }

@@ -1,13 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using Telegram.Bot.Converters;
 
 namespace Telegram.Bot.Types;
 
 /// <summary>
 /// Represents a ChatId
 /// </summary>
-[JsonConverter(typeof(ChatIdConverter))]
+//[JsonConverter(typeof(ChatIdConverter))]
 public class ChatId : IEquatable<ChatId>
 {
     /// <summary>
@@ -39,7 +37,9 @@ public class ChatId : IEquatable<ChatId>
     /// <exception cref="ArgumentNullException">Thrown when string value is <c>null</c></exception>
     public ChatId(string username)
     {
+#pragma warning disable CA1510
         if (username is null) { throw new ArgumentNullException(nameof(username)); }
+#pragma warning restore CA1510
         if (username.Length > 1 && username[0] == '@')
         {
             Username = username;
@@ -107,28 +107,29 @@ public class ChatId : IEquatable<ChatId>
     /// Convert a Chat Object to a <see cref="ChatId"/>
     /// </summary>
     /// <param name="chat"></param>
-    [return: NotNullIfNotNull(nameof(chat))]
-    public static implicit operator ChatId?(Chat? chat) => chat is null ? null : new(chat.Id);
+    public static implicit operator ChatId?(Chat? chat)
+        => chat is null
+            ? null
+            : new(chat.Id);
 
     /// <summary>
     /// Compares two ChatId objects
     /// </summary>
-    public static bool operator ==(ChatId? obj1, ChatId? obj2)
-    {
-        if (obj1 is null || obj2 is null) { return false; }
-
-        if (obj1.Identifier is not null && obj2.Identifier is not null)
+    public static bool operator ==(ChatId? obj1, ChatId? obj2) =>
+        (obj1, obj2) switch
         {
-            return obj1.Identifier == obj2.Identifier;
-        }
+            (null, _) => false,
 
-        if (obj1.Username is not null && obj2.Username is not null)
-        {
-            return string.Equals(obj1.Username, obj2.Username, StringComparison.Ordinal);
-        }
+            (_, null) => false,
 
-        return false;
-    }
+            ({Identifier: { } id1}, {Identifier: { } id2})
+                => id1 == id2,
+
+            ({Username: { } username1}, {Username: { } username2})
+                => string.Equals(username1, username2, StringComparison.Ordinal),
+
+            _ => false,
+        };
 
     /// <summary>
     /// Compares two ChatId objects

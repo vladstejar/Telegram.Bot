@@ -1,35 +1,30 @@
-﻿using Newtonsoft.Json.Linq;
-
-namespace Telegram.Bot.Converters;
+﻿namespace Telegram.Bot.Converters;
 
 internal class ChatIdConverter : JsonConverter<ChatId?>
 {
-    public override void WriteJson(JsonWriter writer, ChatId? value, JsonSerializer serializer)
+    public override ChatId? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (!JsonElement.TryParseValue(ref reader, out var element))
+            return null;
+
+        return new(element.Value.ToString());
+    }
+
+    public override void Write(Utf8JsonWriter writer, ChatId? value, JsonSerializerOptions options)
     {
         switch (value)
         {
             case { Username: {} username }:
-                writer.WriteValue(username);
+                writer.WriteStringValue(username);
                 break;
             case { Identifier: {} identifier }:
-                writer.WriteValue(identifier);
+                writer.WriteNumberValue(identifier);
                 break;
             case null:
-                writer.WriteNull();
+                writer.WriteNullValue();
                 break;
             default:
-                throw new JsonSerializationException();
+                throw new JsonException();
         }
-    }
-
-    public override ChatId? ReadJson(
-        JsonReader reader,
-        Type objectType,
-        ChatId? existingValue,
-        bool hasExistingValue,
-        JsonSerializer serializer)
-    {
-        var value = JToken.ReadFrom(reader).Value<string>();
-        return value is null ? null : new(value);
     }
 }

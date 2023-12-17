@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using Newtonsoft.Json.Linq;
 using Telegram.Bot.Extensions;
 
 namespace Telegram.Bot.Requests;
@@ -12,7 +11,6 @@ namespace Telegram.Bot.Requests;
 /// <typeparam name="TResponse">Type of result expected in result</typeparam>
 /// <param name="methodName">Bot API method</param>
 /// <param name="method">HTTP method to use</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public abstract class FileRequestBase<TResponse>(string methodName, HttpMethod? method = default)
     : RequestBase<TResponse>(methodName, method)
 {
@@ -43,8 +41,8 @@ public abstract class FileRequestBase<TResponse>(string methodName, HttpMethod? 
         var boundary = $"{Guid.NewGuid()}{DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture)}";
         var multipartContent = new MultipartFormDataContent(boundary);
 
-        var stringContents = JObject.FromObject(this)
-            .Properties()
+        var stringContents = JsonSerializer.SerializeToElement(this)
+            .EnumerateObject()
             .Where(prop => exceptPropertyNames.Contains(prop.Name, StringComparer.InvariantCulture) is false)
             .Select(prop => (name: prop.Name, content: new StringContent(prop.Value.ToString())));
 

@@ -1,4 +1,5 @@
-using Newtonsoft.Json.Converters;
+using JetBrains.Annotations;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Requests.Abstractions;
 
 // ReSharper disable once CheckNamespace
@@ -15,18 +16,16 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="userId">Unique identifier of the target user</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class BanChatMemberRequest(ChatId chatId, long userId)
     : RequestBase<bool>("banChatMember"),
       IChatTargetable,
       IUserTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 
     /// <summary>
@@ -35,7 +34,6 @@ public class BanChatMemberRequest(ChatId chatId, long userId)
     /// Applied for supergroups and channels only.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public DateTime? UntilDate { get; set; }
 
     /// <summary>
@@ -43,6 +41,5 @@ public class BanChatMemberRequest(ChatId chatId, long userId)
     /// <see langword="false"/>, the user will be able to see messages in the group that were sent before
     /// the user was removed. Always <see langword="true"/> for supergroups and channels.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? RevokeMessages { get; set; }
 }

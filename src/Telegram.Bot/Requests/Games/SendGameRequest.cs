@@ -12,7 +12,6 @@ namespace Telegram.Bot.Requests;
 /// Short name of the game, serves as the unique identifier for the game. Set up your games via
 /// <a href="https://t.me/botfather">@BotFather</a>
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SendGameRequest(long chatId, string gameShortName)
     : RequestBase<Message>("sendGame"),
       IChatTargetable
@@ -20,7 +19,6 @@ public class SendGameRequest(long chatId, string gameShortName)
     /// <summary>
     /// Unique identifier for the target chat
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public long ChatId { get; } = chatId;
 
     /// <inheritdoc />
@@ -29,33 +27,26 @@ public class SendGameRequest(long chatId, string gameShortName)
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? MessageThreadId { get; set; }
 
     /// <summary>
     /// Short name of the game, serves as the unique identifier for the game. Set up your games
     /// via <a href="https://t.me/botfather">@BotFather</a>
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string GameShortName { get; } = gameShortName;
 
     /// <inheritdoc cref="Abstractions.Documentation.DisableNotification"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? DisableNotification { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ProtectContent"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? ProtectContent { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyToMessageId"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ReplyToMessageId { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.AllowSendingWithoutReply"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? AllowSendingWithoutReply { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.InlineReplyMarkup"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
 }

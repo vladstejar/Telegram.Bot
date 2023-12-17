@@ -10,25 +10,21 @@ namespace Telegram.Bot.Requests;
 /// </summary>
 /// <param name="chatId">Unique identifier for the target chat or username of the target supergroup</param>
 /// <param name="messageThreadId">Unique identifier for the target message thread of the forum topic</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class EditForumTopicRequest(ChatId chatId, int messageThreadId)
     : RequestBase<bool>("editForumTopic"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread of the forum topic
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int MessageThreadId { get; } = messageThreadId;
 
     /// <summary>
     /// New topic name, 0-128 characters. If not specififed or empty, the current name of the topic will be kept
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Name { get; set; }
 
     /// <summary>
@@ -36,6 +32,5 @@ public class EditForumTopicRequest(ChatId chatId, int messageThreadId)
     /// <see cref="GetForumTopicIconStickersRequest"/> to get all allowed custom emoji identifiers.
     /// Pass an empty string to remove the icon. If not specified, the current icon will be kept
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? IconCustomEmojiId { get; set; }
 }

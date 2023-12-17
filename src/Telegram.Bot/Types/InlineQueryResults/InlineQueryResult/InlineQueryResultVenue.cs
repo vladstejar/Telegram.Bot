@@ -1,4 +1,4 @@
-
+using JetBrains.Annotations;
 
 // ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Types.InlineQueryResults;
@@ -13,79 +13,67 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="longitude">Longitude of the location in degrees</param>
 /// <param name="title">Title of the result</param>
 /// <param name="address">Address of the venue</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultVenue(
     string id,
     double latitude,
     double longitude,
     string title,
-    string address) : InlineQueryResult(id)
+    string address)
+        : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be venue
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Venue;
 
     /// <inheritdoc cref="Documentation.Latitude" />
-    [JsonProperty(Required = Required.Always)]
     public double Latitude { get; } = latitude;
 
     /// <inheritdoc cref="Documentation.Longitude" />
-    [JsonProperty(Required = Required.Always)]
     public double Longitude { get; } = longitude;
 
     /// <summary>
     /// Title of the venue
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 
     /// <summary>
     /// Address of the venue
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Address { get; } = address;
 
     /// <summary>
     /// Optional. Foursquare identifier of the venue if known
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? FoursquareId { get; set; }
 
     /// <summary>
     /// Optional. Foursquare type of the venue. (For example, "arts_entertainment/default",
     /// "arts_entertainment/aquarium" or "food/icecream".)
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? FoursquareType { get; set; }
 
     /// <summary>
     /// Google Places identifier of the venue
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? GooglePlaceId { get; set; }
 
     /// <summary>
     /// Google Places type of the venue.
     /// <a href="https://developers.google.com/places/web-service/supported_types"/>
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? GooglePlaceType { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? ThumbnailUrl { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailWidth" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailWidth { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailHeight { get; set; }
 }

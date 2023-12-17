@@ -25,6 +25,7 @@ namespace Telegram.Bot;
 /// Thrown if <paramref name="options"/> is <c>null</c>
 /// </exception>
 [PublicAPI]
+
 public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? httpClient = default)
     : ITelegramBotClient
 {
@@ -84,7 +85,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
 #pragma warning disable CA2000
         var httpRequest = new HttpRequestMessage(method: request.Method, requestUri: url)
         {
-            Content = request.ToHttpContent()
+            Content = request.ToHttpContent(),
         };
 #pragma warning restore CA2000
 
@@ -127,12 +128,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
         if (httpResponse.StatusCode != HttpStatusCode.OK)
         {
             var failedApiResponse = await httpResponse
-                .DeserializeContentAsync<ApiResponse>(
-                    guard: response =>
-                        response.ErrorCode is 0 ||
-                        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-                        response.Description is null
-                )
+                .DeserializeContentAsync<ApiResponse>(response => response is {ErrorCode: 0, Description: null})
                 .ConfigureAwait(false);
 
             throw ExceptionsParser.Parse(failedApiResponse);
@@ -140,8 +136,8 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
 
         var apiResponse = await httpResponse
             .DeserializeContentAsync<ApiResponse<TResponse>>(
-                guard: response => !response.Ok ||
-                                   response.Result is null
+                response => !response.Ok ||
+                            response.Result is null
             )
             .ConfigureAwait(false);
 
@@ -157,24 +153,18 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
             try
             {
                 httpResponse = await httpClient
-                    .SendAsync(request: httpRequest, cancellationToken: cancellationToken)
-                    .ConfigureAwait(continueOnCapturedContext: false);
+                    .SendAsync(httpRequest, cancellationToken)
+                    .ConfigureAwait(false);
             }
             catch (TaskCanceledException exception)
             {
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    throw;
-                }
+                if (cancellationToken.IsCancellationRequested) throw;
 
-                throw new RequestException(message: "Request timed out", innerException: exception);
+                throw new RequestException("Request timed out", exception);
             }
             catch (Exception exception)
             {
-                throw new RequestException(
-                    message: "Exception during making request",
-                    innerException: exception
-                );
+                throw new RequestException("Exception during making request", exception);
             }
 
             return httpResponse;
@@ -189,7 +179,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
     {
         try
         {
-            await MakeRequestAsync(request: new GetMeRequest(), cancellationToken: cancellationToken)
+            await MakeRequestAsync(new GetMeRequest(), cancellationToken)
                 .ConfigureAwait(false);
             return true;
         }
@@ -207,9 +197,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
         CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(filePath) || filePath.Length < 2)
-        {
             throw new ArgumentException(message: "Invalid file path", paramName: nameof(filePath));
-        }
 
         if (destination is null) { throw new ArgumentNullException(nameof(destination)); }
 
@@ -223,12 +211,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
         if (!httpResponse.IsSuccessStatusCode)
         {
             var failedApiResponse = await httpResponse
-                .DeserializeContentAsync<ApiResponse>(
-                    guard: response =>
-                        response.ErrorCode is 0 ||
-                        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-                        response.Description is null
-                )
+                .DeserializeContentAsync<ApiResponse>(response => response is {ErrorCode: 0, Description: null})
                 .ConfigureAwait(false);
 
             throw ExceptionsParser.Parse(failedApiResponse);
@@ -236,24 +219,22 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
 
         if (httpResponse.Content is null)
         {
-            throw new RequestException(
-                message: "Response doesn't contain any content",
-                httpResponse.StatusCode
-            );
+            throw new RequestException("Response doesn't contain any content", httpResponse.StatusCode);
         }
 
         try
         {
+#if NET6_0_OR_GREATER
+            await httpResponse.Content.CopyToAsync(destination, cancellationToken)
+#else
             await httpResponse.Content.CopyToAsync(destination)
+#endif
                 .ConfigureAwait(false);
+
         }
         catch (Exception exception)
         {
-            throw new RequestException(
-                message: "Exception during file download",
-                httpResponse.StatusCode,
-                exception
-            );
+            throw new RequestException("Exception during file download", httpResponse.StatusCode, exception);
         }
 
         [MethodImpl(methodImplOptions: MethodImplOptions.AggressiveInlining)]
@@ -271,23 +252,16 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
                         completionOption: HttpCompletionOption.ResponseHeadersRead,
                         cancellationToken: cancellationToken
                     )
-                    .ConfigureAwait(continueOnCapturedContext: false);
+                    .ConfigureAwait(false);
             }
             catch (TaskCanceledException exception)
             {
-                if (cancellationToken.IsCancellationRequested) { throw; }
-
-                throw new RequestException(
-                    message: "Request timed out",
-                    innerException: exception
-                );
+                if (cancellationToken.IsCancellationRequested) throw;
+                throw new RequestException("Request timed out", exception);
             }
             catch (Exception exception)
             {
-                throw new RequestException(
-                    message: "Exception during file download",
-                    innerException: exception
-                );
+                throw new RequestException("Exception during file download", exception);
             }
 
             return httpResponse;

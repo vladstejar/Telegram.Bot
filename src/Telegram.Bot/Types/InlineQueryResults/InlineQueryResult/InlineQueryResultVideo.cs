@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Telegram.Bot.Types.Enums;
 
 // ReSharper disable once CheckNamespace
@@ -22,7 +23,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultVideo"/> is used to send an HTML-page as a result
 /// (e.g., a YouTube video).
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultVideo(
     string id,
     string videoUrl,
@@ -33,19 +34,16 @@ public class InlineQueryResultVideo(
     /// <summary>
     /// Type of the result, must be video
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Video;
 
     /// <summary>
     /// A valid URL for the embedded video player or video file
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string VideoUrl { get; } = videoUrl;
 
     /// <summary>
     /// Mime type of the content of video url, “text/html” or “video/mp4”
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string MimeType { get; } = inputMessageContent is null
         ? "video/mp4"
         : "text/html";
@@ -53,49 +51,41 @@ public class InlineQueryResultVideo(
     /// <summary>
     /// URL of the thumbnail (jpeg only) for the video
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string ThumbnailUrl { get; } = thumbnailUrl;
 
     /// <summary>
     /// Title for the result
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 
     /// <inheritdoc cref="Documentation.Caption" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <summary>
     /// Optional. Video width
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? VideoWidth { get; set; }
 
     /// <summary>
     /// Optional. Video height
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? VideoHeight { get; set; }
 
     /// <summary>
     /// Optional. Video duration in seconds
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? VideoDuration { get; set; }
 
     /// <summary>
     /// Optional. Short description of the result
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Description { get; set; }
 
     /// <summary>
@@ -103,6 +93,5 @@ public class InlineQueryResultVideo(
     /// <b>required</b> if <see cref="InlineQueryResultVideo"/> is used to send an
     /// HTML-page as a result (e.g., a YouTube video).
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; } = inputMessageContent;
 }

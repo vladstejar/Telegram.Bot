@@ -10,7 +10,6 @@ namespace Telegram.Bot.Types;
 /// <a href="https://telegram.org/blog/privacy-discussions-web-bots#meet-seamless-web-bots">version 5.7</a>.
 /// </para>
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class LoginUrl
 {
     /// <summary>
@@ -26,13 +25,11 @@ public class LoginUrl
     /// <a href="https://core.telegram.org/widgets/login#checking-authorization">Checking authorization</a>.
     /// </para>
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Url { get; set; } = default!;
 
     /// <summary>
     /// Optional. New text of the button in forwarded messages
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? ForwardText { get; set; }
 
     /// <summary>
@@ -43,12 +40,10 @@ public class LoginUrl
     /// <a href="https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot">
     /// Linking your domain to the bot</a> for more details.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? BotUsername { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true"/> to request the permission for your bot to send messages to the user
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? RequestWriteAccess { get; set; }
 }

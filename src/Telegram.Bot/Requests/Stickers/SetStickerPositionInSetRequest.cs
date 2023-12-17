@@ -9,19 +9,16 @@ namespace Telegram.Bot.Requests;
 /// <see cref="InputFileId">File identifier</see> of the sticker
 /// </param>
 /// <param name="position">New sticker position in the set, zero-based</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetStickerPositionInSetRequest(InputFileId sticker, int position)
     : RequestBase<bool>("setStickerPositionInSet")
 {
     /// <summary>
     /// <see cref="InputFileId">File identifier</see> of the sticker
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InputFileId Sticker { get; } = sticker;
 
     /// <summary>
     /// New sticker position in the set, zero-based
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int Position { get; } = position;
 }

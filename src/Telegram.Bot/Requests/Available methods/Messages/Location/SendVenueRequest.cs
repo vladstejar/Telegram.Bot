@@ -14,7 +14,6 @@ namespace Telegram.Bot.Requests;
 /// <param name="longitude">Longitude of the venue</param>
 /// <param name="title">Name of the venue</param>
 /// <param name="address">Address of the venue</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SendVenueRequest(
     ChatId chatId,
     double latitude,
@@ -25,82 +24,67 @@ public class SendVenueRequest(
           IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? MessageThreadId { get; set; }
 
     /// <summary>
     /// Latitude of the venue
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public double Latitude { get; } = latitude;
 
     /// <summary>
     /// Longitude of the venue
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public double Longitude { get; } = longitude;
 
     /// <summary>
     /// Name of the venue
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 
     /// <summary>
     /// Address of the venue
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Address { get; } = address;
 
     /// <summary>
     /// Foursquare identifier of the venue
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? FoursquareId { get; set; }
 
     /// <summary>
     /// Foursquare type of the venue, if known. (For example, “arts_entertainment/default”,
     /// “arts_entertainment/aquarium” or “food/icecream”.)
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? FoursquareType { get; set; }
 
     /// <summary>
     /// Google Places identifier of the venue
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? GooglePlaceId { get; set; }
 
     /// <summary>
     /// Google Places type of the venue.
     /// (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? GooglePlaceType { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.DisableNotification"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? DisableNotification { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ProtectContent"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? ProtectContent { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyToMessageId"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ReplyToMessageId { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.AllowSendingWithoutReply"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? AllowSendingWithoutReply { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public IReplyMarkup? ReplyMarkup { get; set; }
 }

@@ -15,16 +15,13 @@ namespace Telegram.Bot.Requests;
 /// </remarks>
 /// <param name="userId">User identifier</param>
 /// <param name="inlineMessageId">Identifier of the inline message</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class GetInlineGameHighScoresRequest(long userId, string inlineMessageId)
     : RequestBase<GameHighScore[]>("getGameHighScores"),
       IUserTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
-    [JsonProperty(Required = Required.Always)]
     public string InlineMessageId { get; } = inlineMessageId;
 }

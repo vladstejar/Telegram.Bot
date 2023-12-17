@@ -1,44 +1,33 @@
-﻿using Newtonsoft.Json.Linq;
-
-namespace Telegram.Bot.Converters;
+﻿namespace Telegram.Bot.Converters;
 
 internal class NullableColorConverter : JsonConverter<Color?>
 {
-    public override void WriteJson(JsonWriter writer, Color? value, JsonSerializer serializer)
+    public override Color? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+        reader.TokenType is JsonTokenType.Number
+            ? new Color(reader.GetUInt32())
+            : throw new JsonException();
+
+    public override void Write(Utf8JsonWriter writer, Color? value, JsonSerializerOptions options)
     {
         if (value?.ToInt() is { } colorValue)
         {
-            writer.WriteValue(colorValue);
+            writer.WriteNumberValue(colorValue);
         }
-    }
-
-    public override Color? ReadJson(
-        JsonReader reader,
-        Type objectType,
-        Color? existingValue,
-        bool hasExistingValue,
-        JsonSerializer serializer)
-    {
-        var value = JToken.ReadFrom(reader).Value<int?>();
-        return value is not null
-            ? new Color(value.Value)
-            : new Color?();
+        else if (options.DefaultIgnoreCondition is JsonIgnoreCondition.Never)
+        {
+            writer.WriteNullValue();
+        }
     }
 }
 
 internal class ColorConverter : JsonConverter<Color>
 {
-    public override void WriteJson(JsonWriter writer, Color value, JsonSerializer serializer) =>
-        writer.WriteValue(value.ToInt());
+    public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        => JsonElement.TryParseValue(ref reader, out var element)
+           && element.Value.TryGetUInt32(out var intValue)
+            ? new Color(intValue)
+            : new();
 
-    public override Color ReadJson(
-        JsonReader reader,
-        Type objectType,
-        Color existingValue,
-        bool hasExistingValue,
-        JsonSerializer serializer)
-    {
-        var value = JToken.ReadFrom(reader).Value<int>();
-        return new(value);
-    }
+    public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
+        => writer.WriteNumberValue(value.ToInt());
 }

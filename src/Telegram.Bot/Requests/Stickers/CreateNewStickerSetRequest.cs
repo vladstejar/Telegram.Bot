@@ -30,7 +30,6 @@ namespace Telegram.Bot.Requests;
 /// <param name="stickerFormat">
 /// Format of stickers in the set.
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class CreateNewStickerSetRequest(
     long userId,
     string name,
@@ -41,7 +40,6 @@ public class CreateNewStickerSetRequest(
           IUserTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 
     /// <summary>
@@ -50,32 +48,27 @@ public class CreateNewStickerSetRequest(
     /// contain consecutive underscores and must end in <i>"_by_&lt;bot username&gt;"</i>.
     /// <i>&lt;bot_username&gt;</i> is case insensitive. 1-64 characters
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Name { get; } = name;
 
     /// <summary>
     /// Sticker set title, 1-64 characters
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Title { get; } = title;
 
     /// <summary>
     /// A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public IEnumerable<InputSticker> Stickers { get; } = stickers;
 
     /// <summary>
     /// Format of stickers in the set.
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public StickerFormat StickerFormat { get; } = stickerFormat;
 
     /// <summary>
     /// Type of stickers in the set.
     /// By default, a regular sticker set is created.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public StickerType? StickerType { get; set; }
 
     /// <summary>
@@ -84,7 +77,6 @@ public class CreateNewStickerSetRequest(
     /// on chat photos, or another appropriate color based on context;
     /// for <see cref="StickerType.CustomEmoji">custom emoji</see> sticker sets only
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? NeedsRepainting { get; set; }
 
     /// <inheritdoc/>

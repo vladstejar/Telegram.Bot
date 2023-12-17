@@ -1,12 +1,13 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 
 namespace Telegram.Bot.Types;
 
 /// <summary>
 /// Represent a color in RGB space
 /// </summary>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 [StructLayout(LayoutKind.Sequential)]
 public readonly record struct Color
 {
@@ -20,19 +21,16 @@ public readonly record struct Color
     /// <summary>
     /// Red component
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int Red { get; }
 
     /// <summary>
     /// Green component
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int Green { get; }
 
     /// <summary>
     /// Blue component
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int Blue { get; }
 
     /// <summary>
@@ -85,7 +83,7 @@ public readonly record struct Color
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public Color(uint color)
     {
-        if (color is > MaxRgbValue or < 0)
+        if (color > MaxRgbValue)
         {
             throw new ArgumentOutOfRangeException(nameof(color), color, "Color is out of range");
         }

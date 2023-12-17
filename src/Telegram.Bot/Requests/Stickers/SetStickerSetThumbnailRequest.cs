@@ -11,7 +11,6 @@ namespace Telegram.Bot.Requests;
 /// </summary>
 /// <param name="name">Sticker set name</param>
 /// <param name="userId">User identifier of the sticker set owner</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class SetStickerSetThumbnailRequest(string name, long userId)
     : FileRequestBase<bool>("setStickerSetThumbnail"),
       IUserTargetable
@@ -19,11 +18,9 @@ public class SetStickerSetThumbnailRequest(string name, long userId)
     /// <summary>
     /// Sticker set name
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string Name { get; } = name;
 
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 
     /// <summary>
@@ -37,7 +34,6 @@ public class SetStickerSetThumbnailRequest(string name, long userId)
     /// upload a new one using multipart/form-data. Animated and video sticker set thumbnails can't be uploaded
     /// via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputFile? Thumbnail { get; set; }
 
     /// <inheritdoc />

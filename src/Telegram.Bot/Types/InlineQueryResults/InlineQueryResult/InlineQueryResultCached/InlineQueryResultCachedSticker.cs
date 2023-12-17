@@ -1,6 +1,9 @@
 
 
 // ReSharper disable once CheckNamespace
+
+using JetBrains.Annotations;
+
 namespace Telegram.Bot.Types.InlineQueryResults;
 
 /// <summary>
@@ -11,22 +14,19 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// </summary>
 /// <param name="id">Unique identifier of this result</param>
 /// <param name="stickerFileId">A valid file identifier of the sticker</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultCachedSticker(string id, string stickerFileId) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be sticker
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Sticker;
 
     /// <summary>
     /// A valid file identifier of the sticker
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string StickerFileId { get; } = stickerFileId;
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 }

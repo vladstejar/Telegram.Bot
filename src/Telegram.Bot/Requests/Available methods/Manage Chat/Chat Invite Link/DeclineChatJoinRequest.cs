@@ -12,19 +12,17 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="userId">Unique identifier of the target user</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class DeclineChatJoinRequest(ChatId chatId, long userId)
     : RequestBase<bool>("declineChatJoinRequest"),
       IChatTargetable,
       IUserTargetable
 {
     /// <inheritdoc/>
-    [JsonProperty(Required = Required.Always)]
+
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Unique identifier of the target user
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public long UserId { get; } = userId;
 }

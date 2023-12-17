@@ -45,10 +45,10 @@ public class GamesTests2(TestsFixture fixture, GamesFixture classFixture) : ICla
         Message gameMessage = await BotClient.SendGameAsync(
             chatId: fixture.SupergroupChat.Id,
             gameShortName: classFixture.GameShortName,
-            replyMarkup: [
+            replyMarkup: new([
                 InlineKeyboardButton.WithCallBackGame(text: "Play"),
                 InlineKeyboardButton.WithCallbackData(textAndCallbackData: "Second button")
-            ]
+            ])
         );
 
         Assert.Equal(MessageType.Game, gameMessage.Type);
@@ -96,7 +96,7 @@ public class GamesTests2(TestsFixture fixture, GamesFixture classFixture) : ICla
         int newScore = oldScore + 1 + new Random().Next(3);
 
         await fixture.SendTestInstructionsAsync(
-            $"Changing score from {oldScore} to {newScore} for {classFixture.Player.Username!.Replace("_", @"\_")}."
+            $"Changing score from {oldScore} to {newScore} for {classFixture.Player.GetSafeUsername()}."
         );
 
         Message gameMessage = await BotClient.SetGameScoreAsync(
@@ -124,7 +124,7 @@ public class GamesTests2(TestsFixture fixture, GamesFixture classFixture) : ICla
         int newScore = oldScore - 1;
 
         await fixture.SendTestInstructionsAsync(
-            $"Changing score from {oldScore} to {newScore} for {classFixture.Player.Username!.Replace("_", @"\_")}."
+            $"Changing score from {oldScore} to {newScore} for {classFixture.Player.GetSafeUsername()}."
         );
 
         Message gameMessage = await BotClient.SetGameScoreAsync(

@@ -35,12 +35,11 @@ public class ReplyMarkupTests
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
     public async Task Should_Send_MultiRow_Keyboard()
     {
-        ReplyKeyboardMarkup replyMarkup =
-        [
+        ReplyKeyboardMarkup replyMarkup = new([
             [   "Top-Left",   "Top" , "Top-Right"   ],
             [       "Left", "Center", "Right"       ],
             ["Bottom-Left", "Bottom", "Bottom-Right"]
-        ];
+        ]);
 
         await BotClient.SendTextMessageAsync(
             chatId: _fixture.SupergroupChat,

@@ -13,17 +13,14 @@ namespace Telegram.Bot.Requests;
 /// <param name="chatId">Unique identifier for the target chat or username of the target channel
 /// (in the format <c>@channelusername</c>)
 /// </param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class UnpinChatMessageRequest(ChatId chatId) : RequestBase<bool>("unpinChatMessage"), IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of a message to unpin. If not specified, the most recent pinned message
     /// (by sending date) will be unpinned.
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? MessageId { get; set; }
 }

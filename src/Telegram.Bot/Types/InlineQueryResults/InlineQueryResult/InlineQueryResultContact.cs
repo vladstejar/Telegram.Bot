@@ -1,6 +1,6 @@
+using JetBrains.Annotations;
+// ReSharper disable CheckNamespace
 
-
-// ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Types.InlineQueryResults;
 
 /// <summary>
@@ -11,52 +11,43 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <param name="id">Unique identifier of this result</param>
 /// <param name="phoneNumber">Contact's phone number</param>
 /// <param name="firstName">Contact's first name</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+[PublicAPI]
 public class InlineQueryResultContact(string id, string phoneNumber, string firstName) : InlineQueryResult(id)
 {
     /// <summary>
     /// Type of the result, must be contact
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public override InlineQueryResultType Type => InlineQueryResultType.Contact;
 
     /// <summary>
     /// Contact's phone number
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string PhoneNumber { get; } = phoneNumber;
 
     /// <summary>
     /// Contact's first name
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string FirstName { get; } = firstName;
 
     /// <summary>
     /// Optional. Contact's last name
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? LastName { get; set; }
 
     /// <summary>
     /// Optional. Additional data about the contact in the form of a vCard, 0-2048 bytes
     /// </summary>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? Vcard { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public InputMessageContent? InputMessageContent { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public string? ThumbnailUrl { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailWidth" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailWidth { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public int? ThumbnailHeight { get; set; }
 }

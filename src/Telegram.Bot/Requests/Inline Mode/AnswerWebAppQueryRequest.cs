@@ -10,19 +10,16 @@ namespace Telegram.Bot.Requests;
 /// </summary>
 /// <param name="webAppQueryId">Unique identifier for the query to be answered</param>
 /// <param name="result">An object describing the message to be sent</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class AnswerWebAppQueryRequest(string webAppQueryId, InlineQueryResult result)
     : RequestBase<SentWebAppMessage>("answerWebAppQuery")
 {
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string WebAppQueryId { get; } = webAppQueryId;
 
     /// <summary>
     /// An object describing the message to be sent
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public InlineQueryResult Result { get; } = result;
 }

@@ -14,22 +14,18 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="messageId">Identifier of a message to pin</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class PinChatMessageRequest(ChatId chatId, int messageId)
     : RequestBase<bool>("pinChatMessage"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// Identifier of a message to pin
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public int MessageId { get; } = messageId;
 
     /// <inheritdoc cref="Abstractions.Documentation.DisableNotification"/>
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     public bool? DisableNotification { get; set; }
 }

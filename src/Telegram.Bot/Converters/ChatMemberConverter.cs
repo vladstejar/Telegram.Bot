@@ -1,37 +1,26 @@
-using System.Reflection;
-using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Text.Json.Nodes;
 using Telegram.Bot.Types.Enums;
 
 namespace Telegram.Bot.Converters;
 
-internal class ChatMemberConverter : JsonConverter
+internal class ChatMemberConverter : JsonConverter<ChatMember>
 {
-    static readonly TypeInfo BaseType = typeof(ChatMember).GetTypeInfo();
-
-    public override bool CanWrite => false;
-    public override bool CanRead => true;
-    public override bool CanConvert(Type objectType) =>
-        BaseType.IsAssignableFrom(objectType.GetTypeInfo());
-
-    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    public override ChatMember? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (value is null)
-        {
-            writer.WriteNull();
-        }
-        else
-        {
-            var jo = JObject.FromObject(value);
-            jo.WriteTo(writer);
-        }
-    }
+        var chatMemberConverter = options.Converters.First(converter => converter is ChatMemberConverter);
+        options.Converters.Remove(chatMemberConverter);
+        Utf8JsonReader clonedReader = reader;
 
-    public override object? ReadJson(
-        JsonReader reader,
-        Type objectType,
-        object? existingValue,
-        JsonSerializer serializer)
-    {
+        do
+        {
+            JsonElement? element;
+            if (JsonElement.TryParseValue(ref clonedReader, out element))
+            {
+
+            }
+        } while (clonedReader.Read());
+
         var jo = JObject.Load(reader);
         var status = jo["status"]?.ToObject<ChatMemberStatus>();
 
@@ -48,7 +37,7 @@ internal class ChatMemberConverter : JsonConverter
             ChatMemberStatus.Left          => typeof(ChatMemberLeft),
             ChatMemberStatus.Kicked        => typeof(ChatMemberBanned),
             ChatMemberStatus.Restricted    => typeof(ChatMemberRestricted),
-            _                              => throw new JsonSerializationException($"Unknown chat member status value of '{jo["status"]}'")
+            _                              => throw new JsonException($"Unknown chat member status value of '{jo["status"]}'")
         };
 
         // Remove status because status property only has getter
@@ -57,5 +46,11 @@ internal class ChatMemberConverter : JsonConverter
         serializer.Populate(jo.CreateReader(), value);
 
         return value;
+    }
+
+    public override void Write(Utf8JsonWriter writer, ChatMember value, JsonSerializerOptions options)
+    {
+        var jo = JObject.FromObject(value);
+        jo.WriteTo(writer);
     }
 }

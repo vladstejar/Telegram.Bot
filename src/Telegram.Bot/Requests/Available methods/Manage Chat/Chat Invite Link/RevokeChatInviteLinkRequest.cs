@@ -13,18 +13,15 @@ namespace Telegram.Bot.Requests;
 /// (in the format <c>@channelusername</c>)
 /// </param>
 /// <param name="inviteLink">The invite link to revoke</param>
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 public class RevokeChatInviteLinkRequest(ChatId chatId, string inviteLink)
     : RequestBase<ChatInviteLink>("revokeChatInviteLink"),
       IChatTargetable
 {
     /// <inheritdoc />
-    [JsonProperty(Required = Required.Always)]
     public ChatId ChatId { get; } = chatId;
 
     /// <summary>
     /// The invite link to revoke
     /// </summary>
-    [JsonProperty(Required = Required.Always)]
     public string InviteLink { get; } = inviteLink;
 }
