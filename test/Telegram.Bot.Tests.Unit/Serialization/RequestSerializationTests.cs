@@ -1,9 +1,11 @@
 using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Telegram.Bot.Requests;
+using Telegram.Bot.Types;
 using Xunit;
 
 namespace Telegram.Bot.Tests.Unit.Serialization;
@@ -81,5 +83,31 @@ public class RequestSerializationTests
         Assert.Contains(@"""name"":""Test link name""", stringContent);
         Assert.Contains(@"""member_limit"":123", stringContent);
         Assert.Contains(@"""creates_join_request"":true", stringContent);
+    }
+
+    [Fact(DisplayName = "Should cache content")]
+    public async Task Should_Cache_Content()
+    {
+        await using Stream
+            stream1 = new MemoryStream(),
+            stream2 = new MemoryStream();
+
+        SendVideoRequest sendVideoRequest = new(
+            chatId: 999999,
+            video: new InputFileStream(stream1, "file"))
+        {
+            Thumbnail = new InputFileStream(stream2, "thumb.jpg"),
+        };
+
+        ///*
+        StreamContent?[] t = await Task.WhenAll(
+            sendVideoRequest.CachedContent(),
+            sendVideoRequest.CachedContent());
+
+        string c1 = await t[0]!.ReadAsStringAsync();
+        string c2 = await t[1]!.ReadAsStringAsync();
+
+        Assert.Equal(c1, c2);
+        //*/
     }
 }
