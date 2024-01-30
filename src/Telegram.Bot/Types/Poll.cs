@@ -73,6 +73,6 @@ public class Poll
     /// <summary>
     /// Optional. Point in time when the poll will be automatically closed
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? CloseDate { get; set; }
 }

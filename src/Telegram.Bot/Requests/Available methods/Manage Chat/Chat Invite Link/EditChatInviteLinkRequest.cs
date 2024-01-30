@@ -33,7 +33,7 @@ public class EditChatInviteLinkRequest(ChatId chatId, string inviteLink)
     /// <summary>
     /// Point in time when the link will expire
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? ExpireDate { get; set; }
 
     /// <summary>

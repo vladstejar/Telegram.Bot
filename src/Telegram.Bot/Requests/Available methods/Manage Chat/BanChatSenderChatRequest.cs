@@ -32,6 +32,6 @@ public class BanChatSenderChatRequest(ChatId chatId, long senderChatId)
     /// Date when the sender chat will be unbanned, unix time. If the chat is banned for more than 366 days or
     /// less than 30 seconds from the current time they are considered to be banned forever.
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? UntilDate { get; set; }
 }

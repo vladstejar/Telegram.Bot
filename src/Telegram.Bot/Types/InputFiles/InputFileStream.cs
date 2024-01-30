@@ -24,4 +24,10 @@ public class InputFileStream(Stream content, string? fileName = default) : Input
     /// Name of a file to upload using multipart/form-data
     /// </summary>
     public string? FileName { get; } = fileName;
+
+    // Needed for STJ to work
+    [JsonConstructor]
+    private InputFileStream(Stream content, string fileName, FileType fileType)
+        : this(content, fileName)
+    { }
 }

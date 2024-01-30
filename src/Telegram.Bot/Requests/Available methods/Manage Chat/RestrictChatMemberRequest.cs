@@ -47,6 +47,6 @@ public class RestrictChatMemberRequest(ChatId chatId, long userId, ChatPermissio
     /// more than 366 days or less than 30 seconds from the current time, they are considered to
     /// be restricted forever.
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? UntilDate { get; set; }
 }

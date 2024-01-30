@@ -6,41 +6,23 @@ internal class MenuButtonConverter : JsonConverter<MenuButton>
 {
     public override MenuButton? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var jo = JObject.Load(reader);
-        var typeToken = jo["type"];
-        var status = typeToken?.ToObject<MenuButtonType>();
-
-        if (status is null)
-        {
+        var clonedReader = reader;
+        var jsonElement = JsonElement.ParseValue(ref clonedReader);
+        if (!jsonElement.TryGetProperty("type", out var statusProperty))
             return null;
-        }
 
+        var status = statusProperty.Deserialize<MenuButtonType?>();
         var actualType = status switch
         {
-            MenuButtonType.Default  => typeof(MenuButtonDefault),
+            MenuButtonType.Default => typeof(MenuButtonDefault),
             MenuButtonType.Commands => typeof(MenuButtonCommands),
-            MenuButtonType.WebApp   => typeof(MenuButtonWebApp),
-            _                       => throw new JsonException($"Unknown menu button type value of '{typeToken}'")
+            MenuButtonType.WebApp => typeof(MenuButtonWebApp),
+            _ => throw new JsonException($"Unknown chat member status value of '{statusProperty}'")
         };
 
-        // Remove status because status property only has getter
-        jo.Remove("type");
-        var value = Activator.CreateInstance(actualType)!;
-        serializer.Populate(jo.CreateReader(), value);
-
-        return value;
+        return (MenuButton?) JsonSerializer.Deserialize(ref reader, actualType, options);
     }
 
     public override void Write(Utf8JsonWriter writer, MenuButton value, JsonSerializerOptions options)
-    {
-        if (value is null)
-        {
-            writer.WriteNull();
-        }
-        else
-        {
-            var jo = JObject.FromObject(value);
-            jo.WriteTo(writer);
-        }
-    }
+        => JsonSerializer.SerializeToElement(value, options).WriteTo(writer);
 }

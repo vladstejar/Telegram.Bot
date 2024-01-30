@@ -1,8 +1,8 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Types.Passport;
 using Xunit;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -27,7 +27,7 @@ public class EncryptedPassportElementTypeConverterTests
         EncryptedPassportElement encryptedPassportElement = new() { Type = encryptedPassportElementType };
         string expectedResult = $$"""{"type":"{{value}}"}""";
 
-        string result = JsonConvert.SerializeObject(encryptedPassportElement);
+        string result = JsonSerializer.Serialize(encryptedPassportElement, JsonSerializerOptionsProvider.Options);
 
         Assert.Equal(expectedResult, result);
     }
@@ -51,7 +51,7 @@ public class EncryptedPassportElementTypeConverterTests
         EncryptedPassportElement expectedResult = new() { Type = encryptedPassportElementType };
         string jsonData = $$"""{"type":"{{value}}"}""";
 
-        EncryptedPassportElement? result = JsonConvert.DeserializeObject<EncryptedPassportElement>(jsonData);
+        EncryptedPassportElement? result = JsonSerializer.Deserialize<EncryptedPassportElement>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -62,7 +62,7 @@ public class EncryptedPassportElementTypeConverterTests
     {
         string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
-        EncryptedPassportElement? result = JsonConvert.DeserializeObject<EncryptedPassportElement>(jsonData);
+        EncryptedPassportElement? result = JsonSerializer.Deserialize<EncryptedPassportElement>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal((EncryptedPassportElementType)0, result.Type);
@@ -78,13 +78,11 @@ public class EncryptedPassportElementTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(encryptedPassportElement));
+        Assert.Throws<JsonException>(() => JsonSerializer.Serialize(encryptedPassportElement, JsonSerializerOptionsProvider.Options));
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     class EncryptedPassportElement
     {
-        [JsonProperty(Required = Required.Always)]
         public EncryptedPassportElementType Type { get; init; }
     }
 }

@@ -16,7 +16,7 @@ public abstract class RequestBase<TResponse>(string methodName, HttpMethod? meth
 {
     /// <inheritdoc />
     [JsonIgnore]
-    public HttpMethod Method { get; } = method ?? HttpMethod.Post;
+    public HttpMethod HttpMethod { get; } = method ?? HttpMethod.Post;
 
     /// <inheritdoc />
     [JsonIgnore]
@@ -28,7 +28,7 @@ public abstract class RequestBase<TResponse>(string methodName, HttpMethod? meth
     /// <returns>Content of HTTP request</returns>
     public virtual HttpContent? ToHttpContent() =>
         new StringContent(
-            content: JsonSerializer.Serialize(this, TelegramJsonContext.Default.Options),
+            content: JsonSerializer.Serialize(this, JsonSerializerOptionsProvider.Options),
             encoding: Encoding.UTF8,
             mediaType: "application/json"
         );
@@ -42,5 +42,5 @@ public abstract class RequestBase<TResponse>(string methodName, HttpMethod? meth
     /// name, otherwise it won't be serialized
     /// </summary>
     [JsonPropertyName("method")]
-    internal string? WebHookMethodName => IsWebhookResponse ? MethodName : default;
+    public string? Method => IsWebhookResponse ? MethodName : default;
 }

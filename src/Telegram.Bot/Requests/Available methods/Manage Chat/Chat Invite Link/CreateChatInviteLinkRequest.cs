@@ -28,7 +28,7 @@ public class CreateChatInviteLinkRequest(ChatId chatId)
     /// <summary>
     /// Point in time when the link will expire
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? ExpireDate { get; set; }
 
     /// <summary>

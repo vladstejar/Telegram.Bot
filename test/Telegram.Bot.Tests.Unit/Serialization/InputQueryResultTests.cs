@@ -1,4 +1,5 @@
-using Newtonsoft.Json;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Requests;
 using Telegram.Bot.Types.InlineQueryResults;
 using Xunit;
@@ -22,7 +23,7 @@ public class InputQueryResultTests
         ];
 
         AnswerInlineQueryRequest request = new("query_id", results) { CacheTime = 0 };
-        string json = JsonConvert.SerializeObject(request);
+        string json = JsonSerializer.Serialize(request, JsonSerializerOptionsProvider.Options);
 
         Assert.Contains(@"""thumbnail_mime_type"":""video/mp4""", json);
     }
@@ -41,7 +42,7 @@ public class InputQueryResultTests
         ];
 
         AnswerInlineQueryRequest request = new("query_id", results) { CacheTime = 0 };
-        string json = JsonConvert.SerializeObject(request);
+        string json = JsonSerializer.Serialize(request, JsonSerializerOptionsProvider.Options);
 
         Assert.Contains(@"""thumbnail_mime_type"":""video/mp4""", json);
     }

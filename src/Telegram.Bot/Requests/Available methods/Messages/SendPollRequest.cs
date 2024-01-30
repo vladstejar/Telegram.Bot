@@ -89,8 +89,7 @@ public class SendPollRequest(ChatId chatId, string question, IEnumerable<string>
     /// Point in time when the poll will be automatically closed. Must be at least 5 and no more
     /// than 600 seconds in the future. Can't be used together with <see cref="OpenPeriod"/>.
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
-
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? CloseDate { get; set; }
 
     /// <summary>

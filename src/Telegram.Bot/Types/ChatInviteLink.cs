@@ -43,7 +43,7 @@ public class ChatInviteLink
     /// <summary>
     /// Optional. Point in time when the link will expire or has been expired
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? ExpireDate { get; set; }
 
     /// <summary>

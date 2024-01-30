@@ -1,6 +1,7 @@
 using System;
 using System.IO;
-using Newtonsoft.Json;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Xunit;
@@ -17,8 +18,8 @@ public class InputStickerSerializationTests
         string[] emojiList = ["🙂"];
         InputSticker inputSticker = new(inputFile, emojiList);
 
-        string json = JsonConvert.SerializeObject(inputSticker);
-        InputSticker obj = JsonConvert.DeserializeObject<InputSticker>(json)!;
+        string json = JsonSerializer.Serialize(inputSticker, JsonSerializerOptionsProvider.Options);
+        InputSticker obj = JsonSerializer.Deserialize<InputSticker>(json, JsonSerializerOptionsProvider.Options)!;
 
         InputFileStream objInputFile = (InputFileStream)obj.Sticker;
 
@@ -37,8 +38,8 @@ public class InputStickerSerializationTests
         string[] emojiList = ["🙂"];
         InputSticker inputStickerFileId = new(inputFileId, emojiList);
 
-        string json = JsonConvert.SerializeObject(inputStickerFileId);
-        InputSticker? obj = JsonConvert.DeserializeObject<InputSticker>(json);
+        string json = JsonSerializer.Serialize(inputStickerFileId, JsonSerializerOptionsProvider.Options);
+        InputSticker? obj = JsonSerializer.Deserialize<InputSticker>(json, JsonSerializerOptionsProvider.Options);
 
         InputFileId? objInputFileId = (InputFileId?)obj?.Sticker;
 
@@ -58,8 +59,8 @@ public class InputStickerSerializationTests
         string[] emojiList = ["🙂"];
         InputSticker inputStickerFileUrl = new(inputFileUrl, emojiList);
 
-        string json = JsonConvert.SerializeObject(inputStickerFileUrl);
-        InputSticker? obj = JsonConvert.DeserializeObject<InputSticker>(json);
+        string json = JsonSerializer.Serialize(inputStickerFileUrl, JsonSerializerOptionsProvider.Options);
+        InputSticker? obj = JsonSerializer.Deserialize<InputSticker>(json, JsonSerializerOptionsProvider.Options);
 
         InputFileUrl? objInputFileUrl = (InputFileUrl?)obj?.Sticker;
 

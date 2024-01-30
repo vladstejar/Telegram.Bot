@@ -83,7 +83,7 @@ public class Message
     /// <summary>
     /// Optional. For forwarded messages, date the original message was sent
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? ForwardDate { get; set; }
 
     /// <summary>
@@ -106,7 +106,7 @@ public class Message
     /// <summary>
     /// Optional. Date the message was last edited
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? EditDate { get; set; }
 
     /// <summary>

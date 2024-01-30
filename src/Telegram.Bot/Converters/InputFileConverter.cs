@@ -4,6 +4,8 @@ namespace Telegram.Bot.Converters;
 
 internal class InputFileConverter : JsonConverter<InputFile?>
 {
+    public override bool CanConvert(Type typeToConvert) => typeof(InputFile).IsAssignableFrom(typeToConvert);
+
     public override InputFile? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (!JsonElement.TryParseValue(ref reader, out var element))

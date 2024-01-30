@@ -24,4 +24,9 @@ public class InputFileUrl(Uri uri) : InputFile
     public InputFileUrl(string url)
         : this(new Uri(url))
     {}
+
+    // Needed for STJ to work
+    [JsonConstructor]
+    private InputFileUrl(Uri url, FileType fileType) : this(url)
+    { }
 }

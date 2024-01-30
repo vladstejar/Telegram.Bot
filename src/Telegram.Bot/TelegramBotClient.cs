@@ -25,9 +25,10 @@ namespace Telegram.Bot;
 /// Thrown if <paramref name="options"/> is <c>null</c>
 /// </exception>
 [PublicAPI]
-
-public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? httpClient = default)
-    : ITelegramBotClient
+public class TelegramBotClient(
+    TelegramBotClientOptions options,
+    HttpClient? httpClient = default)
+        : ITelegramBotClient
 {
     readonly TelegramBotClientOptions _options = options ?? throw new ArgumentNullException(nameof(options));
 
@@ -83,7 +84,7 @@ public class TelegramBotClient(TelegramBotClientOptions options, HttpClient? htt
         var url = $"{_options.BaseRequestUrl}/{request.MethodName}";
 
 #pragma warning disable CA2000
-        var httpRequest = new HttpRequestMessage(method: request.Method, requestUri: url)
+        var httpRequest = new HttpRequestMessage(method: request.HttpMethod, requestUri: url)
         {
             Content = request.ToHttpContent(),
         };

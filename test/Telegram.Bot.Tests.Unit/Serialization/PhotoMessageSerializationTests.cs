@@ -3,7 +3,8 @@ using System.Linq;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Xunit;
-using Newtonsoft.Json;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 
 namespace Telegram.Bot.Tests.Unit.Serialization;
 
@@ -64,7 +65,7 @@ public class PhotoMessageSerializationTests
         }
         """;
 
-        Message? message = JsonConvert.DeserializeObject<Message>(json);
+        Message? message = JsonSerializer.Deserialize<Message>(json, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(message);
         Assert.Equal(MessageType.Photo, message.Type);
@@ -131,7 +132,7 @@ public class PhotoMessageSerializationTests
             ]
         };
 
-        string? json = JsonConvert.SerializeObject(message);
+        string? json = JsonSerializer.Serialize(message, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(json);
         Assert.True(json.Length > 100);

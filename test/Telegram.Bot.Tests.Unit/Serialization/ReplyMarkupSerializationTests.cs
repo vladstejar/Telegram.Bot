@@ -1,4 +1,5 @@
-using Newtonsoft.Json;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Types.ReplyMarkups;
 using Xunit;
 
@@ -16,7 +17,7 @@ public class ReplyMarkupSerializationTests
             KeyboardButton.WithRequestPoll("Create a poll", type)
         );
 
-        string serializedReplyMarkup = JsonConvert.SerializeObject(replyMarkup);
+        string serializedReplyMarkup = JsonSerializer.Serialize(replyMarkup, JsonSerializerOptionsProvider.Options);
 
         string formattedType = string.IsNullOrEmpty(type)
             ? "{}"

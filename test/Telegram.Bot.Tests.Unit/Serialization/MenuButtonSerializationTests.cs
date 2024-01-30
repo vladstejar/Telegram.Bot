@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Xunit;
@@ -17,8 +18,8 @@ public class MenuButtonSerializationTests
             web_app = new { url = "https://example.com/link/to/web/app" }
         };
 
-        string menuButtonJson = JsonConvert.SerializeObject(button, Formatting.Indented);
-        MenuButton? menuButton = JsonConvert.DeserializeObject<MenuButton>(menuButtonJson);
+        string menuButtonJson = JsonSerializer.Serialize(button, JsonSerializerOptionsProvider.Options);
+        MenuButton? menuButton = JsonSerializer.Deserialize<MenuButton>(menuButtonJson, JsonSerializerOptionsProvider.Options);
 
         MenuButtonWebApp webAppButton = Assert.IsType<MenuButtonWebApp>(menuButton);
 
@@ -39,7 +40,7 @@ public class MenuButtonSerializationTests
             Text = "Test text"
         };
 
-        string webAppButtonJson = JsonConvert.SerializeObject(webAppButton);
+        string webAppButtonJson = JsonSerializer.Serialize(webAppButton, JsonSerializerOptionsProvider.Options);
         Assert.Contains(@"""type"":""web_app""", webAppButtonJson);
         Assert.Contains(@"""text"":""Test text""", webAppButtonJson);
         Assert.Contains(@"""web_app"":{", webAppButtonJson);
@@ -51,8 +52,8 @@ public class MenuButtonSerializationTests
     {
         var button = new { type = MenuButtonType.Default, };
 
-        string menuButtonJson = JsonConvert.SerializeObject(button, Formatting.Indented);
-        MenuButton? menuButton = JsonConvert.DeserializeObject<MenuButton>(menuButtonJson);
+        string menuButtonJson = JsonSerializer.Serialize(button, JsonSerializerOptionsProvider.Options);
+        MenuButton? menuButton = JsonSerializer.Deserialize<MenuButton>(menuButtonJson, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(menuButton);
         Assert.Equal(MenuButtonType.Default, menuButton.Type);
@@ -64,7 +65,7 @@ public class MenuButtonSerializationTests
     {
         MenuButtonDefault menuButton = new();
 
-        string menuButtonJson = JsonConvert.SerializeObject(menuButton);
+        string menuButtonJson = JsonSerializer.Serialize(menuButton, JsonSerializerOptionsProvider.Options);
         Assert.Contains(@"""type"":""default""", menuButtonJson);
     }
 
@@ -73,8 +74,8 @@ public class MenuButtonSerializationTests
     {
         var button = new { type = MenuButtonType.Commands, };
 
-        string menuButtonJson = JsonConvert.SerializeObject(button, Formatting.Indented);
-        MenuButton? menuButton = JsonConvert.DeserializeObject<MenuButton>(menuButtonJson);
+        string menuButtonJson = JsonSerializer.Serialize(button, JsonSerializerOptionsProvider.Options);
+        MenuButton? menuButton = JsonSerializer.Deserialize<MenuButton>(menuButtonJson, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(menuButton);
         Assert.Equal(MenuButtonType.Commands, menuButton.Type);
@@ -86,7 +87,7 @@ public class MenuButtonSerializationTests
     {
         MenuButtonCommands menuButton = new();
 
-        string menuButtonJson = JsonConvert.SerializeObject(menuButton);
+        string menuButtonJson = JsonSerializer.Serialize(menuButton, JsonSerializerOptionsProvider.Options);
         Assert.Contains(@"""type"":""commands""", menuButtonJson);
     }
 }

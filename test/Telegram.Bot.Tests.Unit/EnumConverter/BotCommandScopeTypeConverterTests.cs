@@ -1,8 +1,8 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -21,7 +21,7 @@ public class BotCommandScopeTypeConverterTests
         BotCommandScope botCommandScope = new(){ Type = botCommandScopeType };
         string expectedResult = $$"""{"type":"{{value}}"}""";
 
-        string result = JsonConvert.SerializeObject(botCommandScope);
+        string result = JsonSerializer.Serialize(botCommandScope, JsonSerializerOptionsProvider.Options);
 
         Assert.Equal(expectedResult, result);
     }
@@ -39,7 +39,7 @@ public class BotCommandScopeTypeConverterTests
         BotCommandScope expectedResult = new() { Type = botCommandScopeType };
         string jsonData = $$"""{"type":"{{value}}"}""";
 
-        BotCommandScope? result = JsonConvert.DeserializeObject<BotCommandScope>(jsonData);
+        BotCommandScope? result = JsonSerializer.Deserialize<BotCommandScope>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -50,7 +50,7 @@ public class BotCommandScopeTypeConverterTests
     {
         string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
-        BotCommandScope? result = JsonConvert.DeserializeObject<BotCommandScope>(jsonData);
+        BotCommandScope? result = JsonSerializer.Deserialize<BotCommandScope>(jsonData, JsonSerializerOptionsProvider.Options);
         Assert.NotNull(result);
         Assert.Equal((BotCommandScopeType)0, result.Type);
     }
@@ -60,13 +60,11 @@ public class BotCommandScopeTypeConverterTests
     {
         BotCommandScope botCommandScope = new() { Type = (BotCommandScopeType)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(botCommandScope));
+        Assert.Throws<JsonException>(() => JsonSerializer.Serialize(botCommandScope, JsonSerializerOptionsProvider.Options));
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     class BotCommandScope
     {
-        [JsonProperty(Required = Required.Always)]
         public BotCommandScopeType Type { get; init; }
     }
 }

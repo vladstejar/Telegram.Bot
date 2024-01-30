@@ -31,7 +31,7 @@ public class WebhookInfo
     /// <summary>
     /// Optional. Time for the most recent error that happened when trying to deliver an update via webhook
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? LastErrorDate { get; set; }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class WebhookInfo
     /// Optional. Unix time of the most recent error that happened when trying to synchronize available updates
     /// with Telegram datacenters
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? LastSynchronizationErrorDate { get; set; }
 
     /// <summary>

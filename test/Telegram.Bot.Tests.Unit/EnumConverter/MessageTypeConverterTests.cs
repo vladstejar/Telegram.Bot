@@ -1,8 +1,8 @@
-using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -50,7 +50,7 @@ public class MessageTypeConverterTests
         Message message = new() { Type = messageType };
         string expectedResult = $$"""{"type":"{{value}}"}""";
 
-        string result = JsonConvert.SerializeObject(message);
+        string result = JsonSerializer.Serialize(message, JsonSerializerOptionsProvider.Options);
 
         Assert.Equal(expectedResult, result);
     }
@@ -97,7 +97,7 @@ public class MessageTypeConverterTests
         Message expectedResult = new() { Type = messageType };
         string jsonData = $$"""{"type":"{{value}}"}""";
 
-        Message? result = JsonConvert.DeserializeObject<Message>(jsonData);
+        Message? result = JsonSerializer.Deserialize<Message>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -108,7 +108,7 @@ public class MessageTypeConverterTests
     {
         string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
-        Message? result = JsonConvert.DeserializeObject<Message>(jsonData);
+        Message? result = JsonSerializer.Deserialize<Message>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal(MessageType.Unknown, result.Type);
@@ -119,13 +119,11 @@ public class MessageTypeConverterTests
     {
         Message message = new() { Type = (MessageType)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(message));
+        Assert.Throws<JsonException>(() => JsonSerializer.Serialize(message, JsonSerializerOptionsProvider.Options));
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     class Message
     {
-        [JsonProperty(Required = Required.Always)]
         public MessageType Type { get; init; }
     }
 }

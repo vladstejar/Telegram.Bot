@@ -1,8 +1,8 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -17,7 +17,7 @@ public class MenuButtonTypeConverterTests
         MenuButton menuButton = new() { Type = menuButtonType };
         string expectedResult = $$"""{"type":"{{value}}"}""";
 
-        string result = JsonConvert.SerializeObject(menuButton);
+        string result = JsonSerializer.Serialize(menuButton, JsonSerializerOptionsProvider.Options);
 
         Assert.Equal(expectedResult, result);
     }
@@ -31,7 +31,7 @@ public class MenuButtonTypeConverterTests
         MenuButton expectedResult = new() { Type = menuButtonType };
         string jsonData = $$"""{"type":"{{value}}"}""";
 
-        MenuButton? result = JsonConvert.DeserializeObject<MenuButton>(jsonData);
+        MenuButton? result = JsonSerializer.Deserialize<MenuButton>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -42,7 +42,7 @@ public class MenuButtonTypeConverterTests
     {
         string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
-        MenuButton? result = JsonConvert.DeserializeObject<MenuButton>(jsonData);
+        MenuButton? result = JsonSerializer.Deserialize<MenuButton>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal((MenuButtonType)0, result.Type);
@@ -58,13 +58,11 @@ public class MenuButtonTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(menuButton));
+        Assert.Throws<JsonException>(() => JsonSerializer.Serialize(menuButton, JsonSerializerOptionsProvider.Options));
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     class MenuButton
     {
-        [JsonProperty(Required = Required.Always)]
         public MenuButtonType Type { get; init; }
     }
 }

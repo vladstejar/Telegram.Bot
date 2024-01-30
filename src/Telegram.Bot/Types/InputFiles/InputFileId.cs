@@ -16,4 +16,9 @@ public class InputFileId(string id) : InputFile
     /// A file identifier
     /// </summary>
     public string Id { get; } = id;
+
+    // Needed for STJ to work
+    [JsonConstructor]
+    private InputFileId(string id, FileType fileType) : this(id)
+    { }
 }

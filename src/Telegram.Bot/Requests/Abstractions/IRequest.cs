@@ -13,7 +13,7 @@ public interface IRequest
     /// <summary>
     /// HTTP method of request
     /// </summary>
-    HttpMethod Method { get; }
+    HttpMethod HttpMethod { get; }
 
     /// <summary>
     /// API method name

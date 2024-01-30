@@ -33,7 +33,7 @@ public class BanChatMemberRequest(ChatId chatId, long userId)
     /// than 30 seconds from the current time they are considered to be banned forever.
     /// Applied for supergroups and channels only.
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(BanTimeUnixDateTimeConverter))]
     public DateTime? UntilDate { get; set; }
 
     /// <summary>

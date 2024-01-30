@@ -70,7 +70,7 @@ public class Chat
     /// Optional. Expiration date of the emoji status of the other party in a private chat, if any.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    [JsonConverter(typeof(UnixDateTimeConverter))]
+    [JsonConverter(typeof(NullableUnixDateTimeConverter))]
     public DateTime? EmojiStatusExpirationDate { get; set; }
 
     /// <summary>

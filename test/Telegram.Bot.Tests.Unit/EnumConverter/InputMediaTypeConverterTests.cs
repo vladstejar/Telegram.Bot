@@ -1,8 +1,8 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+using System.Text.Json;
+using Telegram.Bot.Converters;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -19,7 +19,7 @@ public class InputMediaTypeConverterTests
         InputMedia inputMedia = new() { Type = inputMediaType };
         string expectedResult = $$"""{"type":"{{value}}"}""";
 
-        string result = JsonConvert.SerializeObject(inputMedia);
+        string result = JsonSerializer.Serialize(inputMedia, JsonSerializerOptionsProvider.Options);
 
         Assert.Equal(expectedResult, result);
     }
@@ -35,7 +35,7 @@ public class InputMediaTypeConverterTests
         InputMedia expectedResult = new() { Type = inputMediaType };
         string jsonData = $$"""{"type":"{{value}}"}""";
 
-        InputMedia? result = JsonConvert.DeserializeObject<InputMedia>(jsonData);
+        InputMedia? result = JsonSerializer.Deserialize<InputMedia>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -46,7 +46,7 @@ public class InputMediaTypeConverterTests
     {
         string jsonData = $$"""{"type":"{{int.MaxValue}}"}""";
 
-        InputMedia? result = JsonConvert.DeserializeObject<InputMedia>(jsonData);
+        InputMedia? result = JsonSerializer.Deserialize<InputMedia>(jsonData, JsonSerializerOptionsProvider.Options);
 
         Assert.NotNull(result);
         Assert.Equal((InputMediaType)0, result.Type);
@@ -62,13 +62,11 @@ public class InputMediaTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(inputMedia));
+        Assert.Throws<JsonException>(() => JsonSerializer.Serialize(inputMedia, JsonSerializerOptionsProvider.Options));
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     class InputMedia
     {
-        [JsonProperty(Required = Required.Always)]
         public InputMediaType Type { get; init; }
     }
 }
