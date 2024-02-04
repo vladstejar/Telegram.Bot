@@ -17,7 +17,7 @@ internal static class StreamExtensions
     {
         if (stream is null || !stream.CanRead) { return default; }
 
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         return default;
 #else
         using var streamReader = new StreamReader(stream);

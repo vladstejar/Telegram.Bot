@@ -13,13 +13,13 @@ namespace Telegram.Bot.Requests;
 /// on each side. Will also return the top three users if the user and his neighbors are not among
 /// them. Please note that this behavior is subject to change.
 /// </remarks>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class GetGameHighScoresRequest : RequestBase<GameHighScore[]>, IUserTargetable, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long UserId { get; }
@@ -27,7 +27,7 @@ public class GetGameHighScoresRequest : RequestBase<GameHighScore[]>, IUserTarge
     /// <summary>
     /// Unique identifier for the target chat
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long ChatId { get; }
@@ -38,7 +38,7 @@ public class GetGameHighScoresRequest : RequestBase<GameHighScore[]>, IUserTarge
     /// <summary>
     /// Identifier of the sent message
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int MessageId { get; }

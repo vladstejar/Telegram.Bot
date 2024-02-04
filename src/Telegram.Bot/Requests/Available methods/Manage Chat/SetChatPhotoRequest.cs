@@ -9,13 +9,13 @@ namespace Telegram.Bot.Requests;
 /// chats. The bot must be an administrator in the chat for this to work and must have the appropriate
 /// admin rights. Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class SetChatPhotoRequest : FileRequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -23,7 +23,7 @@ public class SetChatPhotoRequest : FileRequestBase<bool>, IChatTargetable
     /// <summary>
     /// New chat photo, uploaded using multipart/form-data
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public InputFileStream Photo { get; }

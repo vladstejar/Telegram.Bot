@@ -73,14 +73,14 @@ public class UpdateTypeConverterTests
     {
         Update update = new((UpdateType)int.MaxValue);
 
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         Assert.Throws<JsonException>(() => Serializer.Serialize(update));
 #else
         Assert.Throws<NotSupportedException>(() => Serializer.Serialize(update));
 #endif
     }
 
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     #endif
     record Update([property: JsonProperty(Required = Required.Always)] UpdateType Type);

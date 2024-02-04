@@ -11,19 +11,19 @@ namespace Telegram.Bot.Requests;
 /// So if the user is a member of the chat they will also be <b>removed</b> from the chat.
 /// If you don't want this, use the parameter <see cref="OnlyIfBanned"/>. Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class UnbanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
 
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long UserId { get; }
@@ -31,7 +31,7 @@ public class UnbanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserT
     /// <summary>
     /// Do nothing if the user is not banned
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? OnlyIfBanned { get; set; }

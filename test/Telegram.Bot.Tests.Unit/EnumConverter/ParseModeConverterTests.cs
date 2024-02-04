@@ -49,12 +49,12 @@ public class ParseModeConverterTests
         Assert.Equal((ParseMode)0, result.ParseMode);
     }
 
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     #endif
     class SendMessageRequest
     {
-        #if !NET7_0_OR_GREATER
+        #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
         public ParseMode ParseMode { get; init; }

@@ -5,7 +5,7 @@ namespace Telegram.Bot.Requests;
 /// the bot's profile page and is sent together with the link when users share the bot.
 /// Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class SetMyShortDescriptionRequest : RequestBase<bool>
@@ -14,7 +14,7 @@ public class SetMyShortDescriptionRequest : RequestBase<bool>
     /// New short description for the bot; 0-120 characters.
     /// Pass an empty string to remove the dedicated short description for the given language.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? ShortDescription { get; set; }
@@ -23,7 +23,7 @@ public class SetMyShortDescriptionRequest : RequestBase<bool>
     /// A two-letter ISO 639-1 language code. If empty, the short description will be
     /// applied to all users for whose language there is no dedicated short description.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? LanguageCode { get; set; }

@@ -7,19 +7,19 @@ namespace Telegram.Bot.Requests;
 /// Use this method to set a custom title for an administrator in a supergroup promoted by the bot.
 /// Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class SetChatAdministratorCustomTitleRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
 
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long UserId { get; }
@@ -27,7 +27,7 @@ public class SetChatAdministratorCustomTitleRequest : RequestBase<bool>, IChatTa
     /// <summary>
     /// New custom title for the administrator; 0-16 characters, emoji are not allowed
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string CustomTitle { get; }

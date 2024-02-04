@@ -8,7 +8,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultVenue.InputMessageContent"/> to send a message with the specified
 /// content instead of the venue.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQueryResultVenue : InlineQueryResult
@@ -16,19 +16,19 @@ public class InlineQueryResultVenue : InlineQueryResult
     /// <summary>
     /// Type of the result, must be venue
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InlineQueryResultType Type => InlineQueryResultType.Venue;
 
     /// <inheritdoc cref="Documentation.Latitude" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Latitude { get; }
 
     /// <inheritdoc cref="Documentation.Longitude" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Longitude { get; }
@@ -36,7 +36,7 @@ public class InlineQueryResultVenue : InlineQueryResult
     /// <summary>
     /// Title of the venue
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; }
@@ -44,7 +44,7 @@ public class InlineQueryResultVenue : InlineQueryResult
     /// <summary>
     /// Address of the venue
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Address { get; }
@@ -52,7 +52,7 @@ public class InlineQueryResultVenue : InlineQueryResult
     /// <summary>
     /// Optional. Foursquare identifier of the venue if known
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? FoursquareId { get; set; }
@@ -61,7 +61,7 @@ public class InlineQueryResultVenue : InlineQueryResult
     /// Optional. Foursquare type of the venue. (For example, "arts_entertainment/default",
     /// "arts_entertainment/aquarium" or "food/icecream".)
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? FoursquareType { get; set; }
@@ -69,7 +69,7 @@ public class InlineQueryResultVenue : InlineQueryResult
     /// <summary>
     /// Google Places identifier of the venue
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? GooglePlaceId { get; set; }
@@ -78,31 +78,31 @@ public class InlineQueryResultVenue : InlineQueryResult
     /// Google Places type of the venue.
     /// <a href="https://developers.google.com/places/web-service/supported_types"/>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? GooglePlaceType { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InputMessageContent? InputMessageContent { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? ThumbnailUrl { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailWidth" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ThumbnailWidth { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ThumbnailHeight { get; set; }

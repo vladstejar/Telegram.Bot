@@ -8,13 +8,13 @@ namespace Telegram.Bot.Requests;
 /// administrator for this to work and must have the appropriate administrator rights. Returns <see langword="true"/>
 /// on success
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class UnbanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -22,7 +22,7 @@ public class UnbanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
     /// <summary>
     /// Unique identifier of the target sender chat
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long SenderChatId { get; }

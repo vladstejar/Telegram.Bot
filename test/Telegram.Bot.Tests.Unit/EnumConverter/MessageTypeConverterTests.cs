@@ -120,19 +120,19 @@ public class MessageTypeConverterTests
     {
         Message message = new() { Type = (MessageType)int.MaxValue };
 
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         Assert.Throws<JsonException>(() => Serializer.Serialize(message));
 #else
         Assert.Throws<NotSupportedException>(() => Serializer.Serialize(message));
 #endif
     }
 
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     #endif
     class Message
     {
-        #if !NET7_0_OR_GREATER
+        #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
         public MessageType Type { get; init; }

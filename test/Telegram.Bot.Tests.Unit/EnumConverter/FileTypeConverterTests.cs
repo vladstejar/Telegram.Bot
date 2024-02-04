@@ -59,19 +59,19 @@ public class FileTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         Assert.Throws<JsonException>(() => Serializer.Serialize(onlineFile));
 #else
         Assert.Throws<NotSupportedException>(() => Serializer.Serialize(onlineFile));
 #endif
     }
 
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     #endif
     class OnlineFile
     {
-        #if !NET7_0_OR_GREATER
+        #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
         public FileType FileType { get; init; }

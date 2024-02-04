@@ -15,7 +15,7 @@ namespace Telegram.Bot.Types;
 /// <see cref="Requests.AnswerCallbackQueryRequest"/> even if no notification to the user is needed (e.g., without
 /// specifying any of the optional parameters).
 /// </remarks>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class CallbackQuery
@@ -23,7 +23,7 @@ public class CallbackQuery
     /// <summary>
     /// Unique identifier for this query
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Id { get; set; } = default!;
@@ -31,7 +31,7 @@ public class CallbackQuery
     /// <summary>
     /// Sender
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public User From { get; set; } = default!;
@@ -40,7 +40,7 @@ public class CallbackQuery
     /// Optional. Description with the callback button that originated the query. Note that message content and
     /// message date will not be available if the message is too old
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public Message? Message { get; set; }
@@ -48,7 +48,7 @@ public class CallbackQuery
     /// <summary>
     /// Optional. Identifier of the message sent via the bot in inline mode, that originated the query
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? InlineMessageId { get; set; }
@@ -57,7 +57,7 @@ public class CallbackQuery
     /// Global identifier, uniquely corresponding to the chat to which the message with the callback button was
     /// sent. Useful for high scores in games.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string ChatInstance { get; set; } = default!;
@@ -68,7 +68,7 @@ public class CallbackQuery
     /// <remarks>
     /// Be aware that a bad client can send arbitrary data in this field.
     /// </remarks>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Data { get; set; }
@@ -76,7 +76,7 @@ public class CallbackQuery
     /// <summary>
     /// Optional. Short name of a <see cref="Game"/> to be returned, serves as the unique identifier for the game.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? GameShortName { get; set; }

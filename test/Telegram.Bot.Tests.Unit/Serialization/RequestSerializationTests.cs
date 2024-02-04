@@ -33,7 +33,7 @@ public class RequestSerializationTests
         Assert.DoesNotContain(@"""IsWebhookResponse""", serializeRequest);
     }
 
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [Fact(DisplayName = "Should properly serialize request with custom json settings")]
     public void Should_Properly_Serialize_Request_With_Custom_Json_Settings()
     {

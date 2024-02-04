@@ -9,7 +9,7 @@ namespace Telegram.Bot.Requests;
 /// Represents an API request with a file
 /// </summary>
 /// <typeparam name="TResponse">Type of result expected in result</typeparam>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public abstract class FileRequestBase<TResponse> : RequestBase<TResponse>
@@ -61,7 +61,7 @@ public abstract class FileRequestBase<TResponse> : RequestBase<TResponse>
         var multipartContent = new MultipartFormDataContent(boundary);
 
         var stringContents =
-        #if NET7_0_OR_GREATER
+        #if NET8_0_OR_GREATER
             JsonSerializer.SerializeToElement(this).EnumerateObject()
         #else
             Newtonsoft.Json.Linq.JObject.FromObject(this).Properties()

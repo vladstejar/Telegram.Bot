@@ -8,7 +8,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// you can use <see cref="InlineQueryResultLocation.InputMessageContent"/> to send a message with
 /// the specified content instead of the location.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQueryResultLocation : InlineQueryResult
@@ -16,19 +16,19 @@ public class InlineQueryResultLocation : InlineQueryResult
     /// <summary>
     /// Type of the result, must be location
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InlineQueryResultType Type => InlineQueryResultType.Location;
 
     /// <inheritdoc cref="Documentation.Latitude" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Latitude { get; }
 
     /// <inheritdoc cref="Documentation.Longitude" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Longitude { get; }
@@ -36,7 +36,7 @@ public class InlineQueryResultLocation : InlineQueryResult
     /// <summary>
     /// Location title
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; }
@@ -44,7 +44,7 @@ public class InlineQueryResultLocation : InlineQueryResult
     /// <summary>
     /// Optional. The radius of uncertainty for the location, measured in meters; 0-1500
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public float? HorizontalAccuracy { get; set; }
@@ -52,7 +52,7 @@ public class InlineQueryResultLocation : InlineQueryResult
     /// <summary>
     /// Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? LivePeriod { get; set; }
@@ -61,7 +61,7 @@ public class InlineQueryResultLocation : InlineQueryResult
     /// Optional. For live locations, a direction in which the user is moving, in degrees.
     /// Must be between 1 and 360 if specified.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Heading { get; set; }
@@ -70,31 +70,31 @@ public class InlineQueryResultLocation : InlineQueryResult
     /// Optional. For live locations, a maximum distance for proximity alerts about approaching
     /// another chat member, in meters. Must be between 1 and 100000 if specified.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ProximityAlertRadius { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InputMessageContent? InputMessageContent { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? ThumbnailUrl { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailWidth" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ThumbnailWidth { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ThumbnailHeight { get; set; }

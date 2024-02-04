@@ -10,7 +10,7 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will display
 /// <i>unsupported message</i>.
 /// </remarks>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineKeyboardMarkup : IReplyMarkup
@@ -19,7 +19,7 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// Array of <see cref="InlineKeyboardButton"/> rows, each represented by an Array of
     /// <see cref="InlineKeyboardButton"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public IEnumerable<IEnumerable<InlineKeyboardButton>> InlineKeyboard { get; }
@@ -44,7 +44,7 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// Initializes a new instance of the <see cref="InlineKeyboardMarkup"/> class.
     /// </summary>
     /// <param name="inlineKeyboard">The inline keyboard.</param>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonConstructor]
     #endif
     public InlineKeyboardMarkup(IEnumerable<IEnumerable<InlineKeyboardButton>> inlineKeyboard) =>

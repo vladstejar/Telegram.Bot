@@ -12,13 +12,13 @@ namespace Telegram.Bot.Requests;
 /// methods (the file can be used multiple times).
 /// Returns the uploaded <see cref="File"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class UploadStickerFileRequest : FileRequestBase<File>, IUserTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long UserId { get; }
@@ -26,7 +26,7 @@ public class UploadStickerFileRequest : FileRequestBase<File>, IUserTargetable
     /// <summary>
     /// A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public InputFileStream Sticker { get; }
@@ -34,7 +34,7 @@ public class UploadStickerFileRequest : FileRequestBase<File>, IUserTargetable
     /// <summary>
     /// Format of the sticker
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public StickerFormat StickerFormat { get; }

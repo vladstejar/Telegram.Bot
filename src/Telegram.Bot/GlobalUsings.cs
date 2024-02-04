@@ -3,7 +3,7 @@
 global using System;
 global using Telegram.Bot.Types;
 
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 global using Newtonsoft.Json;
 global using Newtonsoft.Json.Serialization;
 #else

@@ -18,7 +18,7 @@ namespace Telegram.Bot.Requests;
 /// </item>
 /// </list>
 /// </remarks>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class GetUpdatesRequest : RequestBase<Update[]>
@@ -32,7 +32,7 @@ public class GetUpdatesRequest : RequestBase<Update[]>
     /// starting from <see cref="Offset">-offset</see> update from the end of the updates queue.
     /// All previous updates will forgotten.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Offset { get; set; }
@@ -40,7 +40,7 @@ public class GetUpdatesRequest : RequestBase<Update[]>
     /// <summary>
     /// Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Limit { get; set; }
@@ -49,7 +49,7 @@ public class GetUpdatesRequest : RequestBase<Update[]>
     /// Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive,
     /// short polling should be used for testing purposes only.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Timeout { get; set; }
@@ -66,7 +66,7 @@ public class GetUpdatesRequest : RequestBase<Update[]>
     /// Please note that this parameter doesn't affect updates created before the call to the
     /// getUpdates, so unwanted updates may be received for a short period of time.
     /// </remarks>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public IEnumerable<UpdateType>? AllowedUpdates { get; set; }

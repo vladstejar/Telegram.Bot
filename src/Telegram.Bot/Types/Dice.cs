@@ -5,7 +5,7 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// This object represents a dice with random value
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class Dice
@@ -13,7 +13,7 @@ public class Dice
     /// <summary>
     /// Emoji on which the dice throw animation is based
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Emoji { get; set; } = default!;
@@ -23,7 +23,7 @@ public class Dice
     /// <see cref="Football" />("⚽"), and values 1-64 for <see cref="SlotMachine" /> ("🎰"). Defaults to
     /// <see cref="Telegram.Bot.Types.Enums.Emoji.Dice" /> (“🎲”)
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int Value { get; set; }

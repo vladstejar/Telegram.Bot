@@ -4,7 +4,7 @@ namespace Telegram.Bot.Types.Payments;
 /// This object represents a portion of the price for goods or services.
 /// </summary>
 /// <a href="https://core.telegram.org/bots/api#labeledprice"/>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class LabeledPrice
@@ -12,7 +12,7 @@ public class LabeledPrice
     /// <summary>
     /// Portion label
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Label { get; set; }
@@ -27,7 +27,7 @@ public class LabeledPrice
     /// of digits past the decimal point for each currency (2 for the majority of currencies).
     /// </para>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int Amount { get; set; }
@@ -37,7 +37,7 @@ public class LabeledPrice
     /// </summary>
     /// <param name="label">Portion label</param>
     /// <param name="amount">Price of the product</param>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonConstructor]
     #endif
     public LabeledPrice(string label, int amount)

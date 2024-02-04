@@ -9,7 +9,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// use <see cref="InlineQueryResultCachedGif.InputMessageContent"/> to send a message with
 /// specified content instead of the animation.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQueryResultCachedGif : InlineQueryResult
@@ -17,7 +17,7 @@ public class InlineQueryResultCachedGif : InlineQueryResult
     /// <summary>
     /// Type of the result, must be GIF
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InlineQueryResultType Type => InlineQueryResultType.Gif;
@@ -25,7 +25,7 @@ public class InlineQueryResultCachedGif : InlineQueryResult
     /// <summary>
     /// A valid file identifier for the GIF file
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string GifFileId { get; }
@@ -33,31 +33,31 @@ public class InlineQueryResultCachedGif : InlineQueryResult
     /// <summary>
     /// Optional. Title for the result
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Title { get; set; }
 
     /// <inheritdoc cref="Documentation.Caption" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InputMessageContent? InputMessageContent { get; set; }

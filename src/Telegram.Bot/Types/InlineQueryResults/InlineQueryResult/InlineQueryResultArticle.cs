@@ -6,7 +6,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <summary>
 /// Represents a link to an article or web page.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQueryResultArticle : InlineQueryResult
@@ -14,7 +14,7 @@ public class InlineQueryResultArticle : InlineQueryResult
     /// <summary>
     /// Type of the result, must be article
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InlineQueryResultType Type => InlineQueryResultType.Article;
@@ -22,7 +22,7 @@ public class InlineQueryResultArticle : InlineQueryResult
     /// <summary>
     /// Title of the result
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; }
@@ -30,7 +30,7 @@ public class InlineQueryResultArticle : InlineQueryResult
     /// <summary>
     /// Content of the message to be sent
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public InputMessageContent InputMessageContent { get; }
@@ -38,7 +38,7 @@ public class InlineQueryResultArticle : InlineQueryResult
     /// <summary>
     /// Optional. URL of the result.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Url { get; set; }
@@ -46,7 +46,7 @@ public class InlineQueryResultArticle : InlineQueryResult
     /// <summary>
     /// Optional. Pass <see langword="true"/>, if you don't want the URL to be shown in the message.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? HideUrl { get; set; }
@@ -54,25 +54,25 @@ public class InlineQueryResultArticle : InlineQueryResult
     /// <summary>
     /// Optional. Short description of the result.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Description { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? ThumbnailUrl { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailWidth" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ThumbnailWidth { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ThumbnailHeight { get; set; }

@@ -11,7 +11,7 @@ public class InputMediaPhoto :
     IAlbumInputMedia
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InputMediaType Type => InputMediaType.Photo;
@@ -19,7 +19,7 @@ public class InputMediaPhoto :
     /// <summary>
     /// Optional. Pass <see langword="true"/> if the photo needs to be covered with a spoiler animation
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? HasSpoiler { get; set; }

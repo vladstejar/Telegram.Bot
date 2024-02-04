@@ -12,13 +12,13 @@ namespace Telegram.Bot.Requests;
 /// The bot will be able to edit the sticker set thus created.
 /// Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long UserId { get; }
@@ -29,7 +29,7 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// contain consecutive underscores and must end in <i>"_by_&lt;bot username&gt;"</i>.
     /// <i>&lt;bot_username&gt;</i> is case insensitive. 1-64 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Name { get; }
@@ -37,7 +37,7 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// <summary>
     /// Sticker set title, 1-64 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; }
@@ -45,7 +45,7 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// <summary>
     /// A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public IEnumerable<InputSticker> Stickers { get; }
@@ -53,7 +53,7 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// <summary>
     /// Format of stickers in the set.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public StickerFormat StickerFormat { get; }
@@ -62,7 +62,7 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// Type of stickers in the set.
     /// By default, a regular sticker set is created.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public StickerType? StickerType { get; set; }
@@ -73,7 +73,7 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// on chat photos, or another appropriate color based on context;
     /// for <see cref="StickerType.CustomEmoji">custom emoji</see> sticker sets only
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? NeedsRepainting { get; set; }

@@ -7,19 +7,19 @@ namespace Telegram.Bot.Requests;
 /// Use this method to stop updating a live location message before <see cref="Types.Location.LivePeriod"/> expires.
 /// On success <see langword="true"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class StopInlineMessageLiveLocationRequest : RequestBase<bool>
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string InlineMessageId { get; }
 
     /// <inheritdoc cref="Abstractions.Documentation.InlineReplyMarkup"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }

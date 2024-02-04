@@ -7,7 +7,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// Represents the content of a <see cref="Venue"/> message to be sent as the result of an
 /// <see cref="InlineQuery">inline query</see>.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InputVenueMessageContent : InputMessageContent
@@ -15,7 +15,7 @@ public class InputVenueMessageContent : InputMessageContent
     /// <summary>
     /// Latitude of the venue in degrees
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Latitude { get; }
@@ -23,7 +23,7 @@ public class InputVenueMessageContent : InputMessageContent
     /// <summary>
     /// Longitude of the venue in degrees
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Longitude { get; }
@@ -31,7 +31,7 @@ public class InputVenueMessageContent : InputMessageContent
     /// <summary>
     /// Name of the venue
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; }
@@ -39,7 +39,7 @@ public class InputVenueMessageContent : InputMessageContent
     /// <summary>
     /// Address of the venue
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Address { get; }
@@ -47,7 +47,7 @@ public class InputVenueMessageContent : InputMessageContent
     /// <summary>
     /// Optional. Foursquare identifier of the venue, if known
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? FoursquareId { get; set; }
@@ -56,7 +56,7 @@ public class InputVenueMessageContent : InputMessageContent
     /// Optional. Foursquare type of the venue. (For example, “arts_entertainment/default”,
     /// “arts_entertainment/aquarium” or “food/icecream”.)
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? FoursquareType { get; set; }
@@ -64,7 +64,7 @@ public class InputVenueMessageContent : InputMessageContent
     /// <summary>
     /// Google Places identifier of the venue
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? GooglePlaceId { get; set; }
@@ -73,7 +73,7 @@ public class InputVenueMessageContent : InputMessageContent
     /// Google Places type of the venue.
     /// <a href="https://developers.google.com/places/web-service/supported_types"/>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? GooglePlaceType { get; set; }

@@ -8,13 +8,13 @@ namespace Telegram.Bot.Requests;
 /// administrator in the chat for this to work and must have <see cref="ChatAdministratorRights.CanManageTopics"/>
 /// administrator rights. Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class EditGeneralForumTopicRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -22,7 +22,7 @@ public class EditGeneralForumTopicRequest : RequestBase<bool>, IChatTargetable
     /// <summary>
     /// New topic name, 1-128 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Name { get; }

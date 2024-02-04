@@ -8,13 +8,13 @@ namespace Telegram.Bot.Requests;
 /// Use this method to edit only the reply markup of messages. On success the edited
 /// <see cref="Message"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class EditMessageReplyMarkupRequest : RequestBase<Message>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -22,13 +22,13 @@ public class EditMessageReplyMarkupRequest : RequestBase<Message>, IChatTargetab
     /// <summary>
     /// Identifier of the message to edit
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int MessageId { get; }
 
     /// <inheritdoc cref="Documentation.InlineReplyMarkup"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }

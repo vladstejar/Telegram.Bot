@@ -79,19 +79,19 @@ public class EncryptedPassportElementTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         Assert.Throws<JsonException>(() => Serializer.Serialize(encryptedPassportElement));
 #else
         Assert.Throws<NotSupportedException>(() => Serializer.Serialize(encryptedPassportElement));
 #endif
     }
 
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     #endif
     class EncryptedPassportElement
     {
-        #if !NET7_0_OR_GREATER
+        #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
         public EncryptedPassportElementType Type { get; init; }

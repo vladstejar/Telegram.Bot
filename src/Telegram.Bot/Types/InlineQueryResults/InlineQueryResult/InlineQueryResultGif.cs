@@ -9,7 +9,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultGif.InputMessageContent"/> to send a message with the
 /// specified content instead of the animation.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQueryResultGif : InlineQueryResult
@@ -17,7 +17,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// <summary>
     /// Type of the result, must be GIF
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InlineQueryResultType Type => InlineQueryResultType.Gif;
@@ -25,7 +25,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// <summary>
     /// A valid URL for the GIF file. File size must not exceed 1MB
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string GifUrl { get; }
@@ -33,7 +33,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// <summary>
     /// Optional. Width of the GIF.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? GifWidth { get; set; }
@@ -41,7 +41,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// <summary>
     /// Optional. Height of the GIF.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? GifHeight { get; set; }
@@ -49,7 +49,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// <summary>
     /// Optional. Duration of the GIF.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? GifDuration { get; set; }
@@ -57,7 +57,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// <summary>
     /// URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string ThumbnailUrl { get; }
@@ -66,7 +66,7 @@ public class InlineQueryResultGif : InlineQueryResult
     /// Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”,
     /// or “video/mp4”. Defaults to “image/jpeg”
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? ThumbnailMimeType { get; set; }
@@ -74,31 +74,31 @@ public class InlineQueryResultGif : InlineQueryResult
     /// <summary>
     /// Optional. Title for the result
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Title { get; set; }
 
     /// <inheritdoc cref="Documentation.Caption" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InputMessageContent? InputMessageContent { get; set; }

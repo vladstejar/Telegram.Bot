@@ -67,19 +67,19 @@ public class MessageEntityTypeConverterTests
     {
         MessageEntity messageEntity = new() { Type = (MessageEntityType)int.MaxValue };
 
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         Assert.Throws<JsonException>(() => Serializer.Serialize(messageEntity));
 #else
         Assert.Throws<NotSupportedException>(() => Serializer.Serialize(messageEntity));
 #endif
     }
 
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     #endif
     class MessageEntity
     {
-        #if !NET7_0_OR_GREATER
+        #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
         public MessageEntityType Type { get; init; }

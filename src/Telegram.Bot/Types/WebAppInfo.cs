@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains information about a <a href="https://core.telegram.org/bots/webapps ">Web App</a>
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class WebAppInfo
@@ -12,7 +12,7 @@ public class WebAppInfo
     /// An HTTPS URL of a Web App to be opened with additional data as specified in
     /// <a href="https://core.telegram.org/bots/webapps#initializing-web-apps">Initializing Web Apps</a>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Url { get; set; } = default!;

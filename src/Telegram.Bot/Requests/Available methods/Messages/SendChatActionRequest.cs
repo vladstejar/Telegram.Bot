@@ -20,13 +20,13 @@ namespace Telegram.Bot.Requests;
 /// amount of time to arrive.
 /// </para>
 /// </remarks>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class SendChatActionRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -34,7 +34,7 @@ public class SendChatActionRequest : RequestBase<bool>, IChatTargetable
     /// <summary>
     /// Unique identifier for the target message thread; supergroups only
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? MessageThreadId { get; set; }
@@ -51,7 +51,7 @@ public class SendChatActionRequest : RequestBase<bool>, IChatTargetable
     /// <see cref="ChatAction.RecordVideoNote"/> or <see cref="ChatAction.UploadVideoNote"/> for
     /// <see cref="SendVideoNoteRequest">video notes</see>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatAction Action { get; }

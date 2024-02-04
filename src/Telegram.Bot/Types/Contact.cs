@@ -3,7 +3,7 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// This object represents a phone contact.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class Contact
@@ -11,7 +11,7 @@ public class Contact
     /// <summary>
     /// Contact's phone number
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string PhoneNumber { get; set; } = default!;
@@ -19,7 +19,7 @@ public class Contact
     /// <summary>
     /// Contact's first name
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string FirstName { get; set; } = default!;
@@ -27,7 +27,7 @@ public class Contact
     /// <summary>
     /// Optional. Contact's last name
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? LastName { get; set; }
@@ -35,7 +35,7 @@ public class Contact
     /// <summary>
     /// Optional. Contact's user identifier in Telegram
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public long? UserId { get; set; }
@@ -43,7 +43,7 @@ public class Contact
     /// <summary>
     /// Optional. Additional data about the contact in the form of a vCard
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Vcard { get; set; }

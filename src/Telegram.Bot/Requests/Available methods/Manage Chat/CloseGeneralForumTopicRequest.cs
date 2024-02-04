@@ -8,13 +8,13 @@ namespace Telegram.Bot.Requests;
 /// the chat for this to work and must have the <see cref="ChatAdministratorRights.CanManageTopics"/> administrator
 /// rights. Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class CloseGeneralForumTopicRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }

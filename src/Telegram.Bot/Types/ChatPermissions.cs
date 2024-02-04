@@ -3,7 +3,7 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Describes actions that a non-administrator user is allowed to take in a chat.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class ChatPermissions
@@ -11,7 +11,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true"/>, if the user is allowed to send text messages, contacts, locations and venues
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendMessages { get; set; }
@@ -19,7 +19,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true" />, if the user is allowed to send audios
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendAudios { get; set; }
@@ -27,7 +27,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true" />, if the user is allowed to send documents
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendDocuments { get; set; }
@@ -35,7 +35,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true" />, if the user is allowed to send photos
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendPhotos { get; set; }
@@ -43,7 +43,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true" />, if the user is allowed to send videos
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendVideos { get; set; }
@@ -51,7 +51,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true" />, if the user is allowed to send video notes
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendVideoNotes { get; set; }
@@ -59,7 +59,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true" />, if the user is allowed to send voice notes
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendVoiceNotes { get; set; }
@@ -67,7 +67,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true"/>, if the user is allowed to send polls, implies <see cref="CanSendMessages"/>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendPolls { get; set; }
@@ -76,7 +76,7 @@ public class ChatPermissions
     /// Optional. <see langword="true"/>, if the user is allowed to send animations, games, stickers and use inline
     /// bots
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSendOtherMessages { get; set; }
@@ -84,7 +84,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true"/>, if the user is allowed to add web page previews to their messages
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanAddWebPagePreviews { get; set; }
@@ -93,7 +93,7 @@ public class ChatPermissions
     /// Optional. <see langword="true"/>, if the user is allowed to change the chat title, photo and other settings.
     /// Ignored in public supergroups
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanChangeInfo { get; set; }
@@ -101,7 +101,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true"/>, if the user is allowed to invite new users to the chat
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanInviteUsers { get; set; }
@@ -109,7 +109,7 @@ public class ChatPermissions
     /// <summary>
     /// Optional. <see langword="true"/>, if the user is allowed to pin messages. Ignored in public supergroups
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanPinMessages { get; set; }
@@ -119,7 +119,7 @@ public class ChatPermissions
     /// If omitted defaults to the value of <see cref="CanPinMessages"/>
     /// supergroups only
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanManageTopics { get; set; }

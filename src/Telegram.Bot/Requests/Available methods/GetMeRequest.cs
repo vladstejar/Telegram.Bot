@@ -5,7 +5,7 @@ namespace Telegram.Bot.Requests;
 /// A simple method for testing your bot’s auth token. Requires no parameters. Returns basic information
 /// about the bot in form of a <see cref="User"/> object.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class GetMeRequest : ParameterlessRequest<User>

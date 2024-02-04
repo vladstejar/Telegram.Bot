@@ -1,4 +1,4 @@
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
 using System.Text.Json.Serialization;
 #else
 using Newtonsoft.Json.Converters;
@@ -11,7 +11,7 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// This object represents a chat.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class Chat
@@ -23,7 +23,7 @@ public class Chat
     /// at most 52 significant bits, so a signed 64-bit integer
     /// or double-precision float type are safe for storing this identifier.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long Id { get; set; }
@@ -31,7 +31,7 @@ public class Chat
     /// <summary>
     /// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatType Type { get; set; }
@@ -39,7 +39,7 @@ public class Chat
     /// <summary>
     /// Optional. Title, for supergroups, channels and group chats
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Title { get; set; }
@@ -47,7 +47,7 @@ public class Chat
     /// <summary>
     /// Optional. Username, for private chats, supergroups and channels if available
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Username { get; set; }
@@ -55,7 +55,7 @@ public class Chat
     /// <summary>
     /// Optional. First name of the other party in a private chat
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? FirstName { get; set; }
@@ -63,7 +63,7 @@ public class Chat
     /// <summary>
     /// Optional. Last name of the other party in a private chat
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? LastName { get; set; }
@@ -71,7 +71,7 @@ public class Chat
     /// <summary>
     /// Optional. <see langword="true"/>, if the supergroup chat is a forum (has topics enabled)
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? IsForum { get; set; }
@@ -79,7 +79,7 @@ public class Chat
     /// <summary>
     /// Optional. Chat photo. Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ChatPhoto? Photo { get; set; }
@@ -88,7 +88,7 @@ public class Chat
     /// Optional. If non-empty, the list of all active chat usernames; for private chats, supergroups and channels.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string[]? ActiveUsernames { get; set; }
@@ -97,7 +97,7 @@ public class Chat
     /// Optional. Custom emoji identifier of emoji status of the other party in a private chat.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? EmojiStatusCustomEmojiId { get; set; }
@@ -106,7 +106,7 @@ public class Chat
     /// Optional. Expiration date of the emoji status of the other party in a private chat, if any.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if NET7_0_OR_GREATER
+    #if NET8_0_OR_GREATER
     [JsonConverter(typeof(UnixDateTimeConverter))]
     #else
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -117,7 +117,7 @@ public class Chat
     /// <summary>
     /// Optional. Bio of the other party in a private chat. Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Bio { get; set; }
@@ -127,7 +127,7 @@ public class Chat
     /// <c>tg://user?id=&lt;user_id&gt;</c> links only in chats with the user.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? HasPrivateForwards { get; set; }
@@ -137,7 +137,7 @@ public class Chat
     /// and video note messages in the private chat.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? HasRestrictedVoiceAndVideoMessages { get; set; }
@@ -146,7 +146,7 @@ public class Chat
     /// Optional. <see langword="true"/>, if users need to join the supergroup before they can send messages.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? JoinToSendMessages { get; set; }
@@ -155,7 +155,7 @@ public class Chat
     /// Optional. <see langword="true"/>, if all users directly joining the supergroup need to be approved by supergroup administrators.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? JoinByRequest { get; set; }
@@ -164,7 +164,7 @@ public class Chat
     /// Optional. Description, for groups, supergroups and channel chats.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Description { get; set; }
@@ -173,7 +173,7 @@ public class Chat
     /// Optional. Primary invite link, for groups, supergroups and channel chats.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? InviteLink { get; set; }
@@ -182,7 +182,7 @@ public class Chat
     /// Optional. The most recent pinned message (by sending date).
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public Message? PinnedMessage { get; set; }
@@ -191,7 +191,7 @@ public class Chat
     /// Optional. Default chat member permissions, for groups and supergroups.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ChatPermissions? Permissions { get; set; }
@@ -200,7 +200,7 @@ public class Chat
     /// Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each
     /// unpriviledged user. Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? SlowModeDelay { get; set; }
@@ -209,7 +209,7 @@ public class Chat
     /// Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? MessageAutoDeleteTime { get; set; }
@@ -218,7 +218,7 @@ public class Chat
     /// Optional. <see langword="true"/>, if aggressive anti-spam checks are enabled in the supergroup. The field is
     /// only available to chat administrators. Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? HasAggressiveAntiSpamEnabled { get; set; }
@@ -227,7 +227,7 @@ public class Chat
     /// Optional. <see langword="true"/>, if non-administrators can only get the list of bots and administrators in
     /// the chat. Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? HasHiddenMembers { get; set; }
@@ -236,7 +236,7 @@ public class Chat
     /// Optional. <see langword="true"/>, if messages from the chat can't be forwarded to other chats.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? HasProtectedContent { get; set; }
@@ -245,7 +245,7 @@ public class Chat
     /// Optional. For supergroups, name of group sticker set.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? StickerSetName { get; set; }
@@ -254,7 +254,7 @@ public class Chat
     /// Optional. True, if the bot can change the group sticker set.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? CanSetStickerSet { get; set; }
@@ -266,7 +266,7 @@ public class Chat
     /// 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public long? LinkedChatId { get; set; }
@@ -275,7 +275,7 @@ public class Chat
     /// Optional. For supergroups, the location to which the supergroup is connected.
     /// Returned only in <see cref="Requests.GetChatRequest"/>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ChatLocation? Location { get; set; }

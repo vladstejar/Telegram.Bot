@@ -1,4 +1,4 @@
-﻿#if NET7_0_OR_GREATER
+﻿#if NET8_0_OR_GREATER
 
 // ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Converters;

@@ -1,4 +1,4 @@
-﻿#if NET7_0_OR_GREATER
+﻿#if NET8_0_OR_GREATER
 using System.Text.Json.Serialization;
 using Telegram.Bot.Converters;
 #else
@@ -10,7 +10,7 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents a join request sent to a chat.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class ChatJoinRequest
@@ -18,7 +18,7 @@ public class ChatJoinRequest
     /// <summary>
     /// Chat to which the request was sent
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public Chat Chat { get; set; } = default!;
@@ -26,7 +26,7 @@ public class ChatJoinRequest
     /// <summary>
     /// User that sent the join request
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public User From { get; set; } = default!;
@@ -38,7 +38,7 @@ public class ChatJoinRequest
     /// identifier. The bot can use this identifier for 24 hours to send messages until the join request is processed,
     /// assuming no other administrator contacted the user.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long UserChatId { get; set; }
@@ -46,7 +46,7 @@ public class ChatJoinRequest
     /// <summary>
     /// Date the request was sent
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     [JsonConverter(typeof(UnixDateTimeConverter))]
@@ -55,7 +55,7 @@ public class ChatJoinRequest
     /// <summary>
     /// Optional. Bio of the user
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Bio { get; set; }
@@ -63,7 +63,7 @@ public class ChatJoinRequest
     /// <summary>
     /// Optional. Chat invite link that was used by the user to send the join request
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ChatInviteLink? InviteLink { get; set; }

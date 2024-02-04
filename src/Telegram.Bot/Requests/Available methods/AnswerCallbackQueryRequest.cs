@@ -12,7 +12,7 @@ namespace Telegram.Bot.Requests;
 /// must first create a game for your bot via <c>@BotFather</c> and accept the terms. Otherwise, you
 /// may use links like <c>t.me/your_bot? start = XXXX</c> that open your bot with a parameter.
 /// </remarks>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class AnswerCallbackQueryRequest : RequestBase<bool>
@@ -20,7 +20,7 @@ public class AnswerCallbackQueryRequest : RequestBase<bool>
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string CallbackQueryId { get; }
@@ -28,7 +28,7 @@ public class AnswerCallbackQueryRequest : RequestBase<bool>
     /// <summary>
     /// Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Text { get; set; }
@@ -37,7 +37,7 @@ public class AnswerCallbackQueryRequest : RequestBase<bool>
     /// If true, an alert will be shown by the client instead of a notification at the top of
     /// the chat screen. Defaults to <see langword="false"/>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? ShowAlert { get; set; }
@@ -52,7 +52,7 @@ public class AnswerCallbackQueryRequest : RequestBase<bool>
     /// a parameter
     /// </para>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Url { get; set; }
@@ -61,7 +61,7 @@ public class AnswerCallbackQueryRequest : RequestBase<bool>
     /// The maximum amount of time in seconds that the result of the callback query may be cached
     /// client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? CacheTime { get; set; }

@@ -14,13 +14,13 @@ namespace Telegram.Bot.Requests;
 /// file via its <see cref="InputFileId"/> or specify a URL.
 /// On success the edited <see cref="Message"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class EditMessageMediaRequest : FileRequestBase<Message>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -28,7 +28,7 @@ public class EditMessageMediaRequest : FileRequestBase<Message>, IChatTargetable
     /// <summary>
     /// Identifier of the message to edit
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int MessageId { get; }
@@ -36,13 +36,13 @@ public class EditMessageMediaRequest : FileRequestBase<Message>, IChatTargetable
     /// <summary>
     /// A new media content of the message
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public InputMedia Media { get; }
 
     /// <inheritdoc cref="Documentation.InlineReplyMarkup"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }

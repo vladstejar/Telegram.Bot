@@ -61,19 +61,19 @@ public class BotCommandScopeTypeConverterTests
     {
         BotCommandScope botCommandScope = new() { Type = (BotCommandScopeType)int.MaxValue };
 
-        #if NET7_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         Assert.Throws<JsonException>(() => Serializer.Serialize(botCommandScope));
         #else
         Assert.Throws<NotSupportedException>(() => Serializer.Serialize(botCommandScope));
         #endif
     }
 
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     #endif
     class BotCommandScope
     {
-        #if !NET7_0_OR_GREATER
+        #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
         public BotCommandScopeType Type { get; init; }

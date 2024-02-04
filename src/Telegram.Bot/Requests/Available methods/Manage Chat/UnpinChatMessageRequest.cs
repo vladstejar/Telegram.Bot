@@ -10,13 +10,13 @@ namespace Telegram.Bot.Requests;
 /// '<see cref="ChatMemberAdministrator.CanEditMessages"/>' admin right in a channel.
 /// Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class UnpinChatMessageRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -25,7 +25,7 @@ public class UnpinChatMessageRequest : RequestBase<bool>, IChatTargetable
     /// Identifier of a message to unpin. If not specified, the most recent pinned message
     /// (by sending date) will be unpinned.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? MessageId { get; set; }

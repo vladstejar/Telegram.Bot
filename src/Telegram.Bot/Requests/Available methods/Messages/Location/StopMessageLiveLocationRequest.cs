@@ -9,13 +9,13 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Types.Location.LivePeriod"/> expires. On success the sent
 /// <see cref="Message"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class StopMessageLiveLocationRequest : RequestBase<Message>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -23,13 +23,13 @@ public class StopMessageLiveLocationRequest : RequestBase<Message>, IChatTargeta
     /// <summary>
     /// Identifier of the sent message
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int MessageId { get; }
 
     /// <inheritdoc cref="Abstractions.Documentation.InlineReplyMarkup"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }

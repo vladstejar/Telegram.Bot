@@ -6,7 +6,7 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// want to create user-friendly step-by-step interfaces without having to sacrifice
 /// <a href="https://core.telegram.org/bots#privacy-mode">privacy mode</a>.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class ForceReplyMarkup : ReplyMarkupBase
@@ -14,7 +14,7 @@ public class ForceReplyMarkup : ReplyMarkupBase
     /// <summary>
     /// Shows reply interface to the user, as if they manually selected the bot’s message and tapped 'Reply'
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public bool ForceReply => true;
@@ -22,7 +22,7 @@ public class ForceReplyMarkup : ReplyMarkupBase
     /// <summary>
     /// Optional. The placeholder to be shown in the input field when the reply is active; 1-64 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? InputFieldPlaceholder { get; set; }

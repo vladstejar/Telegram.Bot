@@ -9,13 +9,13 @@ namespace Telegram.Bot.Requests;
 /// this to work and must have the <see cref="ChatAdministratorRights.CanManageTopics"/> administrator rights.
 /// Returns information about the created topic as a <see cref="ForumTopic"/> object.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class CreateForumTopicRequest : RequestBase<ForumTopic>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -23,7 +23,7 @@ public class CreateForumTopicRequest : RequestBase<ForumTopic>, IChatTargetable
     /// <summary>
     /// Topic name, 1-128 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Name { get; }
@@ -32,7 +32,7 @@ public class CreateForumTopicRequest : RequestBase<ForumTopic>, IChatTargetable
     /// Optional. Color of the topic icon in RGB format. Currently, must be one of 0x6FB9F0, 0xFFD67E, 0xCB86DB,
     /// 0x8EEE98, 0xFF93B2, or 0xFB6F5F
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     [JsonConverter(typeof(ColorConverter))]
@@ -41,7 +41,7 @@ public class CreateForumTopicRequest : RequestBase<ForumTopic>, IChatTargetable
     /// <summary>
     /// Optional. Unique identifier of the custom emoji shown as the topic icon.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? IconCustomEmojiId { get; set; }

@@ -7,13 +7,13 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to send point on the map. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class SendLocationRequest : RequestBase<Message>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -21,7 +21,7 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? MessageThreadId { get; set; }
@@ -29,7 +29,7 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Latitude of the location
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Latitude { get; }
@@ -37,7 +37,7 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Longitude of the location
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Longitude { get; }
@@ -45,7 +45,7 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Period in seconds for which the location will be updated, should be between 60 and 86400
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? LivePeriod { get; set; }
@@ -54,7 +54,7 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// For live locations, a direction in which the user is moving, in degrees.
     /// Must be between 1 and 360 if specified.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Heading { get; set; }
@@ -63,7 +63,7 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// For live locations, a maximum distance for proximity alerts about approaching another
     /// chat member, in meters. Must be between 1 and 100000 if specified.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ProximityAlertRadius { get; set; }
@@ -71,13 +71,13 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Sends the message silently. Users will receive a notification with no sound.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? DisableNotification { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ProtectContent"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? ProtectContent { get; set; }
@@ -85,7 +85,7 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// If the message is a reply, ID of the original message
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ReplyToMessageId { get; set; }
@@ -93,13 +93,13 @@ public class SendLocationRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Pass <see langword="true"/>, if the message should be sent even if the specified replied-to message is not found
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? AllowSendingWithoutReply { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public IReplyMarkup? ReplyMarkup { get; set; }

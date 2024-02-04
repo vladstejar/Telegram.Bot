@@ -6,7 +6,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <summary>
 /// Represents a <see cref="Game"/>.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQueryResultGame : InlineQueryResult
@@ -14,7 +14,7 @@ public class InlineQueryResultGame : InlineQueryResult
     /// <summary>
     /// Type of the result, must be game
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InlineQueryResultType Type => InlineQueryResultType.Game;
@@ -22,7 +22,7 @@ public class InlineQueryResultGame : InlineQueryResult
     /// <summary>
     /// Short name of the game
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string GameShortName { get; }

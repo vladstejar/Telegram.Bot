@@ -7,7 +7,7 @@ namespace Telegram.Bot.Types;
 /// This object represents an incoming inline query. When the user sends an empty query, your bot could return
 /// some default or trending results.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQuery
@@ -15,7 +15,7 @@ public class InlineQuery
     /// <summary>
     /// Unique identifier for this query
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Id { get; set; } = default!;
@@ -23,7 +23,7 @@ public class InlineQuery
     /// <summary>
     /// Sender
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public User From { get; set; } = default!;
@@ -31,7 +31,7 @@ public class InlineQuery
     /// <summary>
     /// Text of the query (up to 256 characters)
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Query { get; set; } = default!;
@@ -39,7 +39,7 @@ public class InlineQuery
     /// <summary>
     /// Offset of the results to be returned, can be controlled by the bot
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Offset { get; set; } = default!;
@@ -50,7 +50,7 @@ public class InlineQuery
     /// <see cref="Supergroup"/>, or <see cref="Channel"/>. The chat type should be always known for requests
     /// sent from official clients and most third-party clients, unless the request was sent from a secret chat
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ChatType? ChatType { get; set; }
@@ -58,7 +58,7 @@ public class InlineQuery
     /// <summary>
     /// Optional. Sender location, only for bots that request user location
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public Location? Location { get; set; }

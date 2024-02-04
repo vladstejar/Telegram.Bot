@@ -9,13 +9,13 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Types.Location.LivePeriod"/> expires or editing is explicitly disabled by a call to
 /// <see cref="StopMessageLiveLocationRequest"/>. On success the edited <see cref="Message"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -23,7 +23,7 @@ public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargeta
     /// <summary>
     /// Identifier of the message to edit
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int MessageId { get; }
@@ -31,7 +31,7 @@ public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargeta
     /// <summary>
     /// Latitude of new location
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Latitude { get; }
@@ -39,7 +39,7 @@ public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargeta
     /// <summary>
     /// Longitude of new location
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public double Longitude { get; }
@@ -47,7 +47,7 @@ public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargeta
     /// <summary>
     /// The radius of uncertainty for the location, measured in meters; 0-1500
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public float? HorizontalAccuracy { get; set; }
@@ -55,7 +55,7 @@ public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargeta
     /// <summary>
     /// Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Heading { get; set; }
@@ -64,13 +64,13 @@ public class EditMessageLiveLocationRequest : RequestBase<Message>, IChatTargeta
     /// Maximum distance for proximity alerts about approaching another chat member, in meters.
     /// Must be between 1 and 100000 if specified.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ProximityAlertRadius { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.InlineReplyMarkup"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }

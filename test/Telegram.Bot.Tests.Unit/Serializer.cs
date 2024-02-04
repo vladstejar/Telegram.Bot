@@ -1,4 +1,4 @@
-﻿#if NET7_0_OR_GREATER
+﻿#if NET8_0_OR_GREATER
 using System.Text.Json;
 #else
 using Newtonsoft.Json;
@@ -10,7 +10,7 @@ namespace Telegram.Bot.Tests.Unit;
 
 internal static class Serializer
 {
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
     public static T? Deserialize<T>(string value)
         => JsonSerializer.Deserialize<T>(value, JsonSerializerOptionsProvider.Options);
 

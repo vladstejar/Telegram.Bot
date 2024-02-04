@@ -6,7 +6,7 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents a video to be sent
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InputMediaVideo :
@@ -15,13 +15,13 @@ public class InputMediaVideo :
     IAlbumInputMedia
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InputMediaType Type => InputMediaType.Video;
 
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InputFile? Thumbnail { get; set; }
@@ -29,7 +29,7 @@ public class InputMediaVideo :
     /// <summary>
     /// Optional. Video width
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Width { get; set; }
@@ -37,7 +37,7 @@ public class InputMediaVideo :
     /// <summary>
     /// Optional. Video height
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Height { get; set; }
@@ -45,7 +45,7 @@ public class InputMediaVideo :
     /// <summary>
     /// Optional. Video duration
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? Duration { get; set; }
@@ -53,7 +53,7 @@ public class InputMediaVideo :
     /// <summary>
     /// Optional. Pass True, if the uploaded video is suitable for streaming
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? SupportsStreaming { get; set; }
@@ -61,7 +61,7 @@ public class InputMediaVideo :
     /// <summary>
     /// Optional. Pass <see langword="true"/> if the video needs to be covered with a spoiler animation
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? HasSpoiler { get; set; }

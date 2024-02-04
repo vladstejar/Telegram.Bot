@@ -9,13 +9,13 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to edit captions of messages. On success <see langword="true"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class EditInlineMessageCaptionRequest : RequestBase<bool>
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string InlineMessageId { get; }
@@ -23,25 +23,25 @@ public class EditInlineMessageCaptionRequest : RequestBase<bool>
     /// <summary>
     /// New caption of the message, 0-1024 characters after entities parsing
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public IEnumerable<MessageEntity>? CaptionEntities { get; set; }
 
     /// <inheritdoc cref="Documentation.ReplyMarkup"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }

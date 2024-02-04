@@ -3,13 +3,13 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// <summary>
 /// This object represents one button of an inline keyboard. You <b>must</b> use exactly one of the optional fields.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineKeyboardButton : IKeyboardButton
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Text { get; set; }
@@ -18,7 +18,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// Optional. HTTP or tg:// URL to be opened when the button is pressed. Links <c>tg://user?id=&lt;user_id&gt;</c>
     /// can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Url { get; set; }
@@ -27,7 +27,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// Optional. Data to be sent in a <see cref="CallbackQuery">callback query</see> to the bot when button
     /// is pressed, 1-64 bytes
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? CallbackData { get; set; }
@@ -37,7 +37,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// be able to send an arbitrary message on behalf of the user using the request
     /// <see cref="Requests.AnswerWebAppQueryRequest"/>. Available only in private chats between a user and the bot.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public WebAppInfo? WebApp { get; set; }
@@ -46,7 +46,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// Optional. An HTTP URL used to automatically authorize the user. Can be used as a replacement for the
     /// <a href="https://core.telegram.org/widgets/login">Telegram Login Widget</a>.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public LoginUrl? LoginUrl { get; set; }
@@ -63,7 +63,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// actions – in this case the user will be automatically returned to the chat they switched from, skipping the
     /// chat selection screen.
     /// </remarks>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? SwitchInlineQuery { get; set; }
@@ -76,7 +76,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting
     /// something from multiple options.
     /// </remarks>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? SwitchInlineQueryCurrentChat { get; set; }
@@ -85,7 +85,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type,
     /// open that chat and insert the bot's username and the specified inline query in the input field
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public SwitchInlineQueryChosenChat? SwitchInlineQueryChosenChat { get; set; }
@@ -96,7 +96,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// <remarks>
     /// <b>NOTE:</b> This type of button <b>must</b> always be the first button in the first row.
     /// </remarks>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public CallbackGame? CallbackGame { get; set; }
@@ -107,7 +107,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// <remarks>
     /// <b>NOTE:</b> This type of button <b>must</b> always be the first button in the first row.
     /// </remarks>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? Pay { get; set; }
@@ -116,7 +116,7 @@ public class InlineKeyboardButton : IKeyboardButton
     /// Instantiates new Inline Keyboard object
     /// </summary>
     /// <param name="text">Label text on the button</param>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonConstructor]
     #endif
     public InlineKeyboardButton(string text)

@@ -9,13 +9,13 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to edit text and game messages. On success <see langword="true"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class EditInlineMessageTextRequest : RequestBase<bool>
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string InlineMessageId { get; }
@@ -23,19 +23,19 @@ public class EditInlineMessageTextRequest : RequestBase<bool>
     /// <summary>
     /// New text of the message, 1-4096 characters after entities parsing
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Text { get; }
 
     /// <inheritdoc cref="Documentation.ParseMode"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.Entities"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public IEnumerable<MessageEntity>? Entities { get; set; }
@@ -43,13 +43,13 @@ public class EditInlineMessageTextRequest : RequestBase<bool>
     /// <summary>
     /// Disables link previews for links in this message
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? DisableWebPagePreview { get; set; }
 
     /// <inheritdoc cref="Documentation.ReplyMarkup"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }

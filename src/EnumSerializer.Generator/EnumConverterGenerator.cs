@@ -12,7 +12,7 @@ namespace EnumSerializer.Generator;
 public class EnumConverterGenerator : IIncrementalGenerator
 {
     const string ConverterAttribute =
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         "System.Text.Json.Serialization.JsonConverterAttribute";
 #else
         "Newtonsoft.Json.JsonConverterAttribute";
@@ -62,7 +62,7 @@ public class EnumConverterGenerator : IIncrementalGenerator
             );
         }
 
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         var optionsTemplate = Template.Parse(SourceGenerationHelper.JsonSerializerOptionsProviderTemplate);
         var generatedOptionsProviderClass = SourceGenerationHelper.GenerateOptionsProviderClass(optionsTemplate, enumsToProcess);
         context.AddSource(

@@ -9,7 +9,7 @@ namespace Telegram.Bot.Requests;
 /// Represents an API request
 /// </summary>
 /// <typeparam name="TResponse">Type of result expected in result</typeparam>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public abstract class RequestBase<TResponse> : IRequest<TResponse>
@@ -45,11 +45,11 @@ public abstract class RequestBase<TResponse> : IRequest<TResponse>
     public virtual HttpContent? ToHttpContent() =>
         new StringContent(
             content:
-                #if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
                 JsonSerializer.Serialize(this, JsonSerializerOptionsProvider.Options),
-                #else
+#else
                 JsonConvert.SerializeObject(this),
-                #endif
+#endif
             encoding: Encoding.UTF8,
             mediaType: "application/json"
         );
@@ -62,10 +62,11 @@ public abstract class RequestBase<TResponse> : IRequest<TResponse>
     /// If <see cref="IsWebhookResponse"/> is set to <see langword="true"/> is set to the method
     /// name, otherwise it won't be serialized
     /// </summary>
-    #if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [JsonProperty("method", DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #else
+#else
     [JsonPropertyName("method")]
-    #endif
-    public string? WebHookMethodName => IsWebhookResponse ? MethodName : default;
+    [JsonInclude]
+#endif
+    internal string? WebHookMethodName => IsWebhookResponse ? MethodName : default;
 }

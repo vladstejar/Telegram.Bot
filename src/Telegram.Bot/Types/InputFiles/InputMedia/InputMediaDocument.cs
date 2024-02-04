@@ -6,7 +6,7 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents a general file to be sent
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InputMediaDocument :
@@ -15,13 +15,13 @@ public class InputMediaDocument :
     IAlbumInputMedia
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InputMediaType Type => InputMediaType.Document;
 
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InputFile? Thumbnail { get; set; }
@@ -30,7 +30,7 @@ public class InputMediaDocument :
     /// Optional. Disables automatic server-side content type detection for files uploaded using
     /// multipart/form-data. Always true, if the document is sent as part of an album.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? DisableContentTypeDetection { get; set; }

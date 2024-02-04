@@ -9,7 +9,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// <see cref="InlineQueryResultCachedVideo.InputMessageContent"/> to send a message with
 /// the specified content instead of the video.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQueryResultCachedVideo : InlineQueryResult
@@ -17,7 +17,7 @@ public class InlineQueryResultCachedVideo : InlineQueryResult
     /// <summary>
     /// Type of the result, must be video
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InlineQueryResultType Type => InlineQueryResultType.Video;
@@ -25,7 +25,7 @@ public class InlineQueryResultCachedVideo : InlineQueryResult
     /// <summary>
     /// A valid file identifier for the video file
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string VideoFileId { get; }
@@ -33,7 +33,7 @@ public class InlineQueryResultCachedVideo : InlineQueryResult
     /// <summary>
     /// Title for the result
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; }
@@ -41,31 +41,31 @@ public class InlineQueryResultCachedVideo : InlineQueryResult
     /// <summary>
     /// Optional. Short description of the result
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Description { get; set; }
 
     /// <inheritdoc cref="Documentation.Caption" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InputMessageContent? InputMessageContent { get; set; }

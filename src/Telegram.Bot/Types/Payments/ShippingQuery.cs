@@ -3,7 +3,7 @@
 /// <summary>
 /// This object contains information about an incoming shipping query.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class ShippingQuery
@@ -11,7 +11,7 @@ public class ShippingQuery
     /// <summary>
     /// Unique query identifier
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Id { get; set; } = default!;
@@ -19,7 +19,7 @@ public class ShippingQuery
     /// <summary>
     /// User who sent the query
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public User From { get; set; } = default!;
@@ -27,7 +27,7 @@ public class ShippingQuery
     /// <summary>
     /// Bot specified invoice payload
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string InvoicePayload { get; set; } = default!;
@@ -35,7 +35,7 @@ public class ShippingQuery
     /// <summary>
     /// User specified shipping address
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ShippingAddress ShippingAddress { get; set; } = default!;

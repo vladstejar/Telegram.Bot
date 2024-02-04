@@ -6,7 +6,7 @@ namespace Telegram.Bot.Types;
 /// This object contains information about the chat whose identifier was shared with the bot using a
 /// <see cref="KeyboardButtonRequestChat"/> button.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class ChatShared
@@ -14,7 +14,7 @@ public class ChatShared
     /// <summary>
     /// Identifier of the request
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int RequestId { get; set; }
@@ -26,7 +26,7 @@ public class ChatShared
     /// access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by
     /// some other means.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long ChatId { get; set; }

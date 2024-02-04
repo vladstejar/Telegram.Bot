@@ -13,7 +13,7 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// If an <see cref="InlineQueryResultVideo"/> message contains an embedded video (e.g., YouTube),
 /// you <b>must</b> replace its content using <see cref="InlineQueryResultVideo.InputMessageContent"/>.
 /// </remarks>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class InlineQueryResultVideo : InlineQueryResult
@@ -21,7 +21,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// Type of the result, must be video
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public override InlineQueryResultType Type => InlineQueryResultType.Video;
@@ -29,7 +29,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// A valid URL for the embedded video player or video file
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string VideoUrl { get; }
@@ -37,7 +37,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// Mime type of the content of video url, “text/html” or “video/mp4”
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string MimeType { get; }
@@ -45,7 +45,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// URL of the thumbnail (jpeg only) for the video
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string ThumbnailUrl { get; }
@@ -53,25 +53,25 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// Title for the result
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; }
 
     /// <inheritdoc cref="Documentation.Caption" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public MessageEntity[]? CaptionEntities { get; set; }
@@ -79,7 +79,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// Optional. Video width
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? VideoWidth { get; set; }
@@ -87,7 +87,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// Optional. Video height
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? VideoHeight { get; set; }
@@ -95,7 +95,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// Optional. Video duration in seconds
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? VideoDuration { get; set; }
@@ -103,7 +103,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <summary>
     /// Optional. Short description of the result
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Description { get; set; }
@@ -113,7 +113,7 @@ public class InlineQueryResultVideo : InlineQueryResult
     /// <b>required</b> if <see cref="InlineQueryResultVideo"/> is used to send an
     /// HTML-page as a result (e.g., a YouTube video).
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InputMessageContent? InputMessageContent { get; set; }

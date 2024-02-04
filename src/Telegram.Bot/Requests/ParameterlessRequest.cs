@@ -6,7 +6,7 @@ namespace Telegram.Bot.Requests;
 /// Represents a request that doesn't require any parameters
 /// </summary>
 /// <typeparam name="TResult"></typeparam>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class ParameterlessRequest<TResult> : RequestBase<TResult>

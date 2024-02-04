@@ -10,7 +10,7 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Types.Update"/> with a <see cref="Types.Update.ShippingQuery"/> field to the
 /// bot. Use this method to reply to shipping queries. On success, <see langword="true"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class AnswerShippingQueryRequest : RequestBase<bool>
@@ -18,7 +18,7 @@ public class AnswerShippingQueryRequest : RequestBase<bool>
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string ShippingQueryId { get; }
@@ -27,7 +27,7 @@ public class AnswerShippingQueryRequest : RequestBase<bool>
     /// Specify <see langword="true"/> if delivery to the specified address is possible and <see langword="false"/>
     /// if there are any problems (for example, if delivery to the specified address is not possible)
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public bool Ok { get; }
@@ -35,7 +35,7 @@ public class AnswerShippingQueryRequest : RequestBase<bool>
     /// <summary>
     /// Required if <see cref="Ok"/> is <see langword="true"/>. An array of available shipping options.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public IEnumerable<ShippingOption>? ShippingOptions { get; }
@@ -45,7 +45,7 @@ public class AnswerShippingQueryRequest : RequestBase<bool>
     /// why it is impossible to complete the order (e.g. "Sorry, delivery to your desired address
     /// is unavailable'). Telegram will display this message to the user.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? ErrorMessage { get; }

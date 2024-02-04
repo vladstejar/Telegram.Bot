@@ -4,7 +4,7 @@ namespace Telegram.Bot.Types;
 /// This object represents a game. Use BotFather to create and edit games, their short names will act as unique
 /// identifiers.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class Game
@@ -12,7 +12,7 @@ public class Game
     /// <summary>
     /// Title of the game.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; set; } = default!;
@@ -20,7 +20,7 @@ public class Game
     /// <summary>
     /// Description of the game.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Description { get; set; } = default!;
@@ -28,7 +28,7 @@ public class Game
     /// <summary>
     /// Photo that will be displayed in the game message in chats.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public PhotoSize[] Photo { get; set; } = default!;
@@ -39,7 +39,7 @@ public class Game
     /// <see cref="Requests.SetGameScoreRequest"/>, or manually edited using
     /// <see cref="Requests.EditMessageTextRequest"/>. 0-4096 characters.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? Text { get; set; }
@@ -47,7 +47,7 @@ public class Game
     /// <summary>
     /// Optional. Special entities that appear in text, such as usernames, URLs, bot commands, etc.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public MessageEntity[]? TextEntities { get; set; }
@@ -56,7 +56,7 @@ public class Game
     /// Optional. Animation that will be displayed in the game message in chats. Upload via
     /// <a href="https://t.me/botfather">@BotFather</a>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public Animation? Animation { get; set; }

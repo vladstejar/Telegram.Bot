@@ -9,7 +9,7 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to send invoices. On success, the sent <see cref="Message"/> is returned.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
@@ -18,7 +18,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// Unique identifier for the target chat or username of the target channel
     /// (in the format <c>@channelusername</c>)
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long ChatId { get; }
@@ -29,7 +29,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? MessageThreadId { get; set; }
@@ -37,7 +37,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Product name, 1-32 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Title { get; }
@@ -45,7 +45,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Product description, 1-255 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Description { get; }
@@ -54,7 +54,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user,
     /// use for your internal processes
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Payload { get; }
@@ -62,7 +62,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Payments provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string ProviderToken { get; }
@@ -71,7 +71,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// Three-letter ISO 4217 currency code, see
     /// <a href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Currency { get; }
@@ -80,7 +80,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost,
     /// delivery tax, bonus, etc.)
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public IEnumerable<LabeledPrice> Prices { get; }
@@ -93,7 +93,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// it shows the number of digits past the decimal point for each currency (2 for the majority
     /// of currencies). Defaults to 0
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? MaxTipAmount { get; set; }
@@ -103,7 +103,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a
     /// strictly increased order and must not exceed <see cref="MaxTipAmount"/>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public IEnumerable<int>? SuggestedTipAmounts { get; set; }
@@ -115,7 +115,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// button with a deep link to the bot (instead of a <i>Pay</i> button), with the value used as the
     /// start parameter
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? StartParameter { get; set; }
@@ -124,7 +124,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// A JSON-serialized data about the invoice, which will be shared with the payment provider.
     /// A detailed description of required fields should be provided by the payment provider.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? ProviderData { get; set; }
@@ -133,7 +133,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// URL of the product photo for the invoice. Can be a photo of the goods or a marketing image
     /// for a service. People like it better when they see what they are paying for.
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? PhotoUrl { get; set; }
@@ -141,7 +141,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Photo size
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? PhotoSize { get; set; }
@@ -149,7 +149,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Photo width
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? PhotoWidth { get; set; }
@@ -157,7 +157,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Photo height
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? PhotoHeight { get; set; }
@@ -165,7 +165,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Pass <see langword="true"/>, if you require the user's full name to complete the order
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? NeedName { get; set; }
@@ -173,7 +173,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Pass <see langword="true"/>, if you require the user's phone number to complete the order
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? NeedPhoneNumber { get; set; }
@@ -181,7 +181,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Pass <see langword="true"/>, if you require the user's email to complete the order
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? NeedEmail { get; set; }
@@ -189,7 +189,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Pass <see langword="true"/>, if you require the user's shipping address to complete the order
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? NeedShippingAddress { get; set; }
@@ -197,7 +197,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Pass <see langword="true"/>, if user's phone number should be sent to provider
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? SendPhoneNumberToProvider { get; set; }
@@ -205,7 +205,7 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Pass <see langword="true"/>, if user's email address should be sent to provider
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? SendEmailToProvider { get; set; }
@@ -213,37 +213,37 @@ public class SendInvoiceRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Pass <see langword="true"/>, if the final price depends on the shipping method
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? IsFlexible { get; set; }
 
     /// <inheritdoc cref="Documentation.DisableNotification" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? DisableNotification { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ProtectContent"/>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? ProtectContent { get; set; }
 
     /// <inheritdoc cref="Documentation.ReplyToMessageId" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? ReplyToMessageId { get; set; }
 
     /// <inheritdoc cref="Documentation.AllowSendingWithoutReply" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public bool? AllowSendingWithoutReply { get; set; }
 
     /// <inheritdoc cref="Documentation.InlineReplyMarkup" />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }

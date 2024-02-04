@@ -7,7 +7,7 @@ namespace Telegram.Bot.Requests;
 /// The sticker must belong to a sticker set created by the bot.
 /// Returns <see langword="true"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class SetStickerKeywordsRequest : RequestBase<bool>
@@ -15,7 +15,7 @@ public class SetStickerKeywordsRequest : RequestBase<bool>
     /// <summary>
     /// <see cref="InputFileId">File identifier</see> of the sticker
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public InputFileId Sticker { get; }
@@ -24,7 +24,7 @@ public class SetStickerKeywordsRequest : RequestBase<bool>
     /// Optional. A JSON-serialized list of 0-20 search keywords for the sticker
     /// with total length of up to 64 characters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public IEnumerable<string>? Keywords { get; set; }

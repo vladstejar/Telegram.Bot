@@ -68,14 +68,14 @@ public class StickerTypeConverterTests
     {
         Sticker sticker = new() { Type = (StickerType)int.MaxValue };
 
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
         Assert.Throws<JsonException>(() => Serializer.Serialize(sticker));
 #else
         Assert.Throws<NotSupportedException>(() => Serializer.Serialize(sticker));
 #endif
     }
 
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     #endif
     class Sticker
@@ -84,7 +84,7 @@ public class StickerTypeConverterTests
         /// Type of the sticker. The type of the sticker is independent from its format,
         /// which is determined by the fields <see cref="IsAnimated"/> and <see cref="IsVideo"/>.
         /// </summary>
-        #if !NET7_0_OR_GREATER
+        #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
         public StickerType Type { get; set; }

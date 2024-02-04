@@ -3,7 +3,7 @@ namespace Telegram.Bot.Types.Payments;
 /// <summary>
 /// This object contains basic information about a successful payment.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class SuccessfulPayment
@@ -12,7 +12,7 @@ public class SuccessfulPayment
     /// Three-letter ISO 4217
     /// <a href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> code
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Currency { get; set; } = default!;
@@ -27,7 +27,7 @@ public class SuccessfulPayment
     /// the number of digits past the decimal point for each currency (2 for the majority of currencies).
     /// </para>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int TotalAmount { get; set; }
@@ -35,7 +35,7 @@ public class SuccessfulPayment
     /// <summary>
     /// Bot specified invoice payload
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string InvoicePayload { get; set; } = default!;
@@ -43,7 +43,7 @@ public class SuccessfulPayment
     /// <summary>
     /// Optional. Identifier of the shipping option chosen by the user
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? ShippingOptionId { get; set; }
@@ -51,7 +51,7 @@ public class SuccessfulPayment
     /// <summary>
     /// Optional. Order info provided by the user
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public OrderInfo? OrderInfo { get; set; }
@@ -59,7 +59,7 @@ public class SuccessfulPayment
     /// <summary>
     /// Telegram payment identifier
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string TelegramPaymentChargeId { get; set; } = default!;
@@ -67,7 +67,7 @@ public class SuccessfulPayment
     /// <summary>
     /// Provider payment identifier
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string ProviderPaymentChargeId { get; set; } = default!;

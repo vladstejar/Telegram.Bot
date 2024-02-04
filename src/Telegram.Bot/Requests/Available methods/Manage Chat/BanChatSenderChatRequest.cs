@@ -1,4 +1,4 @@
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 using Newtonsoft.Json.Converters;
 #endif
 using Telegram.Bot.Converters;
@@ -13,13 +13,13 @@ namespace Telegram.Bot.Requests;
 /// an administrator in the supergroup or channel for this to work and must have the appropriate administrator
 /// rights. Returns <see langword="true"/> on success
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class BanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public ChatId ChatId { get; }
@@ -27,7 +27,7 @@ public class BanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
     /// <summary>
     /// Unique identifier of the target sender chat
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public long SenderChatId { get; }
@@ -37,7 +37,7 @@ public class BanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
     /// less than 30 seconds from the current time they are considered to be banned forever.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public DateTime? UntilDate { get; set; }

@@ -5,7 +5,7 @@ namespace Telegram.Bot.Requests;
 /// for the given <see cref="LanguageCode">user language</see>.
 /// Returns <see cref="BotShortDescription"/> on success.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class GetMyShortDescriptionRequest : RequestBase<BotShortDescription>
@@ -13,7 +13,7 @@ public class GetMyShortDescriptionRequest : RequestBase<BotShortDescription>
     /// <summary>
     /// A two-letter ISO 639-1 language code or an empty string
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? LanguageCode { get; set; }

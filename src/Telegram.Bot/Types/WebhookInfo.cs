@@ -1,4 +1,4 @@
-#if NET7_0_OR_GREATER
+#if NET8_0_OR_GREATER
 using System.Text.Json.Serialization;
 using Telegram.Bot.Converters;
 #else
@@ -11,7 +11,7 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Contains information about the current status of a webhook.
 /// </summary>
-#if !NET7_0_OR_GREATER
+#if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
 public class WebhookInfo
@@ -19,7 +19,7 @@ public class WebhookInfo
     /// <summary>
     /// Webhook URL, may be empty if webhook is not set up
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public string Url { get; set; } = default!;
@@ -27,7 +27,7 @@ public class WebhookInfo
     /// <summary>
     /// <see langword="true"/>, if a custom certificate was provided for webhook certificate checks
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public bool HasCustomCertificate { get; set; }
@@ -35,7 +35,7 @@ public class WebhookInfo
     /// <summary>
     /// Number of updates awaiting delivery
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
     #endif
     public int PendingUpdateCount { get; set; }
@@ -43,7 +43,7 @@ public class WebhookInfo
     /// <summary>
     /// Optional. Currently used webhook IP address
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? IpAddress { get; set; }
@@ -52,7 +52,7 @@ public class WebhookInfo
     /// Optional. Time for the most recent error that happened when trying to deliver an update via webhook
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public DateTime? LastErrorDate { get; set; }
@@ -61,7 +61,7 @@ public class WebhookInfo
     /// Optional. Error message in human-readable format for the most recent error that happened when trying to
     /// deliver an update via webhook
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public string? LastErrorMessage { get; set; }
@@ -70,7 +70,7 @@ public class WebhookInfo
     /// Optional. Unix time of the most recent error that happened when trying to synchronize available updates
     /// with Telegram datacenters
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     [JsonConverter(typeof(UnixDateTimeConverter))]
@@ -79,7 +79,7 @@ public class WebhookInfo
     /// <summary>
     /// Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public int? MaxConnections { get; set; }
@@ -88,7 +88,7 @@ public class WebhookInfo
     /// Optional. A list of update types the bot is subscribed to. Defaults to all update types except
     /// <see cref="UpdateType.ChatMember"/>
     /// </summary>
-    #if !NET7_0_OR_GREATER
+    #if !NET8_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
     #endif
     public UpdateType[]? AllowedUpdates { get; set; }
