@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -50,7 +51,7 @@ public class MessageTypeConverterTests
         Message message = new() { Type = messageType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(message);
+        string result = Serializer.Serialize(message);
 
         Assert.Equal(expectedResult, result);
     }
@@ -97,7 +98,7 @@ public class MessageTypeConverterTests
         Message expectedResult = new() { Type = messageType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        Message? result = JsonConvert.DeserializeObject<Message>(jsonData);
+        Message? result = Serializer.Deserialize<Message>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -108,7 +109,7 @@ public class MessageTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        Message? result = JsonConvert.DeserializeObject<Message>(jsonData);
+        Message? result = Serializer.Deserialize<Message>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(MessageType.Unknown, result.Type);
@@ -119,13 +120,21 @@ public class MessageTypeConverterTests
     {
         Message message = new() { Type = (MessageType)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(message));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(message));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(message));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class Message
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public MessageType Type { get; init; }
     }
 }

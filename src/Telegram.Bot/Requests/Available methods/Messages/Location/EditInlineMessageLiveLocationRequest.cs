@@ -8,46 +8,62 @@ namespace Telegram.Bot.Requests;
 /// <see cref="Types.Location.LivePeriod"/> expires or editing is explicitly disabled by a call to
 /// <see cref="StopInlineMessageLiveLocationRequest"/>. On success <see langword="true"/> is returned.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class EditInlineMessageLiveLocationRequest : RequestBase<bool>
 {
     /// <inheritdoc cref="Abstractions.Documentation.InlineMessageId"/>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public string InlineMessageId { get; }
 
     /// <summary>
     /// Latitude of new location
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public double Latitude { get; }
 
     /// <summary>
     /// Longitude of new location
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public double Longitude { get; }
 
     /// <summary>
     /// The radius of uncertainty for the location, measured in meters; 0-1500
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public float? HorizontalAccuracy { get; set; }
 
     /// <summary>
     /// Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public int? Heading { get; set; }
 
     /// <summary>
     /// Maximum distance for proximity alerts about approaching another chat member, in meters. Must be
     /// between 1 and 100000 if specified.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public int? ProximityAlertRadius { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
 
     /// <summary>

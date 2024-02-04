@@ -14,13 +14,17 @@ namespace Telegram.Bot.Requests;
 /// You can use <see cref="ITelegramBotClient.DownloadFileAsync"/> or
 /// <see cref="TelegramBotClientExtensions.GetInfoAndDownloadFileAsync"/> methods to download the file
 /// </remarks>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class GetFileRequest : RequestBase<File>
 {
     /// <summary>
     /// File identifier to get info about
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public string FileId { get; }
 
     /// <summary>

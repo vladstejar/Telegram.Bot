@@ -1,6 +1,6 @@
-﻿using Telegram.Bot.Converters;
-using Telegram.Bot.Requests;
+﻿using Telegram.Bot.Requests;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Converters;
 
 namespace Telegram.Bot.Types;
 
@@ -14,21 +14,32 @@ namespace Telegram.Bot.Types;
 /// If a menu button other than MenuButtonDefault is set for a private chat, then it is applied in the chat.
 /// Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 [JsonConverter(typeof(MenuButtonConverter))]
+#elif NET7_0_OR_GREATER
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(MenuButtonCommands), "commands")]
+[JsonDerivedType(typeof(MenuButtonDefault), "default")]
+[JsonDerivedType(typeof(MenuButtonWebApp), "web_app")]
+#endif
 public abstract class MenuButton
 {
     /// <summary>
     /// Type of the button
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty]
+    #endif
     public abstract MenuButtonType Type { get; }
 }
 
 /// <summary>
 /// Represents a menu button, which opens the bot’s list of commands.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class MenuButtonCommands : MenuButton
 {
     /// <inheritdoc />
@@ -38,7 +49,9 @@ public class MenuButtonCommands : MenuButton
 /// <summary>
 /// Represents a menu button, which launches a <a href="https://core.telegram.org/bots/webapps">Web App</a>.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class MenuButtonWebApp : MenuButton
 {
     /// <inheritdoc />
@@ -47,21 +60,27 @@ public class MenuButtonWebApp : MenuButton
     /// <summary>
     /// Text on the button
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public string Text { get; set; } = default!;
 
     /// <summary>
     /// Description of the Web App that will be launched when the user presses the button. The Web App will be able
     /// to send an arbitrary message on behalf of the user using the method <see cref="AnswerWebAppQueryRequest"/>.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public WebAppInfo WebApp { get; set; } = default!;
 }
 
 /// <summary>
 /// Describes that no specific value for the menu button was set.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class MenuButtonDefault : MenuButton
 {
     /// <inheritdoc />

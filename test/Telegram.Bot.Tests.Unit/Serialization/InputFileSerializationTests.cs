@@ -15,8 +15,8 @@ public class InputFileSerializationTests
         const string fileName = "myFile";
         InputFileStream inputFile = new(new MemoryStream(), fileName);
 
-        string json = JsonConvert.SerializeObject(inputFile);
-        InputFileStream obj = JsonConvert.DeserializeObject<InputFileStream>(json)!;
+        string json = Serializer.Serialize(inputFile);
+        InputFileStream obj = Serializer.Deserialize<InputFileStream>(json)!;
 
         Assert.Equal(@$"""attach://{fileName}""", json);
         Assert.Equal(Stream.Null, obj.Content);
@@ -30,8 +30,8 @@ public class InputFileSerializationTests
         const string fileId = "This-is-a-file_id";
         InputFileId inputFileId = new(fileId);
 
-        string json = JsonConvert.SerializeObject(inputFileId);
-        InputFileId? obj = JsonConvert.DeserializeObject<InputFileId>(json);
+        string json = Serializer.Serialize(inputFileId);
+        InputFileId? obj = Serializer.Deserialize<InputFileId>(json);
 
         Assert.NotNull(obj);
         Assert.Equal(@$"""{fileId}""", json);
@@ -45,8 +45,8 @@ public class InputFileSerializationTests
         Uri url = new("http://github.org/TelegramBots");
         InputFileUrl inputFileUrl = new(url);
 
-        string json = JsonConvert.SerializeObject(inputFileUrl);
-        InputFileUrl? obj = JsonConvert.DeserializeObject<InputFileUrl>(json);
+        string json = Serializer.Serialize(inputFileUrl);
+        InputFileUrl? obj = Serializer.Deserialize<InputFileUrl>(json);
 
         Assert.NotNull(obj);
         Assert.Equal(@$"""{url}""", json);

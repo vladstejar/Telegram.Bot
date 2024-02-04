@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Telegram.Bot.Types.InlineQueryResults;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -28,7 +29,7 @@ public class InlineQueryResultTypeConverterTests
         InlineQueryResult inlineQuery = new() { Type = inlineQueryResultType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(inlineQuery);
+        string result = Serializer.Serialize(inlineQuery);
 
         Assert.Equal(expectedResult, result);
     }
@@ -53,7 +54,7 @@ public class InlineQueryResultTypeConverterTests
         InlineQueryResult expectedResult = new() { Type = inlineQueryResultType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        InlineQueryResult? result = JsonConvert.DeserializeObject<InlineQueryResult>(jsonData);
+        InlineQueryResult? result = Serializer.Deserialize<InlineQueryResult>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -64,7 +65,7 @@ public class InlineQueryResultTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        InlineQueryResult? result = JsonConvert.DeserializeObject<InlineQueryResult>(jsonData);
+        InlineQueryResult? result = Serializer.Deserialize<InlineQueryResult>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((InlineQueryResultType)0, result.Type);
@@ -75,13 +76,21 @@ public class InlineQueryResultTypeConverterTests
     {
         InlineQueryResult inlineQueryResult = new() { Type = (InlineQueryResultType)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(inlineQueryResult));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(inlineQueryResult));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(inlineQueryResult));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class InlineQueryResult
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public InlineQueryResultType Type { get; init; }
     }
 }

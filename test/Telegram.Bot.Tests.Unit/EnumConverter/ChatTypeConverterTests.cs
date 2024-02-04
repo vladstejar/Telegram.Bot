@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -19,7 +20,7 @@ public class ChatTypeConverterTests
         InlineQuery inlineQuery = new() { Type = chatType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(inlineQuery);
+        string result = Serializer.Serialize(inlineQuery);
 
         Assert.Equal(expectedResult, result);
     }
@@ -35,7 +36,7 @@ public class ChatTypeConverterTests
         InlineQuery expectedResult = new() { Type = chatType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        InlineQuery? result = JsonConvert.DeserializeObject<InlineQuery>(jsonData);
+        InlineQuery? result = Serializer.Deserialize<InlineQuery>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -46,7 +47,7 @@ public class ChatTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        InlineQuery? result = JsonConvert.DeserializeObject<InlineQuery>(jsonData);
+        InlineQuery? result = Serializer.Deserialize<InlineQuery>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((ChatType)0, result.Type);
@@ -62,13 +63,21 @@ public class ChatTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(inlineQuery));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(inlineQuery));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(inlineQuery));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class InlineQuery
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public ChatType Type { get; init; }
     }
 }

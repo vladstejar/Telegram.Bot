@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -16,7 +17,7 @@ public class PollTypeConverterTests
         Poll poll = new() { Type = pollType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(poll);
+        string result = Serializer.Serialize(poll);
 
         Assert.Equal(expectedResult, result);
     }
@@ -29,7 +30,7 @@ public class PollTypeConverterTests
         Poll expectedResult = new() { Type = pollType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        Poll? result = JsonConvert.DeserializeObject<Poll>(jsonData);
+        Poll? result = Serializer.Deserialize<Poll>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -40,7 +41,7 @@ public class PollTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        Poll? result = JsonConvert.DeserializeObject<Poll>(jsonData);
+        Poll? result = Serializer.Deserialize<Poll>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((PollType)0, result.Type);
@@ -56,13 +57,21 @@ public class PollTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(poll));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(poll));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(poll));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class Poll
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public PollType Type { get; init; }
     }
 }

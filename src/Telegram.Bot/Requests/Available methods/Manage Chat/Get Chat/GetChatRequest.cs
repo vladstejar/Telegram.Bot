@@ -9,11 +9,15 @@ namespace Telegram.Bot.Requests;
 /// one-on-one conversations, current username of a user, group or channel, etc.).
 /// Returns a <see cref="Chat"/> object on success.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class GetChatRequest : RequestBase<Chat>, IChatTargetable
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     [JsonConverter(typeof(ChatIdConverter))]
     public ChatId ChatId { get; }
 

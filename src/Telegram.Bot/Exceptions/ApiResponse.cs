@@ -3,25 +3,33 @@ namespace Telegram.Bot.Exceptions;
 /// <summary>
 /// Represents failed API response
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class ApiResponse
 {
     /// <summary>
     /// Gets the error message.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public string Description { get; private set; }
 
     /// <summary>
     /// Gets the error code.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public int ErrorCode { get; private set; }
 
     /// <summary>
     /// Contains information about why a request was unsuccessful.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public ResponseParameters? Parameters { get; private set; }
 
     /// <summary>

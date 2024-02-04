@@ -6,37 +6,49 @@ namespace Telegram.Bot.Types;
 /// Represents bot API response
 /// </summary>
 /// <typeparam name="TResult">Expected type of operation result</typeparam>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class ApiResponse<TResult>
 {
     /// <summary>
     /// Gets a value indicating whether the request was successful.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public bool Ok { get; private set; }
 
     /// <summary>
     /// Gets the error message.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public string? Description { get; private set; }
 
     /// <summary>
     /// Gets the error code.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public int? ErrorCode { get; private set; }
 
     /// <summary>
     /// Contains information about why a request was unsuccessful.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public ResponseParameters? Parameters { get; private set; }
 
     /// <summary>
     /// Gets the result object.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     [MaybeNull]
     [AllowNull]
     public TResult Result { get; private set; }
@@ -62,8 +74,4 @@ public class ApiResponse<TResult>
         Parameters = parameters;
         Result = result;
     }
-
-    [JsonConstructor]
-    private ApiResponse()
-    { }
 }

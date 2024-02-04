@@ -24,6 +24,11 @@ public interface IRequest
     bool IsWebhookResponse { get; set; }
 
     /// <summary>
+    ///
+    /// </summary>
+    string? WebHookMethodName { get; }
+
+    /// <summary>
     /// Generate content of HTTP message
     /// </summary>
     /// <returns>Content of HTTP request</returns>

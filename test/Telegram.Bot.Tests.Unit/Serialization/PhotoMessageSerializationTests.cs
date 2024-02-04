@@ -64,7 +64,7 @@ public class PhotoMessageSerializationTests
         }
         """;
 
-        Message? message = JsonConvert.DeserializeObject<Message>(json);
+        Message? message = Serializer.Deserialize<Message>(json);
 
         Assert.NotNull(message);
         Assert.Equal(MessageType.Photo, message.Type);
@@ -132,7 +132,7 @@ public class PhotoMessageSerializationTests
             }
         };
 
-        string? json = JsonConvert.SerializeObject(message);
+        string? json = Serializer.Serialize(message);
 
         Assert.NotNull(json);
         Assert.True(json.Length > 100);

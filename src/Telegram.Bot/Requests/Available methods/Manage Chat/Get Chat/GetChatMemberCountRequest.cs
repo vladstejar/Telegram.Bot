@@ -6,11 +6,15 @@ namespace Telegram.Bot.Requests;
 /// <summary>
 /// Use this method to get the number of members in a chat. Returns <c>int</c> on success.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class GetChatMemberCountRequest : RequestBase<int>, IChatTargetable
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public ChatId ChatId { get; }
 
     /// <summary>

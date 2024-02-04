@@ -1,6 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Telegram.Bot.Converters;
+#if !NET7_0_OR_GREATER
+using Newtonsoft.Json.Converters;
+#endif
 
 namespace Telegram.Bot.Types;
 

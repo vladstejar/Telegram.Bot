@@ -4,7 +4,14 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// Defines how clients display a reply interface to the <see cref="User"/>
 /// </summary>
 /// <seealso cref="Telegram.Bot.Types.ReplyMarkups.IReplyMarkup" />
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#else
+[JsonPolymorphic(TypeDiscriminatorPropertyName = null)]
+[JsonDerivedType(typeof(ForceReplyMarkup))]
+[JsonDerivedType(typeof(ReplyKeyboardMarkup))]
+[JsonDerivedType(typeof(ReplyKeyboardRemove))]
+#endif
 public abstract class ReplyMarkupBase : IReplyMarkup
 {
     /// <summary>
@@ -23,6 +30,8 @@ public abstract class ReplyMarkupBase : IReplyMarkup
     /// <i>Example:</i> A user requests to change the bot’s language, bot replies to the request with a keyboard
     /// to select the new language. Other users in the group don't see the keyboard.
     /// </remarks>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? Selective { get; set; }
 }

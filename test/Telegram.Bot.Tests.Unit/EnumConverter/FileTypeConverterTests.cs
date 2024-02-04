@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -17,7 +18,7 @@ public class FileTypeConverterTests
         OnlineFile onlineFile = new() { FileType = fileType };
         string expectedResult = @$"{{""file_type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(onlineFile);
+        string result = Serializer.Serialize(onlineFile);
 
         Assert.Equal(expectedResult, result);
     }
@@ -31,7 +32,7 @@ public class FileTypeConverterTests
         OnlineFile expectedResult = new() { FileType = fileType };
         string jsonData = @$"{{""file_type"":""{value}""}}";
 
-        OnlineFile? result = JsonConvert.DeserializeObject<OnlineFile>(jsonData);
+        OnlineFile? result = Serializer.Deserialize<OnlineFile>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.FileType, result.FileType);
@@ -42,7 +43,7 @@ public class FileTypeConverterTests
     {
         string jsonData = @$"{{""file_type"":""{int.MaxValue}""}}";
 
-        OnlineFile? result = JsonConvert.DeserializeObject<OnlineFile>(jsonData);
+        OnlineFile? result = Serializer.Deserialize<OnlineFile>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((FileType)0, result.FileType);
@@ -58,13 +59,21 @@ public class FileTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(onlineFile));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(onlineFile));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(onlineFile));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class OnlineFile
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public FileType FileType { get; init; }
     }
 }

@@ -16,7 +16,7 @@ public class ReplyMarkupSerializationTests
             KeyboardButton.WithRequestPoll("Create a poll", type)
         );
 
-        string serializedReplyMarkup = JsonConvert.SerializeObject(replyMarkup);
+        string serializedReplyMarkup = Serializer.Serialize(replyMarkup);
 
         string formattedType = string.IsNullOrEmpty(type)
             ? "{}"

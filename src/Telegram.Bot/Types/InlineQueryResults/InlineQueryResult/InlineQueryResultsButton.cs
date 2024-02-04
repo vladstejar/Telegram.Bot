@@ -5,13 +5,17 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// This object represents a button to be shown above inline query results.
 /// You <b>must</b> use exactly one of the optional fields.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class InlineQueryResultsButton
 {
     /// <summary>
     /// Label text on the button
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public string Text { get; }
 
     /// <summary>
@@ -20,7 +24,9 @@ public class InlineQueryResultsButton
     /// the method <see href="https://core.telegram.org/bots/webapps#initializing-web-apps">switchInlineQuery</see>
     /// inside the Web App.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public WebAppInfo? WebApp { get; set; }
 
     /// <summary>
@@ -36,7 +42,9 @@ public class InlineQueryResultsButton
     /// the bot can offer a switch_inline button so that the user can easily return to the chat
     /// where they wanted to use the bot's inline capabilities.
     /// </remarks>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public string? StartParameter { get; set; }
 
     /// <summary>

@@ -8,19 +8,25 @@ namespace Telegram.Bot.Requests;
 /// <a href="https://core.telegram.org/bots/webapps">Web App</a> and send a corresponding message on behalf of the
 /// user to the chat from which the query originated. On success, a <see cref="SentWebAppMessage"/> object is returned.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class AnswerWebAppQueryRequest : RequestBase<SentWebAppMessage>
 {
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public string WebAppQueryId { get; }
 
     /// <summary>
     /// An object describing the message to be sent
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public InlineQueryResult Result { get; }
 
     /// <summary>

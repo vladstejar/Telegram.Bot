@@ -1,8 +1,15 @@
+#if !NET7_0_OR_GREATER
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+#endif
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+#if NET7_0_OR_GREATER
+using JsonException = System.Text.Json.JsonException;
+#endif
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -18,9 +25,19 @@ public class EmojiConverterTests
     public void Should_Convert_Emoji_To_String(Emoji emoji, string value)
     {
         Dice dice = new() { Emoji = emoji };
-        string expectedResult = @$"{{""emoji"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(dice);
+        string escapedValue =
+#if NET7_0_OR_GREATER
+            EscapeUnicode(value);
+#else
+            value;
+#endif
+
+        string expectedResult = @$"{{""emoji"":""{escapedValue}""}}";
+
+        string result = Serializer.Serialize(dice);
+
+
 
         Assert.Equal(expectedResult, result);
     }
@@ -35,9 +52,17 @@ public class EmojiConverterTests
     public void Should_Convert_String_To_Emoji(Emoji emoji, string value)
     {
         Dice expectedResult = new() { Emoji = emoji };
-        string jsonData = @$"{{""emoji"":""{value}""}}";
 
-        Dice? result = JsonConvert.DeserializeObject<Dice>(jsonData);
+        string escapedValue =
+#if NET7_0_OR_GREATER
+            EscapeUnicode(value);
+#else
+            value;
+#endif
+
+        string jsonData = @$"{{""emoji"":""{escapedValue}""}}";
+
+        Dice? result = Serializer.Deserialize<Dice>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Emoji, result.Emoji);
@@ -48,7 +73,7 @@ public class EmojiConverterTests
     {
         string jsonData = @$"{{""emoji"":""{int.MaxValue}""}}";
 
-        Dice? result = JsonConvert.DeserializeObject<Dice>(jsonData);
+        Dice? result = Serializer.Deserialize<Dice>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((Emoji)0, result.Emoji);
@@ -64,13 +89,35 @@ public class EmojiConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(dice));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(dice));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(dice));
+#endif
     }
 
+    static string EscapeUnicode(string value)
+    {
+        byte[] bytes = Encoding.BigEndianUnicode.GetBytes(value);
+        List<string> escapedUnicode = new();
+        for (int i = 0; i < bytes.Length; i += 2)
+        {
+            byte[] c = bytes[i..(i + 2)];
+            string hexFormatted = BitConverter.ToString(c).Replace("-", "").ToUpperInvariant();
+            escapedUnicode.Add($@"\u{hexFormatted}");
+        }
+
+        return string.Join("", escapedUnicode);
+    }
+
+#if !NET7_0_OR_GREATER
     [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
     class Dice
     {
-        [JsonProperty(Required = Required.Always)]
+#if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+#endif
         public Emoji Emoji { get; init; }
     }
 }

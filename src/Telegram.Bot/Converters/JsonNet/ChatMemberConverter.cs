@@ -1,7 +1,10 @@
+#if !NET7_0_OR_GREATER
+
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using Telegram.Bot.Types.Enums;
 
+// ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Converters;
 
 internal class ChatMemberConverter : JsonConverter
@@ -59,3 +62,5 @@ internal class ChatMemberConverter : JsonConverter
         return value;
     }
 }
+
+#endif

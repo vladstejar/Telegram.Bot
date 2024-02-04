@@ -211,7 +211,7 @@ public class TestsFixture : IDisposable
 #if DEBUG
         BotClient.OnMakingApiRequest += OnMakingApiRequest;
         BotClient.OnApiResponseReceived += OnApiResponseReceived;
-#endif
+    #endif
     }
 
     Task<Message> SendNotificationToChatAsync(
@@ -329,7 +329,7 @@ public class TestsFixture : IDisposable
         /* Debugging Hint: set breakpoints with conditions here in order to investigate the HTTP response received. */
     }
 #pragma warning restore 219
-#endif
+    #endif
     static class Constants
     {
         public const string StartCollectionMessageFormat = "💬 Test Collection:\n*{0}*";

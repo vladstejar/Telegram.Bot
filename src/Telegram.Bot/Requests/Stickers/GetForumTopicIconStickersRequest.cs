@@ -6,7 +6,9 @@ namespace Telegram.Bot.Requests;
 /// Requires no parameters.
 /// Returns an Array of <see cref="Sticker"/> objects.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class GetForumTopicIconStickersRequest : RequestBase<Sticker[]>
 {
     /// <summary>

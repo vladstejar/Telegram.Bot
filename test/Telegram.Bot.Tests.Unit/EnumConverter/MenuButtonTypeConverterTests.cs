@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -17,7 +18,7 @@ public class MenuButtonTypeConverterTests
         MenuButton menuButton = new() { Type = menuButtonType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(menuButton);
+        string result = Serializer.Serialize(menuButton);
 
         Assert.Equal(expectedResult, result);
     }
@@ -31,7 +32,7 @@ public class MenuButtonTypeConverterTests
         MenuButton expectedResult = new() { Type = menuButtonType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        MenuButton? result = JsonConvert.DeserializeObject<MenuButton>(jsonData);
+        MenuButton? result = Serializer.Deserialize<MenuButton>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -42,7 +43,7 @@ public class MenuButtonTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        MenuButton? result = JsonConvert.DeserializeObject<MenuButton>(jsonData);
+        MenuButton? result = Serializer.Deserialize<MenuButton>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((MenuButtonType)0, result.Type);
@@ -58,13 +59,21 @@ public class MenuButtonTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(menuButton));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(menuButton));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(menuButton));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class MenuButton
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public MenuButtonType Type { get; init; }
     }
 }

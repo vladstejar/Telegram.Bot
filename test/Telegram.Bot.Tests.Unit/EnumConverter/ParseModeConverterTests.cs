@@ -17,7 +17,7 @@ public class ParseModeConverterTests
         SendMessageRequest sendMessageRequest = new() { ParseMode = parseMode };
         string expectedResult = @$"{{""parse_mode"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(sendMessageRequest);
+        string result = Serializer.Serialize(sendMessageRequest);
 
         Assert.Equal(expectedResult, result);
     }
@@ -32,7 +32,7 @@ public class ParseModeConverterTests
         SendMessageRequest expectedResult = new() { ParseMode = parseMode };
         string jsonData = @$"{{""parse_mode"":""{value}""}}";
 
-        SendMessageRequest? result = JsonConvert.DeserializeObject<SendMessageRequest>(jsonData);
+        SendMessageRequest? result = Serializer.Deserialize<SendMessageRequest>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.ParseMode, result.ParseMode);
@@ -43,16 +43,20 @@ public class ParseModeConverterTests
     {
         string jsonData = @$"{{""parse_mode"":""{int.MaxValue}""}}";
 
-        SendMessageRequest? result = JsonConvert.DeserializeObject<SendMessageRequest>(jsonData);
+        SendMessageRequest? result = Serializer.Deserialize<SendMessageRequest>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((ParseMode)0, result.ParseMode);
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class SendMessageRequest
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public ParseMode ParseMode { get; init; }
     }
 }

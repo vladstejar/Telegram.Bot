@@ -17,6 +17,9 @@ internal static class StreamExtensions
     {
         if (stream is null || !stream.CanRead) { return default; }
 
+#if NET7_0_OR_GREATER
+        return default;
+#else
         using var streamReader = new StreamReader(stream);
         using var jsonTextReader = new JsonTextReader(streamReader);
 
@@ -24,5 +27,6 @@ internal static class StreamExtensions
         var searchResult = jsonSerializer.Deserialize<T>(jsonTextReader);
 
         return searchResult;
+#endif
     }
 }

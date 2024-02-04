@@ -6,41 +6,55 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class InputMediaAnimation :
     InputMedia,
     IInputMediaThumb
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public override InputMediaType Type => InputMediaType.Animation;
 
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public InputFile? Thumbnail { get; set; }
 
     /// <summary>
     /// Optional. Animation width
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public int? Width { get; set; }
 
     /// <summary>
     /// Optional. Animation height
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public int? Height { get; set; }
 
     /// <summary>
     /// Optional. Animation duration
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public int? Duration { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true"/> if the animation needs to be covered with a spoiler animation
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? HasSpoiler { get; set; }
 
     /// <summary>

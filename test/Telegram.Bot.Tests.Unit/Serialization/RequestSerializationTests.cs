@@ -27,12 +27,13 @@ public class RequestSerializationTests
     {
         GetUpdatesRequest request = new() { Offset = 12345 };
 
-        string serializeRequest = JsonConvert.SerializeObject(request);
+        string serializeRequest = Serializer.Serialize(request);
 
         Assert.DoesNotContain(@"""MethodName""", serializeRequest);
         Assert.DoesNotContain(@"""IsWebhookResponse""", serializeRequest);
     }
 
+#if !NET7_0_OR_GREATER
     [Fact(DisplayName = "Should properly serialize request with custom json settings")]
     public void Should_Properly_Serialize_Request_With_Custom_Json_Settings()
     {
@@ -50,7 +51,7 @@ public class RequestSerializationTests
             DateTimeZoneHandling = DateTimeZoneHandling.Unspecified
         };
 
-        string serializeRequest = JsonConvert.SerializeObject(request, settings);
+        string serializeRequest = Serializer.Serialize(request, settings);
 
         Assert.DoesNotContain(@"""MethodName""", serializeRequest);
         Assert.DoesNotContain(@"""method_name""", serializeRequest);
@@ -59,6 +60,7 @@ public class RequestSerializationTests
         Assert.Contains(@"""offset"":12345", serializeRequest);
         Assert.DoesNotContain(@"""allowed_updates""", serializeRequest);
     }
+#endif
 
     [Fact(DisplayName = "Should serialize createChatInviteLink request")]
     public async Task Should_Serialize_CreateChatInviteLink_Request()

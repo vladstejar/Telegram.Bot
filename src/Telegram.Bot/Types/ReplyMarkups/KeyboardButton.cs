@@ -18,60 +18,78 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// clients will display unsupported message.
 /// </para>
 /// </remarks>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class KeyboardButton : IKeyboardButton
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public string Text { get; set; }
 
     /// <summary>
     /// Optional. If specified, pressing the button will open a list of suitable users. Tapping on any user will send
     /// their identifier to the bot in a “user_shared” service message. Available in private chats only.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public KeyboardButtonRequestUser? RequestUser { get; set; }
 
     /// <summary>
     /// Optional. If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send
     /// its identifier to the bot in a “chat_shared” service message. Available in private chats only.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public KeyboardButtonRequestChat? RequestChat { get; set; }
 
     /// <summary>
     /// Optional. If <see langword="true"/>, the user's phone number will be sent as a contact when the button
     /// is pressed. Available in private chats only
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? RequestContact { get; set; }
 
     /// <summary>
     /// Optional. If <see langword="true"/>, the user's current location will be sent when the button is pressed.
     /// Available in private chats only
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? RequestLocation { get; set; }
 
     /// <summary>
     /// Optional. If specified, the user will be asked to create a poll and send it to the bot when the button
     /// is pressed. Available in private chats only
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public KeyboardButtonPollType? RequestPoll { get; set; }
 
     /// <summary>
     /// Optional. If specified, the described Web App will be launched when the button is pressed. The Web App will
     /// be able to send a “web_app_data” service message. Available in private chats only.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public WebAppInfo? WebApp { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="KeyboardButton"/> class.
     /// </summary>
     /// <param name="text">Label text on the button</param>
+    #if !NET7_0_OR_GREATER
     [JsonConstructor]
+    #endif
     public KeyboardButton(string text) => Text = text;
 
     /// <summary>

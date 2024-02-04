@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -18,7 +19,7 @@ public class MaskPositionPointConverterTests
         MaskPosition maskPosition = new() { Point = maskPositionPoint };
         string expectedResult = @$"{{""point"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(maskPosition);
+        string result = Serializer.Serialize(maskPosition);
 
         Assert.Equal(expectedResult, result);
     }
@@ -33,7 +34,7 @@ public class MaskPositionPointConverterTests
         MaskPosition expectedResult = new() { Point = maskPositionPoint };
         string jsonData = @$"{{""point"":""{value}""}}";
 
-        MaskPosition? result = JsonConvert.DeserializeObject<MaskPosition>(jsonData);
+        MaskPosition? result = Serializer.Deserialize<MaskPosition>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Point, result.Point);
@@ -44,7 +45,7 @@ public class MaskPositionPointConverterTests
     {
         string jsonData = @$"{{""point"":""{int.MaxValue}""}}";
 
-        MaskPosition? result = JsonConvert.DeserializeObject<MaskPosition>(jsonData);
+        MaskPosition? result = Serializer.Deserialize<MaskPosition>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((MaskPositionPoint)0, result.Point);
@@ -60,13 +61,21 @@ public class MaskPositionPointConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(maskPosition));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(maskPosition));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(maskPosition));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class MaskPosition
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public MaskPositionPoint Point { get; init; }
     }
 }

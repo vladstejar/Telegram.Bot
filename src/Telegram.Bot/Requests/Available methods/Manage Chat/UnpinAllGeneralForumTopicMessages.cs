@@ -8,11 +8,15 @@ namespace Telegram.Bot.Requests;
 /// the chat for this to work and must have the <see cref="ChatAdministratorRights.CanPinMessages"/> administrator right in the supergroup.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class UnpinAllGeneralForumTopicMessages : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public ChatId ChatId { get; }
 
     /// <summary>

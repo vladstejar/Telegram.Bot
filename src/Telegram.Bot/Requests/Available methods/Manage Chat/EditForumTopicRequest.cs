@@ -8,23 +8,31 @@ namespace Telegram.Bot.Requests;
 /// in the chat for this to work and must have <see cref="ChatAdministratorRights.CanManageTopics"/> administrator
 /// rights, unless it is the creator of the topic. Returns <see langword="true"/> on success.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class EditForumTopicRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public ChatId ChatId { get; }
 
     /// <summary>
     /// Unique identifier for the target message thread of the forum topic
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public int MessageThreadId { get; }
 
     /// <summary>
     /// New topic name, 0-128 characters. If not specififed or empty, the current name of the topic will be kept
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public string? Name { get; set; }
 
     /// <summary>
@@ -32,7 +40,9 @@ public class EditForumTopicRequest : RequestBase<bool>, IChatTargetable
     /// <see cref="GetForumTopicIconStickersRequest"/> to get all allowed custom emoji identifiers. Pass an empty string to remove the icon.
     /// If not specified, the current icon will be kept
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public string? IconCustomEmojiId { get; set; }
 
     /// <summary>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -34,7 +35,7 @@ public class MessageEntityTypeConverterTests
         MessageEntity messageEntity = new() { Type = messageEntityType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(messageEntity);
+        string result = Serializer.Serialize(messageEntity);
 
         Assert.Equal(expectedResult, result);
     }
@@ -46,7 +47,7 @@ public class MessageEntityTypeConverterTests
         MessageEntity expectedResult = new() { Type = messageEntityType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        MessageEntity result = JsonConvert.DeserializeObject<MessageEntity>(jsonData)!;
+        MessageEntity result = Serializer.Deserialize<MessageEntity>(jsonData)!;
 
         Assert.Equal(expectedResult.Type, result.Type);
     }
@@ -56,7 +57,7 @@ public class MessageEntityTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        MessageEntity result = JsonConvert.DeserializeObject<MessageEntity>(jsonData)!;
+        MessageEntity result = Serializer.Deserialize<MessageEntity>(jsonData)!;
 
         Assert.Equal((MessageEntityType)0, result.Type);
     }
@@ -66,13 +67,21 @@ public class MessageEntityTypeConverterTests
     {
         MessageEntity messageEntity = new() { Type = (MessageEntityType)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(messageEntity));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(messageEntity));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(messageEntity));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class MessageEntity
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public MessageEntityType Type { get; init; }
     }
 

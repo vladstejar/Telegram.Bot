@@ -1,4 +1,7 @@
+#if !NET7_0_OR_GREATER
 using Newtonsoft.Json.Converters;
+#endif
+using Telegram.Bot.Converters;
 using Telegram.Bot.Requests.Abstractions;
 
 // ReSharper disable once CheckNamespace
@@ -11,15 +14,21 @@ namespace Telegram.Bot.Requests;
 /// administrator in the chat for this to work and must have the appropriate admin rights.
 /// Returns <see langword="true"/> on success.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class BanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public ChatId ChatId { get; }
 
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public long UserId { get; }
 
     /// <summary>
@@ -28,7 +37,9 @@ public class BanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTar
     /// Applied for supergroups and channels only.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public DateTime? UntilDate { get; set; }
 
     /// <summary>
@@ -36,7 +47,9 @@ public class BanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTar
     /// <see langword="false"/>, the user will be able to see messages in the group that were sent before
     /// the user was removed. Always <see langword="true"/> for supergroups and channels.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? RevokeMessages { get; set; }
 
     /// <summary>

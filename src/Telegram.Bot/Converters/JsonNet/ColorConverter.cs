@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿#if !NET7_0_OR_GREATER
 
+using Newtonsoft.Json.Linq;
+
+// ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Converters;
 
 internal class NullableColorConverter : JsonConverter<Color?>
@@ -42,3 +45,5 @@ internal class ColorConverter : JsonConverter<Color>
         return new(value);
     }
 }
+
+#endif

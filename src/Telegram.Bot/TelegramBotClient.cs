@@ -253,8 +253,13 @@ public class TelegramBotClient : ITelegramBotClient
 
         try
         {
+#if NET6_0_OR_GREATER
+            await httpResponse.Content.CopyToAsync(destination, cancellationToken)
+#else
             await httpResponse.Content.CopyToAsync(destination)
+#endif
                 .ConfigureAwait(false);
+
         }
         catch (Exception exception)
         {

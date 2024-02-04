@@ -13,7 +13,7 @@ public class MethodNameTests
     {
         SendMessageRequest sendMessageRequest = new(1, "text") { IsWebhookResponse = true };
 
-        string request = JsonConvert.SerializeObject(sendMessageRequest);
+        string request = Serializer.Serialize(sendMessageRequest);
         Assert.Contains(@"""method"":""sendMessage""", request);
     }
 
@@ -22,7 +22,7 @@ public class MethodNameTests
     {
         SendMessageRequest sendMessageRequest = new(1, "text") { IsWebhookResponse = false };
 
-        string request = JsonConvert.SerializeObject(sendMessageRequest);
+        string request = Serializer.Serialize(sendMessageRequest);
         Assert.DoesNotContain(@"""method"":""sendMessage""", request);
     }
 
@@ -31,7 +31,7 @@ public class MethodNameTests
     {
         DeleteWebhookRequest deleteWebhookRequest = new() { IsWebhookResponse = true };
 
-        string request = JsonConvert.SerializeObject(deleteWebhookRequest);
+        string request = Serializer.Serialize(deleteWebhookRequest);
         Assert.Equal(@"{""method"":""deleteWebhook""}", request);
     }
 
@@ -40,7 +40,7 @@ public class MethodNameTests
     {
         DeleteWebhookRequest deleteWebhookRequest = new() { IsWebhookResponse = false };
 
-        string request = JsonConvert.SerializeObject(deleteWebhookRequest);
+        string request = Serializer.Serialize(deleteWebhookRequest);
         Assert.Equal("{}", request);
     }
 

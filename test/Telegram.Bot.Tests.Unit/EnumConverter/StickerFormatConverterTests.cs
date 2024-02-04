@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -35,7 +36,7 @@ public class StickerFormatConverterTests
         Sticker sticker = new() { Format = stickerFormat };
         string expectedResult = @$"{{""format"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(sticker);
+        string result = Serializer.Serialize(sticker);
 
         Assert.Equal(expectedResult, result);
     }
@@ -47,7 +48,7 @@ public class StickerFormatConverterTests
         Sticker expectedResult = new() { Format = stickerFormat };
         string jsonData = @$"{{""format"":""{value}""}}";
 
-        Sticker result = JsonConvert.DeserializeObject<Sticker>(jsonData)!;
+        Sticker result = Serializer.Deserialize<Sticker>(jsonData)!;
 
         Assert.Equal(expectedResult.Format, result.Format);
     }
@@ -57,7 +58,7 @@ public class StickerFormatConverterTests
     {
         string jsonData = @$"{{""format"":""{int.MaxValue}""}}";
 
-        Sticker result = JsonConvert.DeserializeObject<Sticker>(jsonData)!;
+        Sticker result = Serializer.Deserialize<Sticker>(jsonData)!;
 
         Assert.Equal((StickerFormat)0, result.Format);
     }
@@ -67,16 +68,24 @@ public class StickerFormatConverterTests
     {
         Sticker sticker = new() { Format = (StickerFormat)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(sticker));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(sticker));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(sticker));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class Sticker
     {
         /// <summary>
         /// Format of the sticker
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public StickerFormat Format { get; set; }
     }
 

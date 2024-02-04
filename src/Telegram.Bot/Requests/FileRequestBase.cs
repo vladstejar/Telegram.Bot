@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using Newtonsoft.Json.Linq;
 using Telegram.Bot.Extensions;
 
 namespace Telegram.Bot.Requests;
@@ -10,7 +9,9 @@ namespace Telegram.Bot.Requests;
 /// Represents an API request with a file
 /// </summary>
 /// <typeparam name="TResponse">Type of result expected in result</typeparam>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public abstract class FileRequestBase<TResponse> : RequestBase<TResponse>
 {
     /// <summary>
@@ -59,10 +60,15 @@ public abstract class FileRequestBase<TResponse> : RequestBase<TResponse>
         var boundary = $"{Guid.NewGuid()}{DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture)}";
         var multipartContent = new MultipartFormDataContent(boundary);
 
-        var stringContents = JObject.FromObject(this)
-            .Properties()
-            .Where(prop => exceptPropertyNames.Contains(prop.Name, StringComparer.InvariantCulture) is false)
-            .Select(prop => (name: prop.Name, content: new StringContent(prop.Value.ToString())));
+        var stringContents =
+        #if NET7_0_OR_GREATER
+            JsonSerializer.SerializeToElement(this).EnumerateObject()
+        #else
+            Newtonsoft.Json.Linq.JObject.FromObject(this).Properties()
+        #endif
+                .Where(prop => exceptPropertyNames.Contains(prop.Name, StringComparer.InvariantCulture) is false)
+                .Select(prop => (name: prop.Name, content: new StringContent(prop.Value.ToString())));
+
 
         foreach (var strContent in stringContents)
         {

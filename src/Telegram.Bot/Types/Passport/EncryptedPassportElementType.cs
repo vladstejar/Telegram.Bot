@@ -1,3 +1,9 @@
+#if NET7_0_OR_GREATER
+using System.Text.Json.Serialization;
+#else
+using Newtonsoft.Json.Converters;
+#endif
+
 namespace Telegram.Bot.Types.Passport;
 
 /// <summary>
@@ -69,5 +75,5 @@ public enum EncryptedPassportElementType
     /// <summary>
     /// Email
     /// </summary>
-    Email
+    Email,
 }

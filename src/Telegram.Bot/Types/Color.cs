@@ -6,7 +6,9 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represent a color in RGB space
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
 [StructLayout(LayoutKind.Sequential)]
 public readonly record struct Color
 {
@@ -20,19 +22,25 @@ public readonly record struct Color
     /// <summary>
     /// Red component
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public int Red { get; }
 
     /// <summary>
     /// Green component
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public int Green { get; }
 
     /// <summary>
     /// Blue component
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public int Blue { get; }
 
     /// <summary>

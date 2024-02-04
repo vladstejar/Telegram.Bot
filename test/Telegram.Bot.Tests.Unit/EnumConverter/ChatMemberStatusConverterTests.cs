@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -20,7 +21,7 @@ public class ChatMemberStatusConverterTests
         ChatMember chatMember = new() { Type = chatMemberStatus };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(chatMember);
+        string result = Serializer.Serialize(chatMember);
 
         Assert.Equal(expectedResult, result);
     }
@@ -37,7 +38,7 @@ public class ChatMemberStatusConverterTests
         ChatMember expectedResult = new() { Type = chatMemberStatus };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        ChatMember? result = JsonConvert.DeserializeObject<ChatMember>(jsonData);
+        ChatMember? result = Serializer.Deserialize<ChatMember>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -48,7 +49,7 @@ public class ChatMemberStatusConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        ChatMember? result = JsonConvert.DeserializeObject<ChatMember>(jsonData);
+        ChatMember? result = Serializer.Deserialize<ChatMember>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((ChatMemberStatus)0, result.Type);
@@ -59,13 +60,21 @@ public class ChatMemberStatusConverterTests
     {
         ChatMember chatMember = new() { Type = (ChatMemberStatus)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(chatMember));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(chatMember));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(chatMember));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class ChatMember
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public ChatMemberStatus Type { get; init; }
     }
 }

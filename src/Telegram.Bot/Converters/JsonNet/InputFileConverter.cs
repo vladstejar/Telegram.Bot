@@ -1,6 +1,9 @@
+#if !NET7_0_OR_GREATER
+
 using System.IO;
 using Newtonsoft.Json.Linq;
 
+// ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Converters;
 
 internal class InputFileConverter : JsonConverter<InputFile?>
@@ -36,3 +39,5 @@ internal class InputFileConverter : JsonConverter<InputFile?>
             : new InputFileId(value);
     }
 }
+
+#endif

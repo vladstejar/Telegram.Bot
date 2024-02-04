@@ -23,7 +23,7 @@ public class InputQueryResultTests
         };
 
         AnswerInlineQueryRequest request = new("query_id", results) { CacheTime = 0 };
-        string json = JsonConvert.SerializeObject(request);
+        string json = Serializer.Serialize(request);
 
         Assert.Contains(@"""thumbnail_mime_type"":""video/mp4""", json);
     }
@@ -31,7 +31,7 @@ public class InputQueryResultTests
     public void Should_Serialize_InlineQueryResultGif_With_ThumbMimeType()
     {
         InlineQueryResult[] results =
-        {
+        [
             new InlineQueryResultGif(
                 id: "gif_result_with_video_thumb",
                 gifUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif",
@@ -39,11 +39,11 @@ public class InputQueryResultTests
             {
                 Caption = "A frozing bubble",
                 ThumbnailMimeType = "video/mp4"
-            },
-        };
+            }
+        ];
 
         AnswerInlineQueryRequest request = new("query_id", results) { CacheTime = 0 };
-        string json = JsonConvert.SerializeObject(request);
+        string json = Serializer.Serialize(request);
 
         Assert.Contains(@"""thumbnail_mime_type"":""video/mp4""", json);
     }

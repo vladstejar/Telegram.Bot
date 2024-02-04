@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -19,7 +20,7 @@ public class InputMediaTypeConverterTests
         InputMedia inputMedia = new() { Type = inputMediaType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(inputMedia);
+        string result = Serializer.Serialize(inputMedia);
 
         Assert.Equal(expectedResult, result);
     }
@@ -35,7 +36,7 @@ public class InputMediaTypeConverterTests
         InputMedia expectedResult = new() { Type = inputMediaType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        InputMedia? result = JsonConvert.DeserializeObject<InputMedia>(jsonData);
+        InputMedia? result = Serializer.Deserialize<InputMedia>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -46,7 +47,7 @@ public class InputMediaTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        InputMedia? result = JsonConvert.DeserializeObject<InputMedia>(jsonData);
+        InputMedia? result = Serializer.Deserialize<InputMedia>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((InputMediaType)0, result.Type);
@@ -62,13 +63,21 @@ public class InputMediaTypeConverterTests
         //        EnumToString.TryGetValue(value, out var stringValue)
         //            ? stringValue
         //            : "unknown";
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(inputMedia));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(inputMedia));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(inputMedia));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class InputMedia
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public InputMediaType Type { get; init; }
     }
 }

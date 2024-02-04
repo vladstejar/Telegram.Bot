@@ -11,12 +11,17 @@ namespace EnumSerializer.Generator;
 [Generator(LanguageNames.CSharp)]
 public class EnumConverterGenerator : IIncrementalGenerator
 {
-    const string JsonConverterAttribute = "Newtonsoft.Json.JsonConverterAttribute";
+    const string ConverterAttribute =
+#if NET7_0_OR_GREATER
+        "System.Text.Json.Serialization.JsonConverterAttribute";
+#else
+        "Newtonsoft.Json.JsonConverterAttribute";
+#endif
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         IncrementalValuesProvider<EnumDeclarationSyntax> enumDeclarations = context.SyntaxProvider
-            .ForAttributeWithMetadataName(JsonConverterAttribute,
+            .ForAttributeWithMetadataName(ConverterAttribute,
                predicate: static (node, _) => node is EnumDeclarationSyntax { AttributeLists.Count: > 0 },
                transform: static (context, _) => (EnumDeclarationSyntax)context.TargetNode)
            .Where(static m => m is not null)!;
@@ -47,15 +52,24 @@ public class EnumConverterGenerator : IIncrementalGenerator
             return;
         }
 
-        Template template = Template.Parse(SourceGenerationHelper.ConverterTemplate);
+        Template converterTemplate = Template.Parse(SourceGenerationHelper.ConverterTemplate);
         foreach (var enumToProcess in enumsToProcess)
         {
-            var result = SourceGenerationHelper.GenerateConverterClass(template, enumToProcess);
+            var generatedConverter = SourceGenerationHelper.GenerateConverterClass(converterTemplate, enumToProcess);
             context.AddSource(
                 hintName: $"{enumToProcess.Name}Converter.g.cs",
-                sourceText: SourceText.From(result, Encoding.UTF8)
+                sourceText: SourceText.From(generatedConverter, Encoding.UTF8)
             );
         }
+
+#if NET7_0_OR_GREATER
+        var optionsTemplate = Template.Parse(SourceGenerationHelper.JsonSerializerOptionsProviderTemplate);
+        var generatedOptionsProviderClass = SourceGenerationHelper.GenerateOptionsProviderClass(optionsTemplate, enumsToProcess);
+        context.AddSource(
+            hintName: "JsonSerializerOptionsProvider.g.cs",
+            sourceText: SourceText.From(generatedOptionsProviderClass, Encoding.UTF8)
+        );
+#endif
     }
 
     static List<EnumInfo> GetTypesToGenerate(
@@ -63,7 +77,7 @@ public class EnumConverterGenerator : IIncrementalGenerator
         IEnumerable<EnumDeclarationSyntax> enums, CancellationToken ct)
     {
         var enumsToProcess = new List<EnumInfo>();
-        INamedTypeSymbol? enumAttribute = compilation.GetTypeByMetadataName(JsonConverterAttribute);
+        INamedTypeSymbol? enumAttribute = compilation.GetTypeByMetadataName(ConverterAttribute);
         if (enumAttribute is null)
         {
             // nothing to do if this type isn't available
@@ -99,7 +113,7 @@ public class EnumConverterGenerator : IIncrementalGenerator
                     continue;
                 }
 
-                string? displayName = GetDisplayName(member) ?? ToSnakeCase(member.Name);
+                string displayName = GetDisplayName(member) ?? ToSnakeCase(member.Name);
 
                 members.Add(new(
                     member.Name,

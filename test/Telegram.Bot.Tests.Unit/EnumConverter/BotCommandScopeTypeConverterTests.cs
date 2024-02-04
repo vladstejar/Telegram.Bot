@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -21,7 +22,7 @@ public class BotCommandScopeTypeConverterTests
         BotCommandScope botCommandScope = new(){ Type = botCommandScopeType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(botCommandScope);
+        string result = Serializer.Serialize(botCommandScope);
 
         Assert.Equal(expectedResult, result);
     }
@@ -39,7 +40,7 @@ public class BotCommandScopeTypeConverterTests
         BotCommandScope expectedResult = new() { Type = botCommandScopeType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        BotCommandScope? result = JsonConvert.DeserializeObject<BotCommandScope>(jsonData);
+        BotCommandScope? result = Serializer.Deserialize<BotCommandScope>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -50,7 +51,7 @@ public class BotCommandScopeTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        BotCommandScope? result = JsonConvert.DeserializeObject<BotCommandScope>(jsonData);
+        BotCommandScope? result = Serializer.Deserialize<BotCommandScope>(jsonData);
         Assert.NotNull(result);
         Assert.Equal((BotCommandScopeType)0, result.Type);
     }
@@ -60,13 +61,21 @@ public class BotCommandScopeTypeConverterTests
     {
         BotCommandScope botCommandScope = new() { Type = (BotCommandScopeType)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(botCommandScope));
+        #if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(botCommandScope));
+        #else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(botCommandScope));
+        #endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class BotCommandScope
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public BotCommandScopeType Type { get; init; }
     }
 }

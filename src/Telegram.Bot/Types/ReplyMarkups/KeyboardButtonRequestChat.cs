@@ -4,27 +4,35 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 /// This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be
 /// shared with the bot when the corresponding button is pressed.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class KeyboardButtonRequestChat
 {
     /// <summary>
     /// Signed 32-bit identifier of the request
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public int RequestId { get; set; }
 
     /// <summary>
     /// Pass <see langword="true" /> to request a channel chat, pass <see langword="false" /> to request a group
     /// or a supergroup chat.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public bool ChatIsChannel { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true" /> to request a forum supergroup, pass <see langword="false" /> to
     /// request a non-forum chat. If not specified, no additional restrictions are applied.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? ChatIsForum { get; set; }
 
     /// <summary>
@@ -32,21 +40,27 @@ public class KeyboardButtonRequestChat
     /// pass <see langword="false" /> to request a chat without a username. If not specified, no additional
     /// restrictions are applied.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? ChatHasUsername { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true" /> to request a chat owned by the user. Otherwise, no additional
     /// restrictions are applied.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? ChatIsCreated { get; set; }
 
     /// <summary>
     /// Optional. A JSON-serialized object listing the required administrator rights of the user in the chat.
     /// If not specified, no additional restrictions are applied.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public ChatAdministratorRights? UserAdministratorRights { get; set; }
 
     /// <summary>
@@ -54,13 +68,17 @@ public class KeyboardButtonRequestChat
     /// The rights must be a subset of <see cref="ChatAdministratorRights" />. If not specified, no additional
     /// restrictions are applied.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public ChatAdministratorRights? BotAdministratorRights { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true" /> to request a chat with the bot as a member. Otherwise, no additional
     /// restrictions are applied.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool BotIsMember { get; set; }
 }

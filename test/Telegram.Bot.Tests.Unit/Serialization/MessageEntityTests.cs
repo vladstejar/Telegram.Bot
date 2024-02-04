@@ -18,7 +18,7 @@ public class MessageEntityTests
         }
         """;
 
-        MessageEntity? message = JsonConvert.DeserializeObject<MessageEntity>(json);
+        MessageEntity? message = Serializer.Deserialize<MessageEntity>(json);
 
         Assert.NotNull(message);
         Assert.Equal(MessageEntityType.PhoneNumber, message.Type);
@@ -34,7 +34,7 @@ public class MessageEntityTests
             Type = MessageEntityType.PhoneNumber
         };
 
-        string? json = JsonConvert.SerializeObject(messageEntity);
+        string? json = Serializer.Serialize(messageEntity);
 
         Assert.NotNull(json);
         Assert.True(json.Length > 10);
@@ -52,7 +52,7 @@ public class MessageEntityTests
         }
         """;
 
-        MessageEntity? message = JsonConvert.DeserializeObject<MessageEntity>(json);
+        MessageEntity? message = Serializer.Deserialize<MessageEntity>(json);
 
         Assert.NotNull(message);
         Assert.Equal((MessageEntityType)0, message.Type);
@@ -68,7 +68,7 @@ public class MessageEntityTests
             Type = 0
         };
 
-        string? json = JsonConvert.SerializeObject(messageEntity);
+        string? json = Serializer.Serialize(messageEntity);
 
         Assert.NotNull(json);
         Assert.True(json.Length > 10);

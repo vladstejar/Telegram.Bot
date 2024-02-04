@@ -20,24 +20,32 @@ namespace Telegram.Bot.Requests;
 /// </list>
 /// Returns <see langword="true"/> on success.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class AddStickerToSetRequest : FileRequestBase<bool>, IUserTargetable
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public long UserId { get; }
 
     /// <summary>
     /// Sticker set name
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public string Name { get; }
 
     /// <summary>
     /// A JSON-serialized object with information about the added sticker.
     /// If exactly the same sticker had already been added to the set, then the set isn't changed.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public InputSticker Sticker { get; }
 
     /// <summary>

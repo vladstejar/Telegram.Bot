@@ -7,15 +7,21 @@ namespace Telegram.Bot.Requests;
 /// Use this method to get information about a member of a chat. Returns a <see cref="ChatMember"/>
 /// object on success.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class GetChatMemberRequest : RequestBase<ChatMember>, IChatTargetable, IUserTargetable
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public ChatId ChatId { get; }
 
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public long UserId { get; }
 
     /// <summary>

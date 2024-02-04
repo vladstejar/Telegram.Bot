@@ -1,4 +1,7 @@
+#if !NET7_0_OR_GREATER
 using Newtonsoft.Json.Converters;
+#endif
+using Telegram.Bot.Converters;
 using Telegram.Bot.Requests.Abstractions;
 
 // ReSharper disable once CheckNamespace
@@ -9,21 +12,29 @@ namespace Telegram.Bot.Requests;
 /// supergroup for this to work and must have the appropriate admin rights. Pass <see langword="true"/>
 /// for all permissions to lift restrictions from a user. Returns <see langword="true"/> on success.
 /// </summary>
+#if !NET7_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
 public class RestrictChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
 {
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public ChatId ChatId { get; }
 
     /// <inheritdoc />
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public long UserId { get; }
 
     /// <summary>
     /// New user permissions
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
+    #endif
     public ChatPermissions Permissions { get; }
 
     /// <summary>
@@ -36,7 +47,9 @@ public class RestrictChatMemberRequest : RequestBase<bool>, IChatTargetable, IUs
     /// permissions; the <see cref="ChatPermissions.CanSendPolls"/> permission will imply the
     /// <see cref="ChatPermissions.CanSendMessages"/> permission.
     /// </summary>
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public bool? UseIndependentChatPermissions { get; set; }
 
     /// <summary>
@@ -45,7 +58,9 @@ public class RestrictChatMemberRequest : RequestBase<bool>, IChatTargetable, IUs
     /// be restricted forever.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
+    #if !NET7_0_OR_GREATER
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+    #endif
     public DateTime? UntilDate { get; set; }
 
     /// <summary>

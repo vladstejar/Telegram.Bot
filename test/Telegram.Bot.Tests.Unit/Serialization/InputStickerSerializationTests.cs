@@ -17,8 +17,8 @@ public class InputStickerSerializationTests
         string[] emojiList = { "🙂" };
         InputSticker inputSticker = new(inputFile, emojiList);
 
-        string json = JsonConvert.SerializeObject(inputSticker);
-        InputSticker obj = JsonConvert.DeserializeObject<InputSticker>(json)!;
+        string json = Serializer.Serialize(inputSticker);
+        InputSticker obj = Serializer.Deserialize<InputSticker>(json)!;
 
         InputFileStream objInputFile = (InputFileStream)obj.Sticker;
 
@@ -37,8 +37,8 @@ public class InputStickerSerializationTests
         string[] emojiList = new[] { "🙂" };
         InputSticker inputStickerFileId = new InputSticker(inputFileId, emojiList);
 
-        string json = JsonConvert.SerializeObject(inputStickerFileId);
-        InputSticker? obj = JsonConvert.DeserializeObject<InputSticker>(json);
+        string json = Serializer.Serialize(inputStickerFileId);
+        InputSticker? obj = Serializer.Deserialize<InputSticker>(json);
 
         InputFileId? objInputFileId = (InputFileId?)obj?.Sticker;
 
@@ -58,8 +58,8 @@ public class InputStickerSerializationTests
         string[] emojiList = new[] { "🙂" };
         InputSticker inputStickerFileUrl = new InputSticker(inputFileUrl, emojiList);
 
-        string json = JsonConvert.SerializeObject(inputStickerFileUrl);
-        InputSticker? obj = JsonConvert.DeserializeObject<InputSticker>(json);
+        string json = Serializer.Serialize(inputStickerFileUrl);
+        InputSticker? obj = Serializer.Deserialize<InputSticker>(json);
 
         InputFileUrl? objInputFileUrl = (InputFileUrl?)obj?.Sticker;
 

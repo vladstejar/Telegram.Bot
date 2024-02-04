@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -32,7 +33,7 @@ public class UpdateTypeConverterTests
             {"type":"{{value}}"}
             """;
 
-        string result = JsonConvert.SerializeObject(update);
+        string result = Serializer.Serialize(update);
 
         Assert.Equal(expectedResult, result);
     }
@@ -47,7 +48,7 @@ public class UpdateTypeConverterTests
             {"type":"{{value}}"}
             """;
 
-        Update? result = JsonConvert.DeserializeObject<Update>(jsonData);
+        Update? result = Serializer.Deserialize<Update>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -61,7 +62,7 @@ public class UpdateTypeConverterTests
             {"type":"{{int.MaxValue}}"}
             """;
 
-        Update? result = JsonConvert.DeserializeObject<Update>(jsonData);
+        Update? result = Serializer.Deserialize<Update>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(UpdateType.Unknown, result.Type);
@@ -72,9 +73,15 @@ public class UpdateTypeConverterTests
     {
         Update update = new((UpdateType)int.MaxValue);
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(update));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(update));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(update));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     record Update([property: JsonProperty(Required = Required.Always)] UpdateType Type);
 }

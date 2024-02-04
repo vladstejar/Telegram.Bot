@@ -39,7 +39,7 @@ public class DocumentSerializationTests
             Caption = "Test Document Description"
         };
 
-        string json = JsonConvert.SerializeObject(documentMessage);
+        string json = Serializer.Serialize(documentMessage);
 
         Assert.NotNull(json);
         Assert.True(json.Length > 100);
@@ -121,7 +121,7 @@ public class DocumentSerializationTests
         }
         """;
 
-        Message? message = JsonConvert.DeserializeObject<Message>(json);
+        Message? message = Serializer.Deserialize<Message>(json);
 
         Assert.NotNull(message);
         Assert.Equal(MessageType.Document, message.Type);

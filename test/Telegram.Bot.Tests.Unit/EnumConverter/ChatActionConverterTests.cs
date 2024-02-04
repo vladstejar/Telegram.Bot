@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -25,7 +26,7 @@ public class ChatActionConverterTests
         SendChatActionRequest sendChatActionRequest = new() { Type = chatAction };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(sendChatActionRequest);
+        string result = Serializer.Serialize(sendChatActionRequest);
 
         Assert.Equal(expectedResult, result);
     }
@@ -47,7 +48,7 @@ public class ChatActionConverterTests
         SendChatActionRequest expectedResult = new() { Type = chatAction };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        SendChatActionRequest? result = JsonConvert.DeserializeObject<SendChatActionRequest>(jsonData);
+        SendChatActionRequest? result = Serializer.Deserialize<SendChatActionRequest>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal(expectedResult.Type, result.Type);
@@ -58,7 +59,7 @@ public class ChatActionConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        SendChatActionRequest? result = JsonConvert.DeserializeObject<SendChatActionRequest>(jsonData);
+        SendChatActionRequest? result = Serializer.Deserialize<SendChatActionRequest>(jsonData);
 
         Assert.NotNull(result);
         Assert.Equal((ChatAction)0, result.Type);
@@ -69,13 +70,21 @@ public class ChatActionConverterTests
     {
         SendChatActionRequest sendChatActionRequest = new() { Type = (ChatAction)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(sendChatActionRequest));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(sendChatActionRequest));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(sendChatActionRequest));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class SendChatActionRequest
     {
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public ChatAction Type { get; init; }
     }
 }

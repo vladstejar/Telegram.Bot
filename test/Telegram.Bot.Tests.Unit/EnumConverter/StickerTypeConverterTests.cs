@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Telegram.Bot.Types.Enums;
 using Xunit;
+using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -35,7 +36,7 @@ public class StickerTypeConverterTests
         Sticker sticker = new() { Type = stickerType };
         string expectedResult = @$"{{""type"":""{value}""}}";
 
-        string result = JsonConvert.SerializeObject(sticker);
+        string result = Serializer.Serialize(sticker);
 
         Assert.Equal(expectedResult, result);
     }
@@ -47,7 +48,7 @@ public class StickerTypeConverterTests
         Sticker expectedResult = new() { Type = stickerType };
         string jsonData = @$"{{""type"":""{value}""}}";
 
-        Sticker result = JsonConvert.DeserializeObject<Sticker>(jsonData)!;
+        Sticker result = Serializer.Deserialize<Sticker>(jsonData)!;
 
         Assert.Equal(expectedResult.Type, result.Type);
     }
@@ -57,7 +58,7 @@ public class StickerTypeConverterTests
     {
         string jsonData = @$"{{""type"":""{int.MaxValue}""}}";
 
-        Sticker result = JsonConvert.DeserializeObject<Sticker>(jsonData)!;
+        Sticker result = Serializer.Deserialize<Sticker>(jsonData)!;
 
         Assert.Equal((StickerType)0, result.Type);
     }
@@ -67,17 +68,25 @@ public class StickerTypeConverterTests
     {
         Sticker sticker = new() { Type = (StickerType)int.MaxValue };
 
-        Assert.Throws<NotSupportedException>(() => JsonConvert.SerializeObject(sticker));
+#if NET7_0_OR_GREATER
+        Assert.Throws<JsonException>(() => Serializer.Serialize(sticker));
+#else
+        Assert.Throws<NotSupportedException>(() => Serializer.Serialize(sticker));
+#endif
     }
 
-    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #if !NET7_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    #endif
     class Sticker
     {
         /// <summary>
         /// Type of the sticker. The type of the sticker is independent from its format,
         /// which is determined by the fields <see cref="IsAnimated"/> and <see cref="IsVideo"/>.
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        #if !NET7_0_OR_GREATER
+    [JsonProperty(Required = Required.Always)]
+    #endif
         public StickerType Type { get; set; }
     }
 

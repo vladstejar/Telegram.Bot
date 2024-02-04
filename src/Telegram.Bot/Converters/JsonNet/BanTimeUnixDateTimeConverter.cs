@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json.Converters;
+﻿#if !NET7_0_OR_GREATER
 
+using Newtonsoft.Json.Converters;
+
+// ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Converters;
 
 internal class BanTimeUnixDateTimeConverter : UnixDateTimeConverter
@@ -31,3 +34,5 @@ internal class BanTimeUnixDateTimeConverter : UnixDateTimeConverter
         }
     }
 }
+
+#endif
