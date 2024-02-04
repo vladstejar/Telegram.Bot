@@ -149,22 +149,27 @@ public class Update
     /// <value>
     /// The update type.
     /// </value>
+#if NET8_0_OR_GREATER
+    [JsonIgnore]
+#else
+    [JsonIgnore]
+#endif
     public UpdateType Type => this switch
     {
-        { Message: { } }            => UpdateType.Message,
-        { EditedMessage: { } }      => UpdateType.EditedMessage,
-        { InlineQuery: { } }        => UpdateType.InlineQuery,
-        { ChosenInlineResult: { } } => UpdateType.ChosenInlineResult,
-        { CallbackQuery: { } }      => UpdateType.CallbackQuery,
-        { ChannelPost: { } }        => UpdateType.ChannelPost,
-        { EditedChannelPost: { } }  => UpdateType.EditedChannelPost,
-        { ShippingQuery: { } }      => UpdateType.ShippingQuery,
-        { PreCheckoutQuery: { } }   => UpdateType.PreCheckoutQuery,
-        { Poll: { } }               => UpdateType.Poll,
-        { PollAnswer: { } }         => UpdateType.PollAnswer,
-        { MyChatMember: { } }       => UpdateType.MyChatMember,
-        { ChatMember: { } }         => UpdateType.ChatMember,
-        { ChatJoinRequest: { } }    => UpdateType.ChatJoinRequest,
-        _                           => UpdateType.Unknown
+        { Message: not null }            => UpdateType.Message,
+        { EditedMessage: not null }      => UpdateType.EditedMessage,
+        { InlineQuery: not null }        => UpdateType.InlineQuery,
+        { ChosenInlineResult: not null } => UpdateType.ChosenInlineResult,
+        { CallbackQuery: not null }      => UpdateType.CallbackQuery,
+        { ChannelPost: not null }        => UpdateType.ChannelPost,
+        { EditedChannelPost: not null }  => UpdateType.EditedChannelPost,
+        { ShippingQuery: not null }      => UpdateType.ShippingQuery,
+        { PreCheckoutQuery: not null }   => UpdateType.PreCheckoutQuery,
+        { Poll: not null }               => UpdateType.Poll,
+        { PollAnswer: not null }         => UpdateType.PollAnswer,
+        { MyChatMember: not null }       => UpdateType.MyChatMember,
+        { ChatMember: not null }         => UpdateType.ChatMember,
+        { ChatJoinRequest: not null }    => UpdateType.ChatJoinRequest,
+        _                                => UpdateType.Unknown
     };
 }

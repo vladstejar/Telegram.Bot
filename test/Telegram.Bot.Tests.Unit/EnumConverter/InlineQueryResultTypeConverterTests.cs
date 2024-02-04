@@ -1,9 +1,13 @@
-using System;
+#if NET8_0_OR_GREATER
+using System.Text.Json.Serialization;
+using JsonException = System.Text.Json.JsonException;
+#else
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+#endif
+using System;
 using Telegram.Bot.Types.InlineQueryResults;
 using Xunit;
-using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -83,14 +87,14 @@ public class InlineQueryResultTypeConverterTests
 #endif
     }
 
-    #if !NET8_0_OR_GREATER
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    #endif
+#if !NET8_0_OR_GREATER
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
     class InlineQueryResult
     {
-        #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+#if !NET8_0_OR_GREATER
+        [JsonProperty(Required = Required.Always)]
+#endif
         public InlineQueryResultType Type { get; init; }
     }
 }

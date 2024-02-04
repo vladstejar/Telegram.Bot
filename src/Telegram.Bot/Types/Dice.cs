@@ -13,9 +13,9 @@ public class Dice
     /// <summary>
     /// Emoji on which the dice throw animation is based
     /// </summary>
-    #if !NET8_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
-    #endif
+#endif
     public string Emoji { get; set; } = default!;
     /// <summary>
     /// Value of the dice, 1-6 for <see cref="Telegram.Bot.Types.Enums.Emoji.Dice" /> (“🎲”),
@@ -23,8 +23,8 @@ public class Dice
     /// <see cref="Football" />("⚽"), and values 1-64 for <see cref="SlotMachine" /> ("🎰"). Defaults to
     /// <see cref="Telegram.Bot.Types.Enums.Emoji.Dice" /> (“🎲”)
     /// </summary>
-    #if !NET8_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
-    #endif
+#endif
     public int Value { get; set; }
 }

@@ -4,6 +4,7 @@ using Newtonsoft.Json.Serialization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Telegram.Bot.Requests;
+using Telegram.Bot.Types.Enums;
 using Xunit;
 
 namespace Telegram.Bot.Tests.Unit.Serialization;
@@ -25,10 +26,18 @@ public class RequestSerializationTests
     [Fact(DisplayName = "Should serialize request")]
     public void Should_Serialize_Request()
     {
-        GetUpdatesRequest request = new() { Offset = 12345 };
+        GetUpdatesRequest request = new()
+        {
+            Offset = 12345,
+            Limit = 100,
+            AllowedUpdates = [UpdateType.Message, UpdateType.Poll],
+        };
 
         string serializeRequest = Serializer.Serialize(request);
 
+        Assert.Contains(@"""offset"":12345", serializeRequest);
+        Assert.Contains(@"""limit"":100", serializeRequest);
+        Assert.Contains(@"""allowed_updates"":[""message"",""poll""]", serializeRequest);
         Assert.DoesNotContain(@"""MethodName""", serializeRequest);
         Assert.DoesNotContain(@"""IsWebhookResponse""", serializeRequest);
     }

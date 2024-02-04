@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Telegram.Bot.Types.Enums;
@@ -54,9 +55,9 @@ public class ParseModeConverterTests
     #endif
     class SendMessageRequest
     {
-        #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+#if !NET8_0_OR_GREATER
+        [JsonProperty(Required = Required.Always)]
+#endif
         public ParseMode ParseMode { get; init; }
     }
 }

@@ -1,9 +1,14 @@
-using System;
+#if NET8_0_OR_GREATER
+using System.Text.Json.Serialization;
+using JsonException = System.Text.Json.JsonException;
+#else
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+#endif
+using System;
 using Telegram.Bot.Types.Enums;
 using Xunit;
-using JsonException = System.Text.Json.JsonException;
+
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -127,14 +132,14 @@ public class MessageTypeConverterTests
 #endif
     }
 
-    #if !NET8_0_OR_GREATER
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    #endif
+#if !NET8_0_OR_GREATER
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
     class Message
     {
-        #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+#if !NET8_0_OR_GREATER
+        [JsonProperty(Required = Required.Always)]
+#endif
         public MessageType Type { get; init; }
     }
 }

@@ -19,9 +19,9 @@ namespace Telegram.Bot.Requests;
 public class SendPollRequest : RequestBase<Message>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
-    #endif
+#endif
     public ChatId ChatId { get; }
 
     /// <summary>
@@ -35,17 +35,17 @@ public class SendPollRequest : RequestBase<Message>, IChatTargetable
     /// <summary>
     /// Poll question, 1-300 characters
     /// </summary>
-    #if !NET8_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
-    #endif
+#endif
     public string Question { get; }
 
     /// <summary>
     /// A list of answer options, 2-10 strings 1-100 characters each
     /// </summary>
-    #if !NET8_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [JsonProperty(Required = Required.Always)]
-    #endif
+#endif
     public IEnumerable<string> Options { get; }
 
     /// <summary>
