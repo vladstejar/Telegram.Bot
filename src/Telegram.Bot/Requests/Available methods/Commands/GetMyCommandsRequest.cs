@@ -9,22 +9,19 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class GetMyCommandsRequest : RequestBase<BotCommand[]>
 {
     /// <summary>
     /// An object, describing scope of users. Defaults to <see cref="BotCommandScopeDefault"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public BotCommandScope? Scope { get; set; }
 
     /// <summary>
     /// A two-letter ISO 639-1 language code or an empty string
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? LanguageCode { get; set; }
 
     /// <summary>

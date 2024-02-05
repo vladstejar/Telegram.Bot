@@ -8,31 +8,38 @@ namespace Telegram.Bot.Types;
 /// </summary>
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#else
+[JsonPolymorphic(TypeDiscriminatorPropertyName = null)]
+[JsonDerivedType(typeof(Animation))]
+[JsonDerivedType(typeof(Audio))]
+[JsonDerivedType(typeof(Document))]
+[JsonDerivedType(typeof(File))]
+[JsonDerivedType(typeof(Passport.PassportFile))]
+[JsonDerivedType(typeof(PhotoSize))]
+[JsonDerivedType(typeof(Sticker))]
+[JsonDerivedType(typeof(Video))]
+[JsonDerivedType(typeof(VideoNote))]
+[JsonDerivedType(typeof(Voice))]
 #endif
+[DataContract]
 public abstract class FileBase
 {
     /// <summary>
     /// Identifier for this file, which can be used to download or reuse the file
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string FileId { get; set; } = default!;
 
     /// <summary>
     /// Unique identifier for this file, which is supposed to be the same over time and for different bots.
     /// Can't be used to download or reuse the file.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string FileUniqueId { get; set; } = default!;
 
     /// <summary>
     /// Optional. File size
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public long? FileSize { get; set; }
 }

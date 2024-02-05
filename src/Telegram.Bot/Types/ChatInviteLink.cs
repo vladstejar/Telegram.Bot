@@ -13,73 +13,58 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatInviteLink
 {
     /// <summary>
     /// The invite link. If the link was created by another chat administrator, then the second part of the
     /// link will be replaced with “…”.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string InviteLink { get; set; } = default!;
 
     /// <summary>
     /// Creator of the link
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public User Creator { get; set; } = default!;
 
     /// <summary>
     /// <see langword="true"/>, if users joining the chat via the link need to be approved by chat administrators
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CreatesJoinRequest { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the link is primary
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool IsPrimary { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the link is revoked
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool IsRevoked { get; set; }
 
     /// <summary>
     /// Optional. Invite link name
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Name { get; set; }
 
     /// <summary>
     /// Optional. Point in time when the link will expire or has been expired
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public DateTime? ExpireDate { get; set; }
 
     /// <summary>
     /// Optional. Maximum number of users that can be members of the chat simultaneously after joining the chat
     /// via this invite link; 1-99999
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? MemberLimit { get; set; }
 
     /// <summary>

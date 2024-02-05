@@ -11,33 +11,28 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class SetMyCommandsRequest : RequestBase<bool>
 {
     /// <summary>
     /// A list of bot commands to be set as the list of the bot’s commands.
     /// At most 100 commands can be specified.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public IEnumerable<BotCommand> Commands { get; }
 
     /// <summary>
     /// An object, describing scope of users for which the commands are relevant.
     /// Defaults to <see cref="BotCommandScopeDefault"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public BotCommandScope? Scope { get; set; }
 
     /// <summary>
     /// A two-letter ISO 639-1 language code. If empty, commands will be applied to all users
     /// from the given <see cref="Scope"/>, for whose language there are no dedicated commands
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? LanguageCode { get; set; }
 
     /// <summary>

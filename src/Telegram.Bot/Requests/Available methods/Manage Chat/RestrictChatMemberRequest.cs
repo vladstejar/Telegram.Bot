@@ -15,26 +15,21 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class RestrictChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; }
 
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public long UserId { get; }
 
     /// <summary>
     /// New user permissions
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatPermissions Permissions { get; }
 
     /// <summary>
@@ -47,9 +42,7 @@ public class RestrictChatMemberRequest : RequestBase<bool>, IChatTargetable, IUs
     /// permissions; the <see cref="ChatPermissions.CanSendPolls"/> permission will imply the
     /// <see cref="ChatPermissions.CanSendMessages"/> permission.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? UseIndependentChatPermissions { get; set; }
 
     /// <summary>
@@ -58,9 +51,7 @@ public class RestrictChatMemberRequest : RequestBase<bool>, IChatTargetable, IUs
     /// be restricted forever.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public DateTime? UntilDate { get; set; }
 
     /// <summary>

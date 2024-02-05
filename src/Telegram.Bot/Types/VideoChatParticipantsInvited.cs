@@ -6,13 +6,12 @@
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class VideoChatParticipantsInvited
 {
     /// <summary>
     /// Optional. New members that were invited to the voice chat
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public User[] Users { get; set; } = default!;
 }

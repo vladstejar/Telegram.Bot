@@ -9,52 +9,41 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InputMediaAnimation :
     InputMedia,
     IInputMediaThumb
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override InputMediaType Type => InputMediaType.Animation;
 
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public InputFile? Thumbnail { get; set; }
 
     /// <summary>
     /// Optional. Animation width
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? Width { get; set; }
 
     /// <summary>
     /// Optional. Animation height
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? Height { get; set; }
 
     /// <summary>
     /// Optional. Animation duration
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? Duration { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true"/> if the animation needs to be covered with a spoiler animation
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? HasSpoiler { get; set; }
 
     /// <summary>

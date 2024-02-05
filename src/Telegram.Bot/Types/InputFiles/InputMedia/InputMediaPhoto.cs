@@ -6,22 +6,22 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Represents a photo to be sent
 /// </summary>
+#if !NET8_0_OR_GREATER
+[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
+[DataContract]
 public class InputMediaPhoto :
     InputMedia,
     IAlbumInputMedia
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override InputMediaType Type => InputMediaType.Photo;
 
     /// <summary>
     /// Optional. Pass <see langword="true"/> if the photo needs to be covered with a spoiler animation
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? HasSpoiler { get; set; }
 
     /// <summary>

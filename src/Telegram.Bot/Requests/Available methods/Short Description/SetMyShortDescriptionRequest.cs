@@ -8,24 +8,21 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class SetMyShortDescriptionRequest : RequestBase<bool>
 {
     /// <summary>
     /// New short description for the bot; 0-120 characters.
     /// Pass an empty string to remove the dedicated short description for the given language.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? ShortDescription { get; set; }
 
     /// <summary>
     /// A two-letter ISO 639-1 language code. If empty, the short description will be
     /// applied to all users for whose language there is no dedicated short description.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? LanguageCode { get; set; }
 
     /// <summary>

@@ -6,45 +6,36 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class Contact
 {
     /// <summary>
     /// Contact's phone number
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string PhoneNumber { get; set; } = default!;
 
     /// <summary>
     /// Contact's first name
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string FirstName { get; set; } = default!;
 
     /// <summary>
     /// Optional. Contact's last name
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? LastName { get; set; }
 
     /// <summary>
     /// Optional. Contact's user identifier in Telegram
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public long? UserId { get; set; }
 
     /// <summary>
     /// Optional. Additional data about the contact in the form of a vCard
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Vcard { get; set; }
 }

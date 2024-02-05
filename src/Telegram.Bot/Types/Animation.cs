@@ -6,53 +6,42 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class Animation : FileBase
 {
     /// <summary>
     /// Video width as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int Width { get; set; }
 
     /// <summary>
     /// Video height as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int Height { get; set; }
 
     /// <summary>
     /// Duration of the video in seconds as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int Duration { get; set; }
 
     /// <summary>
     /// Optional. Animation thumbnail as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PhotoSize? Thumbnail { get; set; }
 
     /// <summary>
     /// Optional. Original animation filename as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? FileName { get; set; }
 
     /// <summary>
     /// Optional. MIME type of the file as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? MimeType { get; set; }
 }

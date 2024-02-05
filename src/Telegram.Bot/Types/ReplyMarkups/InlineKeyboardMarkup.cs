@@ -13,15 +13,14 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InlineKeyboardMarkup : IReplyMarkup
 {
     /// <summary>
     /// Array of <see cref="InlineKeyboardButton"/> rows, each represented by an Array of
     /// <see cref="InlineKeyboardButton"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public IEnumerable<IEnumerable<InlineKeyboardButton>> InlineKeyboard { get; }
 
     /// <summary>
@@ -29,7 +28,7 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// </summary>
     /// <param name="inlineKeyboardButton">Keyboard button</param>
     public InlineKeyboardMarkup(InlineKeyboardButton inlineKeyboardButton)
-        : this(new[] { inlineKeyboardButton })
+        : this([inlineKeyboardButton])
     { }
 
     /// <summary>
@@ -37,16 +36,16 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// </summary>
     /// <param name="inlineKeyboardRow">The inline keyboard row</param>
     public InlineKeyboardMarkup(IEnumerable<InlineKeyboardButton> inlineKeyboardRow)
-        : this(new[] { inlineKeyboardRow })
+        : this([inlineKeyboardRow])
     { }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InlineKeyboardMarkup"/> class.
     /// </summary>
     /// <param name="inlineKeyboard">The inline keyboard.</param>
-    #if !NET8_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [JsonConstructor]
-    #endif
+#endif
     public InlineKeyboardMarkup(IEnumerable<IEnumerable<InlineKeyboardButton>> inlineKeyboard) =>
         InlineKeyboard = inlineKeyboard;
 
@@ -63,7 +62,9 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// <param name="button">Inline keyboard button</param>
     [return: NotNullIfNotNull(nameof(button))]
     public static implicit operator InlineKeyboardMarkup?(InlineKeyboardButton? button) =>
-        button is null ? default : new(button);
+        button is null
+            ? default
+            : new(button);
 
     /// <summary>
     /// Generate an inline keyboard markup with one button
@@ -71,7 +72,9 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// <param name="buttonText">Text of the button</param>
     [return: NotNullIfNotNull(nameof(buttonText))]
     public static implicit operator InlineKeyboardMarkup?(string? buttonText) =>
-        buttonText is null ? default : new(buttonText!);
+        buttonText is null
+            ? default
+            : new(buttonText!);
 
     /// <summary>
     /// Generate an inline keyboard markup from multiple buttons
@@ -79,7 +82,9 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// <param name="inlineKeyboard">Keyboard buttons</param>
     [return: NotNullIfNotNull(nameof(inlineKeyboard))]
     public static implicit operator InlineKeyboardMarkup?(IEnumerable<InlineKeyboardButton>[]? inlineKeyboard) =>
-        inlineKeyboard is null ? default : new(inlineKeyboard);
+        inlineKeyboard is null
+            ? default
+            : new(inlineKeyboard);
 
     /// <summary>
     /// Generate an inline keyboard markup from multiple buttons on 1 row
@@ -87,5 +92,7 @@ public class InlineKeyboardMarkup : IReplyMarkup
     /// <param name="inlineKeyboard">Keyboard buttons</param>
     [return: NotNullIfNotNull(nameof(inlineKeyboard))]
     public static implicit operator InlineKeyboardMarkup?(InlineKeyboardButton[]? inlineKeyboard) =>
-        inlineKeyboard is null ? default : new(inlineKeyboard);
+        inlineKeyboard is null
+            ? default
+            : new(inlineKeyboard);
 }

@@ -77,8 +77,8 @@ public class AnimationMessageTests
         {
             message = await BotClient.SendAnimationAsync(
                 chatId: _fixture.SupergroupChat,
-                animation: new InputFileStream(stream1, "earth.gif"),
-                thumbnail: new InputFileStream(stream2, "thumb.jpg")
+                animation: InputFile.FromStream(stream1, "earth.gif"),
+                thumbnail: InputFile.FromStream(stream2, "thumb.jpg")
             );
         }
 

@@ -12,28 +12,23 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InlineQueryResultCachedSticker : InlineQueryResult
 {
     /// <summary>
     /// Type of the result, must be sticker
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override InlineQueryResultType Type => InlineQueryResultType.Sticker;
 
     /// <summary>
     /// A valid file identifier of the sticker
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string StickerFileId { get; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public InputMessageContent? InputMessageContent { get; set; }
 
     /// <summary>

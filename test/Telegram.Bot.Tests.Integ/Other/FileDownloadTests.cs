@@ -41,7 +41,7 @@ public class FileDownloadTests : IClassFixture<FileDownloadTests.Fixture>
         {
             documentMessage = await BotClient.SendDocumentAsync(
                 chatId: _fixture.SupergroupChat,
-                document: new InputFileStream(stream)
+                document: InputFile.FromStream(stream)
             );
         }
 

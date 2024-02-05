@@ -17,18 +17,15 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; }
 
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public long UserId { get; }
 
     /// <summary>
@@ -37,9 +34,7 @@ public class BanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTar
     /// Applied for supergroups and channels only.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public DateTime? UntilDate { get; set; }
 
     /// <summary>
@@ -47,9 +42,7 @@ public class BanChatMemberRequest : RequestBase<bool>, IChatTargetable, IUserTar
     /// <see langword="false"/>, the user will be able to see messages in the group that were sent before
     /// the user was removed. Always <see langword="true"/> for supergroups and channels.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? RevokeMessages { get; set; }
 
     /// <summary>

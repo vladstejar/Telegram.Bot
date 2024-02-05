@@ -12,20 +12,17 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class RevokeChatInviteLinkRequest : RequestBase<ChatInviteLink>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; }
 
     /// <summary>
     /// The invite link to revoke
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string InviteLink { get; }
 
     /// <summary>

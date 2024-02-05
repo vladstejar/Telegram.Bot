@@ -55,11 +55,12 @@ public class LiveLocationTests : IClassFixture<EntityFixture<Message>>
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.EditMessageLiveLocation)]
     public async Task Should_Update_Live_Location()
     {
-        Location[] locations = {
-            new Location { Latitude = 43.6532f, Longitude = -79.3832f }, // Toronto
-            new Location { Latitude = 59.9343f, Longitude = 30.3351f },  // Saint Petersburg
-            new Location { Latitude = 35.6892f, Longitude = 51.3890f },  // Tehran
-        };
+        Location[] locations =
+        [
+            new() { Latitude = 43.6532f, Longitude = -79.3832f }, // Toronto
+            new() { Latitude = 59.9343f, Longitude = 30.3351f },  // Saint Petersburg
+            new() { Latitude = 35.6892f, Longitude = 51.3890f }   // Tehran
+        ];
 
         Message editedMessage = default;
         foreach (Location newLocation in locations)

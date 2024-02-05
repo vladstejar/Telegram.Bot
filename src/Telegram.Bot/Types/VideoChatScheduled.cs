@@ -13,14 +13,13 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class VideoChatScheduled
 {
     /// <summary>
     /// Point in time when the voice chat is supposed to be started by a chat administrator
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     [JsonConverter(typeof(UnixDateTimeConverter))]
     public DateTime StartDate { get; set; }
 }

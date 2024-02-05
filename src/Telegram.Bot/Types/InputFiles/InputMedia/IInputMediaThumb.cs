@@ -4,6 +4,13 @@ namespace Telegram.Bot.Types;
 /// <summary>
 /// Indicates that an <see cref="InputMedia"/> has a thumbnail.
 /// </summary>
+#if NET8_0_OR_GREATER
+[JsonPolymorphic(TypeDiscriminatorPropertyName = null)]
+[JsonDerivedType(typeof(InputMediaAnimation))]
+[JsonDerivedType(typeof(InputMediaAudio))]
+[JsonDerivedType(typeof(InputMediaDocument))]
+[JsonDerivedType(typeof(InputMediaVideo))]
+#endif
 public interface IInputMediaThumb
 {
     /// <summary>

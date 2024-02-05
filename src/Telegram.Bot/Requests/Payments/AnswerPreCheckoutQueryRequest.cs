@@ -13,23 +13,20 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class AnswerPreCheckoutQueryRequest : RequestBase<bool>
 {
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string PreCheckoutQueryId { get; }
 
     /// <summary>
     /// Specify <see langword="true"/> if everything is alright (goods are available, etc.) and the
     /// bot is ready to proceed with the order. Use <see langword="false"/> if there are any problems.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool Ok { get; }
 
     /// <summary>
@@ -38,9 +35,7 @@ public class AnswerPreCheckoutQueryRequest : RequestBase<bool>
     /// the last of our amazing black T-shirts while you were busy filling out your payment details.
     /// Please choose a different color or garment!"). Telegram will display this message to the user.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? ErrorMessage { get; }
 
     /// <summary>

@@ -6,21 +6,18 @@
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class UserProfilePhotos
 {
     /// <summary>
     /// Total number of profile pictures the target user has
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int TotalCount { get; set; }
 
     /// <summary>
     /// Requested profile pictures (in up to 4 sizes each)
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public PhotoSize[][] Photos { get; set; } = default!;
 }

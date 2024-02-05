@@ -16,20 +16,17 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; }
 
     /// <summary>
     /// Unique identifier of the target sender chat
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public long SenderChatId { get; }
 
     /// <summary>
@@ -37,9 +34,7 @@ public class BanChatSenderChatRequest : RequestBase<bool>, IChatTargetable
     /// less than 30 seconds from the current time they are considered to be banned forever.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public DateTime? UntilDate { get; set; }
 
     /// <summary>

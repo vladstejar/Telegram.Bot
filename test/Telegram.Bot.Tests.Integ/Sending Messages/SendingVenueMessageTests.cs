@@ -53,15 +53,18 @@ public class SendingVenueMessageTests
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendVenue)]
     public async Task Should_Deserialize_Send_Venue()
     {
-        string json = $@"{{
-                chat_id: ""{_fixture.SupergroupChat.Id}"",
+        string json =
+            $$"""
+            {
+                chat_id: "{{_fixture.SupergroupChat.Id}}",
                 latitude: 48.204296,
                 longitude: 16.365514,
-                title: ""Burggarten"",
-                address: ""Opernring"",
-                foursquare_id: ""4b7ff7c3f964a5208d4730e3"",
-                foursquare_type: ""parks_outdoors/park""
-            }}";
+                title: "Burggarten",
+                address: "Opernring",
+                foursquare_id: "4b7ff7c3f964a5208d4730e3",
+                foursquare_type: "parks_outdoors/park"
+            }
+            """;
 
         SendVenueRequest request = JsonConvert.DeserializeObject<SendVenueRequest>(json);
 

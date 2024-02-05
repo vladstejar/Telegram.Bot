@@ -6,21 +6,18 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatLocation
 {
     /// <summary>
     /// The location to which the supergroup is connected. Can't be a live location.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public Location Location { get; set; } = default!;
 
     /// <summary>
     /// Location address; 1-64 characters, as defined by the chat owner
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Address { get; set; } = default!;
 }

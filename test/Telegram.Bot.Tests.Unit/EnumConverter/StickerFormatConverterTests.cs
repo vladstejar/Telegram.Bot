@@ -1,12 +1,9 @@
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Telegram.Bot.Types.Enums;
 using Xunit;
-using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -75,17 +72,16 @@ public class StickerFormatConverterTests
 #endif
     }
 
-    #if !NET8_0_OR_GREATER
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    #endif
+#if !NET8_0_OR_GREATER
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
+    [DataContract]
     class Sticker
     {
         /// <summary>
         /// Format of the sticker
         /// </summary>
-        #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+        [DataMember(IsRequired = true)]
         public StickerFormat Format { get; set; }
     }
 
@@ -93,9 +89,9 @@ public class StickerFormatConverterTests
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            yield return new object[] { StickerFormat.Static, "static" };
-            yield return new object[] { StickerFormat.Animated, "animated" };
-            yield return new object[] { StickerFormat.Video, "video" };
+            yield return [StickerFormat.Static, "static"];
+            yield return [StickerFormat.Animated, "animated"];
+            yield return [StickerFormat.Video, "video"];
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

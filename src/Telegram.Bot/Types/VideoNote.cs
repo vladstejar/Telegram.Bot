@@ -8,29 +8,24 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class VideoNote : FileBase
 {
     /// <summary>
     /// Video width and height (diameter of the video message) as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int Length { get; set; }
 
     /// <summary>
     /// Duration of the video in seconds as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int Duration { get; set; }
 
     /// <summary>
     /// Optional. Video thumbnail
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PhotoSize? Thumbnail { get; set; }
 }

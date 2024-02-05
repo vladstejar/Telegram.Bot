@@ -1,9 +1,9 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Runtime.Serialization;
 using Telegram.Bot.Types.Enums;
 using Xunit;
-using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -68,14 +68,13 @@ public class BotCommandScopeTypeConverterTests
         #endif
     }
 
-    #if !NET8_0_OR_GREATER
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    #endif
+#if !NET8_0_OR_GREATER
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
+    [DataContract]
     class BotCommandScope
     {
-        #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+        [DataMember(IsRequired = true)]
         public BotCommandScopeType Type { get; init; }
     }
 }

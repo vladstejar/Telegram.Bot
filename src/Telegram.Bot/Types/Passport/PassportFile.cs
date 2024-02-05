@@ -14,14 +14,13 @@ namespace Telegram.Bot.Types.Passport;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class PassportFile : FileBase
 {
     /// <summary>
     /// DateTime when the file was uploaded
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     [JsonConverter(typeof(UnixDateTimeConverter))]
     public DateTime FileDate { get; set; }
 }

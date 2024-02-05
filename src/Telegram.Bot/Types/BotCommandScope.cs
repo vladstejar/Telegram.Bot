@@ -7,15 +7,22 @@ namespace Telegram.Bot.Types;
 /// </summary>
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#else
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(BotCommandScopeDefault))]
+[JsonDerivedType(typeof(BotCommandScopeAllPrivateChats))]
+[JsonDerivedType(typeof(BotCommandScopeAllGroupChats))]
+[JsonDerivedType(typeof(BotCommandScopeAllChatAdministrators))]
+[JsonDerivedType(typeof(BotCommandScopeChat))]
+[JsonDerivedType(typeof(BotCommandScopeChatAdministrators))]
+[JsonDerivedType(typeof(BotCommandScopeChatMember))]
 #endif
 public abstract class BotCommandScope
 {
     /// <summary>
     /// Scope type
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public abstract BotCommandScopeType Type { get; }
 
     /// <summary>
@@ -73,12 +80,11 @@ public abstract class BotCommandScope
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BotCommandScopeDefault : BotCommandScope
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override BotCommandScopeType Type => BotCommandScopeType.Default;
 }
 
@@ -86,12 +92,11 @@ public class BotCommandScopeDefault : BotCommandScope
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BotCommandScopeAllPrivateChats : BotCommandScope
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override BotCommandScopeType Type => BotCommandScopeType.AllPrivateChats;
 }
 
@@ -99,12 +104,11 @@ public class BotCommandScopeAllPrivateChats : BotCommandScope
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BotCommandScopeAllGroupChats : BotCommandScope
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override BotCommandScopeType Type => BotCommandScopeType.AllGroupChats;
 }
 
@@ -112,12 +116,11 @@ public class BotCommandScopeAllGroupChats : BotCommandScope
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BotCommandScopeAllChatAdministrators : BotCommandScope
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override BotCommandScopeType Type => BotCommandScopeType.AllChatAdministrators;
 }
 
@@ -125,18 +128,18 @@ public class BotCommandScopeAllChatAdministrators : BotCommandScope
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BotCommandScopeChat : BotCommandScope
 {
     /// <inheritdoc />
+    [DataMember(IsRequired = true)]
     public override BotCommandScopeType Type => BotCommandScopeType.Chat;
 
     /// <summary>
     /// Unique identifier for the target <see cref="Chat"/> or username of the target supergroup
     /// (in the format @supergroupusername)
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; set; } = default!;
 }
 
@@ -144,21 +147,18 @@ public class BotCommandScopeChat : BotCommandScope
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BotCommandScopeChatAdministrators : BotCommandScope
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override BotCommandScopeType Type => BotCommandScopeType.ChatAdministrators;
 
     /// <summary>
     /// Unique identifier for the target <see cref="Chat"/> or username of the target supergroup
     /// (in the format @supergroupusername)
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; set; } = default!;
 }
 
@@ -166,28 +166,23 @@ public class BotCommandScopeChatAdministrators : BotCommandScope
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class BotCommandScopeChatMember : BotCommandScope
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override BotCommandScopeType Type => BotCommandScopeType.ChatMember;
 
     /// <summary>
     /// Unique identifier for the target <see cref="Chat"/> or username of the target supergroup
     /// (in the format @supergroupusername)
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; set; } = default!;
 
     /// <summary>
     /// Unique identifier of the target user
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public long UserId { get; set; }
 }

@@ -35,10 +35,7 @@ public class CallbackQueryTests
             chatId: _fixture.SupergroupChat.Id,
             text: "Please click on *OK* button.",
             parseMode: ParseMode.Markdown,
-            replyMarkup: new InlineKeyboardMarkup(new[]
-            {
-                InlineKeyboardButton.WithCallbackData("OK", callbackQueryData)
-            })
+            replyMarkup: new InlineKeyboardMarkup([InlineKeyboardButton.WithCallbackData("OK", callbackQueryData)])
         );
 
         Update responseUpdate = await _fixture.UpdateReceiver.GetCallbackQueryUpdateAsync(message.MessageId);
@@ -74,9 +71,7 @@ public class CallbackQueryTests
             chatId: _fixture.SupergroupChat.Id,
             text: "Please click on *Notify* button.",
             parseMode: ParseMode.Markdown,
-            replyMarkup: new InlineKeyboardMarkup(
-                InlineKeyboardButton.WithCallbackData("Notify", callbackQueryData)
-            )
+            replyMarkup: new InlineKeyboardMarkup(InlineKeyboardButton.WithCallbackData("Notify", callbackQueryData))
         );
 
         Update responseUpdate = await _fixture.UpdateReceiver.GetCallbackQueryUpdateAsync(message.MessageId);
@@ -97,6 +92,7 @@ public class CallbackQueryTests
         Assert.False(callbackQuery.From.IsBot);
         Assert.NotNull(callbackQuery.From.Username);
         Assert.NotEmpty(callbackQuery.From.Username);
+        Assert.NotNull(callbackQuery.Message);
         Assert.True(JToken.DeepEquals(
             JToken.FromObject(message), JToken.FromObject(callbackQuery.Message)
         ));

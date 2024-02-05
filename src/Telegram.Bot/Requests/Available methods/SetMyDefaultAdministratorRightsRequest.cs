@@ -9,24 +9,21 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class SetMyDefaultAdministratorRightsRequest : RequestBase<bool>
 {
     /// <summary>
     /// Optional. An object describing new default administrator rights. If not specified, the default administrator
     /// rights will be cleared.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public ChatAdministratorRights? Rights { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true"/> to change the default administrator rights of the bot in channels. Otherwise,
     /// the default administrator rights of the bot for groups and supergroups will be changed.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? ForChannels { get; set; }
 
     /// <summary>

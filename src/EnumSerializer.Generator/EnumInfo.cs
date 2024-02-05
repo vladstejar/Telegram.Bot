@@ -1,6 +1,6 @@
 namespace EnumSerializer.Generator;
 
-internal sealed class EnumInfo
+internal sealed record EnumInfo
 {
     public string Name { get; }
     public string Namespace { get; }
@@ -8,7 +8,7 @@ internal sealed class EnumInfo
     /// <summary>
     /// Key is the enum name.
     /// </summary>
-    public  IReadOnlyList<KeyValuePair<string, string>> Members { get; }
+    public IReadOnlyList<KeyValuePair<string, string>> Members { get; }
 
     public EnumInfo(
         string name,

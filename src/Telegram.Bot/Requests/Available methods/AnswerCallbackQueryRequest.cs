@@ -15,31 +15,26 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class AnswerCallbackQueryRequest : RequestBase<bool>
 {
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string CallbackQueryId { get; }
 
     /// <summary>
     /// Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Text { get; set; }
 
     /// <summary>
     /// If true, an alert will be shown by the client instead of a notification at the top of
     /// the chat screen. Defaults to <see langword="false"/>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? ShowAlert { get; set; }
 
     /// <summary>
@@ -52,18 +47,14 @@ public class AnswerCallbackQueryRequest : RequestBase<bool>
     /// a parameter
     /// </para>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Url { get; set; }
 
     /// <summary>
     /// The maximum amount of time in seconds that the result of the callback query may be cached
     /// client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? CacheTime { get; set; }
 
     /// <summary>

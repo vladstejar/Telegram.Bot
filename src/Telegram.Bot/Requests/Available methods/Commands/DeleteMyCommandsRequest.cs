@@ -10,15 +10,14 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class DeleteMyCommandsRequest : RequestBase<bool>
 {
     /// <summary>
     /// An object, describing scope of users for which the commands are relevant.
     /// Defaults to <see cref="BotCommandScopeDefault"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public BotCommandScope? Scope { get; set; }
 
     /// <summary>
@@ -26,9 +25,7 @@ public class DeleteMyCommandsRequest : RequestBase<bool>
     /// from the given <see cref="Scope">Scope</see>, for whose language there are no dedicated
     /// commands
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? LanguageCode { get; set; }
 
     /// <summary>

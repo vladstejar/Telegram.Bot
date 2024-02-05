@@ -7,14 +7,13 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class DeleteStickerFromSetRequest : RequestBase<bool>
 {
     /// <summary>
     /// <see cref="InputFileId">File identifier</see> of the sticker
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public InputFileId Sticker { get; }
 
     /// <summary>

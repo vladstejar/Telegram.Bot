@@ -6,29 +6,24 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class Document : FileBase
 {
     /// <summary>
     /// Optional. Document thumbnail as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PhotoSize? Thumbnail { get; set; }
 
     /// <summary>
     /// Optional. Original filename as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? FileName { get; set; }
 
     /// <summary>
     /// Optional. MIME type of the file as defined by sender
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? MimeType { get; set; }
 }

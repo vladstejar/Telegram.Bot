@@ -29,10 +29,10 @@ public class EditMessageContentTests2
     {
         const string originalMessagePrefix = "original\n";
         (MessageEntityType Type, string Value)[] entityValueMappings =
-        {
+        [
             (MessageEntityType.Bold, "<b>bold</b>"),
-            (MessageEntityType.Italic, "<i>italic</i>"),
-        };
+            (MessageEntityType.Italic, "<i>italic</i>")
+        ];
         string messageText = $"{originalMessagePrefix}{string.Join("\n", entityValueMappings.Select(tuple => tuple.Value))}";
 
         Message originalMessage = await BotClient.SendTextMessageAsync(

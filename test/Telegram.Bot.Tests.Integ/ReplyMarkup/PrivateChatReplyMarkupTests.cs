@@ -29,8 +29,7 @@ public class PrivateChatReplyMarkupTests : IClassFixture<PrivateChatReplyMarkupT
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
     public async Task Should_Receive_Contact_Info()
     {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new (
-            keyboardRow: new[] { KeyboardButton.WithRequestContact("Share Contact"), })
+        ReplyKeyboardMarkup replyKeyboardMarkup = new([KeyboardButton.WithRequestContact("Share Contact")])
         {
             ResizeKeyboard = true,
             OneTimeKeyboard = true,

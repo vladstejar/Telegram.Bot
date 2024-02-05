@@ -35,7 +35,7 @@ public class ApiExceptionsTests
 
         Update forwardedMessageUpdate = await _fixture.UpdateReceiver.GetUpdateAsync(
             predicate: u => u.Message?.ForwardFrom is not null,
-            updateTypes: new[] { UpdateType.Message }
+            updateTypes: [UpdateType.Message]
         );
 
         User forwardFromUser = forwardedMessageUpdate.Message!.ForwardFrom!;

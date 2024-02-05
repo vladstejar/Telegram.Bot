@@ -12,95 +12,72 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InlineQueryResultMpeg4Gif : InlineQueryResult
 {
     /// <summary>
     /// Type of the result, must be mpeg4_gif
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override InlineQueryResultType Type => InlineQueryResultType.Mpeg4Gif;
 
     /// <summary>
     /// A valid URL for the MP4 file. File size must not exceed 1MB
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Mpeg4Url { get; }
 
     /// <summary>
     /// Optional. Video width
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? Mpeg4Width { get; set; }
 
     /// <summary>
     /// Optional. Video height
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? Mpeg4Height { get; set; }
 
     /// <summary>
     /// Optional. Video duration
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? Mpeg4Duration { get; set; }
 
     /// <summary>
     /// URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string ThumbnailUrl { get; }
 
     /// <summary>
     /// Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”,
     /// or “video/mp4”. Defaults to “image/jpeg”
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? ThumbnailMimeType { get; set; }
 
     /// <summary>
     /// Optional. Title for the result
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Title { get; set; }
 
     /// <inheritdoc cref="Documentation.Caption" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Caption { get; set; }
 
     /// <inheritdoc cref="Documentation.ParseMode" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public ParseMode? ParseMode { get; set; }
 
     /// <inheritdoc cref="Documentation.CaptionEntities" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public MessageEntity[]? CaptionEntities { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public InputMessageContent? InputMessageContent { get; set; }
 
     /// <summary>

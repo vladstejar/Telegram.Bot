@@ -1,15 +1,8 @@
-#if !NET8_0_OR_GREATER
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-#endif
-using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 using Telegram.Bot.Types.Enums;
 using Xunit;
-#if NET8_0_OR_GREATER
-using JsonException = System.Text.Json.JsonException;
-#endif
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -113,11 +106,10 @@ public class EmojiConverterTests
 #if !NET8_0_OR_GREATER
     [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+    [DataContract]
     class Dice
     {
-#if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-#endif
+        [DataMember(IsRequired = true)]
         public Emoji Emoji { get; init; }
     }
 }

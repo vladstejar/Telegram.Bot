@@ -7,21 +7,18 @@ namespace Telegram.Bot.Types.Passport;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class PassportData
 {
     /// <summary>
     /// Array with information about documents and other Telegram Passport elements that was shared with the bot.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public EncryptedPassportElement[] Data { get; set; } = default!;
 
     /// <summary>
     /// Encrypted credentials required to decrypt the data.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public EncryptedCredentials Credentials { get; set; } = default!;
 }

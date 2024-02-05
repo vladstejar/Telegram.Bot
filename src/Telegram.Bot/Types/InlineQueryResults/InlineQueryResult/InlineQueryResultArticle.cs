@@ -9,72 +9,55 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InlineQueryResultArticle : InlineQueryResult
 {
     /// <summary>
     /// Type of the result, must be article
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override InlineQueryResultType Type => InlineQueryResultType.Article;
 
     /// <summary>
     /// Title of the result
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Title { get; }
 
     /// <summary>
     /// Content of the message to be sent
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public InputMessageContent InputMessageContent { get; }
 
     /// <summary>
     /// Optional. URL of the result.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Url { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true"/>, if you don't want the URL to be shown in the message.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? HideUrl { get; set; }
 
     /// <summary>
     /// Optional. Short description of the result.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Description { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? ThumbnailUrl { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailWidth" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? ThumbnailWidth { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? ThumbnailHeight { get; set; }
 
     /// <summary>

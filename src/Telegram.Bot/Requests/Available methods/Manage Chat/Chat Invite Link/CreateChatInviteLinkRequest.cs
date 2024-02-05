@@ -16,47 +16,38 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class CreateChatInviteLinkRequest : RequestBase<ChatInviteLink>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; }
 
     /// <summary>
     /// Invite link name; 0-32 characters
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Name { get; set; }
 
     /// <summary>
     /// Point in time when the link will expire
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public DateTime? ExpireDate { get; set; }
 
     /// <summary>
     ///	Maximum number of users that can be members of the chat simultaneously after joining the
     /// chat via this invite link; 1-99999
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? MemberLimit { get; set; }
 
     /// <summary>
     /// Set to <see langword="true"/>, if users joining the chat via the link need to be approved by chat administrators.
     /// If <see langword="true"/>, <see cref="MemberLimit"/> can't be specified
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CreatesJoinRequest { get; set; }
 
     /// <summary>

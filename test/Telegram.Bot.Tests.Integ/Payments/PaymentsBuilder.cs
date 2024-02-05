@@ -11,7 +11,7 @@ namespace Telegram.Bot.Tests.Integ.Payments;
 
 public class PaymentsBuilder
 {
-    readonly List<ShippingOption> _shippingOptions = new();
+    readonly List<ShippingOption> _shippingOptions = [];
     Product? _product;
     string? _currency;
     string? _startParameter;

@@ -47,10 +47,7 @@ public class ApiExceptionsTests2
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendMessage)]
     public async Task Should_Throw_Exception_ApiRequestException()
     {
-        ReplyKeyboardMarkup replyMarkup = new(new[]
-        {
-            KeyboardButton.WithRequestContact("Share Contact"),
-        });
+        ReplyKeyboardMarkup replyMarkup = new([KeyboardButton.WithRequestContact("Share Contact"),]);
 
         ApiRequestException exception = await Assert.ThrowsAsync<ApiRequestException>(() =>
             BotClient.SendTextMessageAsync(

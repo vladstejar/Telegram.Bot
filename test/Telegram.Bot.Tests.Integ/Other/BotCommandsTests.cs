@@ -24,18 +24,10 @@ public class BotCommandsTests: IAsyncLifetime
     public async Task Should_Set_New_Bot_Command_List()
     {
         BotCommand[] commands =
-        {
-            new()
-            {
-                Command = "start",
-                Description = "Start command"
-            },
-            new()
-            {
-                Command = "help",
-                Description = "Help command"
-            },
-        };
+        [
+            new() { Command = "start", Description = "Start command" },
+            new() { Command = "help", Description = "Help command" },
+        ];
 
         _scope = BotCommandScope.Default();
 
@@ -50,18 +42,10 @@ public class BotCommandsTests: IAsyncLifetime
     public async Task Should_Get_Set_Bot_Commands()
     {
         BotCommand[] commands =
-        {
-            new()
-            {
-                Command = "start",
-                Description = "Start command"
-            },
-            new()
-            {
-                Command = "help",
-                Description = "Help command"
-            },
-        };
+        [
+            new() { Command = "start", Description = "Start command" },
+            new() { Command = "help", Description = "Help command" },
+        ];
 
         _scope = BotCommandScope.Default();
 
@@ -82,18 +66,10 @@ public class BotCommandsTests: IAsyncLifetime
     public async Task Should_Delete_Bot_Commands()
     {
         BotCommand[] commands =
-        {
-            new()
-            {
-                Command = "start",
-                Description = "Start command"
-            },
-            new()
-            {
-                Command = "help",
-                Description = "Help command"
-            },
-        };
+        [
+            new() { Command = "start", Description = "Start command" },
+            new() { Command = "help", Description = "Help command" },
+        ];
 
         _scope = BotCommandScope.Default();
 
@@ -120,18 +96,10 @@ public class BotCommandsTests: IAsyncLifetime
     public async Task Should_Set_Group_Scoped_Commands()
     {
         BotCommand[] commands =
-        {
-            new()
-            {
-                Command = "start",
-                Description = "Start command"
-            },
-            new()
-            {
-                Command = "help",
-                Description = "Help command"
-            },
-        };
+        [
+            new() { Command = "start", Description = "Start command" },
+            new() { Command = "help", Description = "Help command" },
+        ];
 
         _scope = BotCommandScope.AllGroupChats();
 

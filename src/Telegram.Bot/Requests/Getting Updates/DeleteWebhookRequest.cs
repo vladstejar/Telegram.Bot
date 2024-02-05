@@ -8,14 +8,13 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class DeleteWebhookRequest : RequestBase<bool>
 {
     /// <summary>
     /// Pass <see langword="true"/> to drop all pending updates
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? DropPendingUpdates { get; set; }
 
     /// <summary>

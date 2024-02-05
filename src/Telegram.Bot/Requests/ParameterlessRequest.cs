@@ -9,6 +9,7 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ParameterlessRequest<TResult> : RequestBase<TResult>
 {
     /// <summary>

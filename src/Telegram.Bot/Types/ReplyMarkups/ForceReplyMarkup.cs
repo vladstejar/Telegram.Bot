@@ -9,21 +9,18 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ForceReplyMarkup : ReplyMarkupBase
 {
     /// <summary>
     /// Shows reply interface to the user, as if they manually selected the bot’s message and tapped 'Reply'
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool ForceReply => true;
 
     /// <summary>
     /// Optional. The placeholder to be shown in the input field when the reply is active; 1-64 characters
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? InputFieldPlaceholder { get; set; }
 }

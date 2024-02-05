@@ -9,7 +9,7 @@ namespace Telegram.Bot.Converters;
 
 internal class MenuButtonConverter : JsonConverter
 {
-    static readonly TypeInfo BaseType = typeof(ChatMember).GetTypeInfo();
+    static readonly TypeInfo BaseType = typeof(MenuButton).GetTypeInfo();
 
     public override bool CanWrite => false;
     public override bool CanRead => true;
@@ -53,7 +53,7 @@ internal class MenuButtonConverter : JsonConverter
         };
 
         // Remove status because status property only has getter
-        jo.Remove("type");
+        // jo.Remove("type");
         var value = Activator.CreateInstance(actualType)!;
         serializer.Populate(jo.CreateReader(), value);
 

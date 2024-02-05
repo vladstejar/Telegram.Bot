@@ -7,39 +7,32 @@ namespace Telegram.Bot.Types.Payments;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class Invoice
 {
     /// <summary>
     /// Product name
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Title { get; set; } = default!;
 
     /// <summary>
     /// Product description
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Description { get; set; } = default!;
 
     /// <summary>
     /// Unique bot deep-linking parameter that can be used to generate this invoice
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string StartParameter { get; set; } = default!;
 
     /// <summary>
     /// Three-letter ISO 4217
     /// <a href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> code
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Currency { get; set; } = default!;
 
     /// <summary>
@@ -52,8 +45,6 @@ public class Invoice
     /// number of digits past the decimal point for each currency (2 for the majority of currencies).
     /// </para>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int TotalAmount { get; set; }
 }

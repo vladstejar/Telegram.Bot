@@ -84,6 +84,7 @@ public class ChannelAdminBotTests : IClassFixture<ChannelAdminBotTestFixture>
 
         Chat chat = await BotClient.GetChatAsync(_classFixture.Chat.Id);
 
+        Assert.NotNull(chat.PinnedMessage);
         Assert.True(JToken.DeepEquals(
             JToken.FromObject(pinnedMsg), JToken.FromObject(chat.PinnedMessage)
         ));
@@ -116,7 +117,7 @@ public class ChannelAdminBotTests : IClassFixture<ChannelAdminBotTestFixture>
         await using Stream stream = System.IO.File.OpenRead(Constants.PathToFile.Photos.Logo);
         await BotClient.SetChatPhotoAsync(
             chatId: _classFixture.Chat.Id,
-            photo: new InputFileStream(stream)
+            photo: InputFile.FromStream(stream)
         );
     }
 

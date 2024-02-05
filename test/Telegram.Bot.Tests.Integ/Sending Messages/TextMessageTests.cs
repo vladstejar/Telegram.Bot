@@ -133,7 +133,7 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
     {
         const string url = "https://telegram.org/";
         (MessageEntityType Type, string Value)[] entityValueMappings =
-        {
+        [
             (MessageEntityType.Bold, "<b>bold</b>"),
             (MessageEntityType.Bold, "<strong>&lt;strong&gt;</strong>"),
             (MessageEntityType.Italic, "<i>italic</i>"),
@@ -147,8 +147,8 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
             (MessageEntityType.Pre, "<pre>pre-formatted fixed-width code block</pre>"),
             (MessageEntityType.Strikethrough, "<s>strikethrough</s>"),
             (MessageEntityType.Underline, "<u>underline</u>"),
-            (MessageEntityType.Spoiler, "<tg-spoiler>spoiler</tg-spoiler>"),
-        };
+            (MessageEntityType.Spoiler, "<tg-spoiler>spoiler</tg-spoiler>")
+        ];
 
         Message message = await BotClient.SendTextMessageAsync(
             chatId: _fixture.SupergroupChat.Id,
@@ -174,7 +174,7 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
     public async Task Should_Parse_Message_Entities_Into_Values()
     {
         (MessageEntityType Type, string Value)[] entityValueMappings =
-        {
+        [
             (MessageEntityType.PhoneNumber, "+38612345678"),
             (MessageEntityType.Cashtag, "$EUR"),
             (MessageEntityType.Hashtag, "#TelegramBots"),
@@ -182,8 +182,8 @@ public class TextMessageTests : IClassFixture<TextMessageTests.Fixture>
             (MessageEntityType.Url, "https://github.com/TelegramBots"),
             (MessageEntityType.Email, "security@telegram.org"),
             (MessageEntityType.BotCommand, "/test"),
-            (MessageEntityType.BotCommand, $"/test@{_fixture.BotUser.Username}"),
-        };
+            (MessageEntityType.BotCommand, $"/test@{_fixture.BotUser.Username}")
+        ];
 
         Message message = await BotClient.SendTextMessageAsync(
             chatId: _fixture.SupergroupChat.Id,

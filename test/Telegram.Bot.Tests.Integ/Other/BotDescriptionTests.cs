@@ -23,11 +23,7 @@ public class BotDescriptionTests: IAsyncLifetime
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SetMyDescription)]
     public async Task Should_Set_New_Bot_Description()
     {
-        string description = "Test bot description";
-
-        await BotClient.SetMyDescriptionAsync(
-            description: description
-        );
+        await BotClient.SetMyDescriptionAsync(description: "Test bot description");
     }
 
     [OrderedFact("Should get previously set bot description")]
@@ -36,9 +32,7 @@ public class BotDescriptionTests: IAsyncLifetime
     {
         string description = "Test bot description";
 
-        await BotClient.SetMyDescriptionAsync(
-            description: description
-        );
+        await BotClient.SetMyDescriptionAsync(description: description);
 
         BotDescription currentDescription = await _fixture.BotClient.GetMyDescriptionAsync();
 
@@ -52,18 +46,14 @@ public class BotDescriptionTests: IAsyncLifetime
     {
         string description = "Test bot description";
 
-        await BotClient.SetMyDescriptionAsync(
-            description: description
-        );
+        await BotClient.SetMyDescriptionAsync(description: description);
 
         BotDescription setDescription = await _fixture.BotClient.GetMyDescriptionAsync();
 
         Assert.NotNull(setDescription);
         Assert.Equal(description, setDescription.Description);
 
-        await BotClient.SetMyDescriptionAsync(
-            description: string.Empty
-        );
+        await BotClient.SetMyDescriptionAsync(description: string.Empty);
 
         BotDescription currentDescription = await _fixture.BotClient.GetMyDescriptionAsync();
 
@@ -94,13 +84,7 @@ public class BotDescriptionTests: IAsyncLifetime
 
     public async Task DisposeAsync()
     {
-        await BotClient.SetMyDescriptionAsync(
-            description: string.Empty
-        );
-
-        await BotClient.SetMyDescriptionAsync(
-            description: string.Empty,
-            languageCode: _languageCode
-        );
+        await BotClient.SetMyDescriptionAsync(description: string.Empty);
+        await BotClient.SetMyDescriptionAsync(description: string.Empty, languageCode: _languageCode);
     }
 }

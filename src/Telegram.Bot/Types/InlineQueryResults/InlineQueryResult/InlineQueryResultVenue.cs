@@ -11,100 +11,75 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InlineQueryResultVenue : InlineQueryResult
 {
     /// <summary>
     /// Type of the result, must be venue
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public override InlineQueryResultType Type => InlineQueryResultType.Venue;
 
     /// <inheritdoc cref="Documentation.Latitude" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public double Latitude { get; }
 
     /// <inheritdoc cref="Documentation.Longitude" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public double Longitude { get; }
 
     /// <summary>
     /// Title of the venue
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Title { get; }
 
     /// <summary>
     /// Address of the venue
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Address { get; }
 
     /// <summary>
     /// Optional. Foursquare identifier of the venue if known
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? FoursquareId { get; set; }
 
     /// <summary>
     /// Optional. Foursquare type of the venue. (For example, "arts_entertainment/default",
     /// "arts_entertainment/aquarium" or "food/icecream".)
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? FoursquareType { get; set; }
 
     /// <summary>
     /// Google Places identifier of the venue
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? GooglePlaceId { get; set; }
 
     /// <summary>
     /// Google Places type of the venue.
     /// <a href="https://developers.google.com/places/web-service/supported_types"/>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? GooglePlaceType { get; set; }
 
     /// <inheritdoc cref="Documentation.InputMessageContent" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public InputMessageContent? InputMessageContent { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailUrl" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? ThumbnailUrl { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailWidth" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? ThumbnailWidth { get; set; }
 
     /// <inheritdoc cref="Documentation.ThumbnailHeight" />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? ThumbnailHeight { get; set; }
 
     /// <summary>

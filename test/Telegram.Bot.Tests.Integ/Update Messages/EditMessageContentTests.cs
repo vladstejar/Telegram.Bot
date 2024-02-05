@@ -100,16 +100,15 @@ public class EditMessageContentTests
         Assert.NotNull(inlineQUpdate.InlineQuery);
 
         string data = "change-me" + new Random().Next(2_000);
-        InlineKeyboardMarkup initialMarkup = new(new[]
-        {
+        InlineKeyboardMarkup initialMarkup = new([
             InlineKeyboardButton.WithCallbackData("Click here to change this button", data)
-        });
+        ]);
 
         InputMessageContent inputMessageContent =
             new InputTextMessageContent("https://core.telegram.org/bots/api");
 
         InlineQueryResult[] inlineQueryResults =
-        {
+        [
             new InlineQueryResultArticle(
                 id: "bot-api",
                 title: "Telegram Bot API",
@@ -117,8 +116,8 @@ public class EditMessageContentTests
             {
                 Description = "The Bot API is an HTTP-based interface created for developers",
                 ReplyMarkup = initialMarkup,
-            },
-        };
+            }
+        ];
 
         await BotClient.AnswerInlineQueryAsync(inlineQUpdate.InlineQuery.Id, inlineQueryResults, 0);
 
@@ -152,14 +151,13 @@ public class EditMessageContentTests
         Assert.NotNull(inlineQUpdate.InlineQuery);
 
         string data = "change-me" + new Random().Next(2_000);
-        InlineKeyboardMarkup replyMarkup = new(new[]
-        {
+        InlineKeyboardMarkup replyMarkup = new([
             InlineKeyboardButton.WithCallbackData("Click here to change caption", data)
-        });
+        ]);
         const string url = "https://cdn.pixabay.com/photo/2017/08/30/12/45/girl-2696947_640.jpg";
 
         InlineQueryResult[] inlineQueryResults =
-        {
+        [
             new InlineQueryResultPhoto(
                 id: "photo1",
                 photoUrl: url,
@@ -168,7 +166,7 @@ public class EditMessageContentTests
                 Caption = "Message caption will be updated shortly",
                 ReplyMarkup = replyMarkup
             }
-        };
+        ];
 
         await BotClient.AnswerInlineQueryAsync(inlineQUpdate.InlineQuery.Id, inlineQueryResults, 0);
 

@@ -11,22 +11,19 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class AnswerWebAppQueryRequest : RequestBase<SentWebAppMessage>
 {
     /// <summary>
     /// Unique identifier for the query to be answered
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string WebAppQueryId { get; }
 
     /// <summary>
     /// An object describing the message to be sent
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public InlineQueryResult Result { get; }
 
     /// <summary>

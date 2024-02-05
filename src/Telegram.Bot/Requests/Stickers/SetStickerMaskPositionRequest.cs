@@ -8,24 +8,21 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class SetStickerMaskPositionRequest : RequestBase<bool>
 {
     //
     /// <summary>
     /// <see cref="InputFileId">File identifier</see> of the sticker
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public InputFileId Sticker { get; }
 
     /// <summary>
     /// A JSON-serialized object with the position where the mask should be placed on faces.
     /// <see cref="Nullable">Omit</see> the parameter to remove the mask position.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public MaskPosition? MaskPosition { get; set; }
 
     /// <summary>

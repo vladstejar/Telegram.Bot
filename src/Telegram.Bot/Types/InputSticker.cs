@@ -10,6 +10,7 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InputSticker
 {
     /// <summary>
@@ -20,35 +21,27 @@ public class InputSticker
     /// stickers can't be uploaded via HTTP URL.
     /// If you are using a <see cref="InputFileStream"/>, then the property <see cref="InputFileStream.FileName"/> is required.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public InputFile Sticker { get; }
 
     /// <summary>
     /// List of 1-20 emoji associated with the sticker
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public IEnumerable<string> EmojiList { get; }
 
     /// <summary>
     /// Optional. Position where the mask should be placed on faces.
     /// For <see cref="StickerType.Mask"/> stickers only.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public MaskPosition? MaskPosition { get; set; }
 
     /// <summary>
     /// Optional. List of 0-20 search keywords for the sticker with total length of up to 64 characters.
     /// For <see cref="StickerType.Regular"/> and <see cref="StickerType.CustomEmoji"/> stickers only.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public IEnumerable<string>? KeyWords { get; set; }
 
     /// <summary>

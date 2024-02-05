@@ -8,15 +8,14 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class GetChatMenuButtonRequest : RequestBase<MenuButton>
 {
     /// <summary>
     /// Optional. Unique identifier for the target private chat. If not specified, default bot’s menu button
     /// will be changed
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public long? ChatId { get; set; }
 
     /// <summary>

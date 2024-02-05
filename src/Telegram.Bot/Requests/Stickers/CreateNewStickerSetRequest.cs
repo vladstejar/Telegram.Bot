@@ -15,12 +15,11 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public long UserId { get; }
 
     /// <summary>
@@ -29,42 +28,32 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// contain consecutive underscores and must end in <i>"_by_&lt;bot username&gt;"</i>.
     /// <i>&lt;bot_username&gt;</i> is case insensitive. 1-64 characters
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Name { get; }
 
     /// <summary>
     /// Sticker set title, 1-64 characters
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Title { get; }
 
     /// <summary>
     /// A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public IEnumerable<InputSticker> Stickers { get; }
 
     /// <summary>
     /// Format of stickers in the set.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public StickerFormat StickerFormat { get; }
 
     /// <summary>
     /// Type of stickers in the set.
     /// By default, a regular sticker set is created.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public StickerType? StickerType { get; set; }
 
     /// <summary>
@@ -73,9 +62,7 @@ public class CreateNewStickerSetRequest : FileRequestBase<bool>, IUserTargetable
     /// on chat photos, or another appropriate color based on context;
     /// for <see cref="StickerType.CustomEmoji">custom emoji</see> sticker sets only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? NeedsRepainting { get; set; }
 
     /// <summary>

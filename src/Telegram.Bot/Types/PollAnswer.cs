@@ -6,37 +6,30 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class PollAnswer
 {
     /// <summary>
     /// Unique poll identifier
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string PollId { get; set; } = default!;
 
     /// <summary>
     /// Optional. The chat that changed the answer to the poll, if the voter is anonymous
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public Chat? VoterChat { get; set; }
 
     /// <summary>
     /// Optional. The user that changed the answer to the poll, if the voter isn't anonymous
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public User? User { get; set; }
 
     /// <summary>
     /// 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int[] OptionIds { get; set; } = default!;
 }

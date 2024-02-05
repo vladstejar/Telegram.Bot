@@ -45,21 +45,23 @@ public class SendingContactMessageTests
     public async Task Should_Send_Contact_With_VCard()
     {
         const string vcard =
-            "BEGIN:VCARD" + "\n" +
-            "VERSION:2.1" + "\n" +
-            "N:Gump;Forrest;;Mr." + "\n" +
-            "FN:Forrest Gump" + "\n" +
-            "ORG:Bubba Gump Shrimp Co." + "\n" +
-            "TITLE:Shrimp Man" + "\n" +
-            "PHOTO;JPEG:https://upload.wikimedia.org/wikipedia/commons/9/95/TomHanksForrestGump94.jpg" + "\n" +
-            "TEL;WORK;VOICE:(111) 555-1212" + "\n" +
-            "TEL;HOME;VOICE:(404) 555-1212" + "\n" +
-            "ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America" + "\n" +
-            "LABEL;HOME;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:42 Plantation St.=0D=0A=" + "\n" +
-            " Baytown, LA 30314=0D=0AUnited States of America" + "\n" +
-            "EMAIL:forrestgump@example.org" + "\n" +
-            "REV:20080424T195243Z" + "\n" +
-            "END:VCARD";
+            """
+            BEGIN:VCARD
+            VERSION:2.1
+            N:Gump;Forrest;;Mr.
+            FN:Forrest Gump
+            ORG:Bubba Gump Shrimp Co.
+            TITLE:Shrimp Man
+            PHOTO;JPEG:https://upload.wikimedia.org/wikipedia/commons/9/95/TomHanksForrestGump94.jpg
+            TEL;WORK;VOICE:(111) 555-1212
+            TEL;HOME;VOICE:(404) 555-1212
+            ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
+            LABEL;HOME;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:42 Plantation St.=0D=0A=
+             Baytown, LA 30314=0D=0AUnited States of America
+            EMAIL:forrestgump@example.org
+            REV:20080424T195243Z
+            END:VCARD
+            """;
 
         Message message = await BotClient.SendContactAsync(
             chatId: _fixture.SupergroupChat,

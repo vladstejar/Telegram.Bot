@@ -31,30 +31,25 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 [JsonDerivedType(typeof(InlineQueryResultVideo))]
 [JsonDerivedType(typeof(InlineQueryResultVoice))]
 #endif
+[DataContract]
 public abstract class InlineQueryResult
 {
     /// <summary>
     /// Type of the result
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public abstract InlineQueryResultType Type { get; }
 
     /// <summary>
     /// Unique identifier for this result, 1-64 Bytes
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Id { get; }
 
     /// <summary>
     /// Optional. Inline keyboard attached to the message
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public InlineKeyboardMarkup? ReplyMarkup { get; set; }
 
     /// <summary>

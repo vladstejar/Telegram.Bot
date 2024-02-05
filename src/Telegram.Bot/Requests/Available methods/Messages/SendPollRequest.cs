@@ -16,78 +16,61 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class SendPollRequest : RequestBase<Message>, IChatTargetable
 {
     /// <inheritdoc />
-#if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-#endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; }
 
     /// <summary>
     /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? MessageThreadId { get; set; }
 
     /// <summary>
     /// Poll question, 1-300 characters
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-#endif
+    [DataMember(IsRequired = true)]
     public string Question { get; }
 
     /// <summary>
     /// A list of answer options, 2-10 strings 1-100 characters each
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-#endif
+    [DataMember(IsRequired = true)]
     public IEnumerable<string> Options { get; }
 
     /// <summary>
     /// <see langword="true"/>, if the poll needs to be anonymous, defaults to <see langword="true"/>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? IsAnonymous { get; set; }
 
     /// <summary>
     /// Poll type, defaults to <see cref="PollType.Regular"/>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PollType? Type { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to
     /// <see langword="false"/>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? AllowsMultipleAnswers { get; set; }
 
     /// <summary>
     /// 0-based identifier of the correct answer option, required for polls in quiz mode
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? CorrectOptionId { get; set; }
 
     /// <summary>
     /// Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a
     /// quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Explanation { get; set; }
 
     /// <summary>
@@ -95,27 +78,21 @@ public class SendPollRequest : RequestBase<Message>, IChatTargetable
     /// <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a>
     /// for more details.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public ParseMode? ExplanationParseMode { get; set; }
 
     /// <summary>
     /// List of special entities that appear in the poll explanation, which can be specified instead
     /// of <see cref="ParseMode"/>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public IEnumerable<MessageEntity>? ExplanationEntities { get; set; }
 
     /// <summary>
     /// Amount of time in seconds the poll will be active after creation, 5-600. Can't be used
     /// together with <see cref="CloseDate"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? OpenPeriod { get; set; }
 
     /// <summary>
@@ -123,47 +100,33 @@ public class SendPollRequest : RequestBase<Message>, IChatTargetable
     /// than 600 seconds in the future. Can't be used together with <see cref="OpenPeriod"/>.
     /// </summary>
     [JsonConverter(typeof(UnixDateTimeConverter))]
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public DateTime? CloseDate { get; set; }
 
     /// <summary>
     /// Pass <see langword="true"/>, if the poll needs to be immediately closed. This can be useful for poll preview.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? IsClosed { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.DisableNotification"/>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? DisableNotification { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ProtectContent"/>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? ProtectContent { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyToMessageId"/>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? ReplyToMessageId { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.AllowSendingWithoutReply"/>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? AllowSendingWithoutReply { get; set; }
 
     /// <inheritdoc cref="Abstractions.Documentation.ReplyMarkup"/>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public IReplyMarkup? ReplyMarkup { get; set; }
 
     /// <summary>

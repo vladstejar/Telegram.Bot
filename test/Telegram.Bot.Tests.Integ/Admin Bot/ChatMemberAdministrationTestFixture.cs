@@ -32,9 +32,10 @@ public class ChatMemberAdministrationTestFixture : IAsyncLifetime
             await testsFixture.UpdateReceiver.DiscardNewUpdatesAsync();
 
             await testsFixture.SendTestCollectionNotificationAsync(collectionName,
-                $"No value is set for `{nameof(TestConfiguration.RegularGroupMemberId)}` " +
-                "in test settings.\n" + "An admin should either forward a message from non-admin member," +
-                " send his/her contact or add a non-admin member to the group."
+                $"""
+                 No value is set for `{nameof(TestConfiguration.RegularGroupMemberId)}` in test settings.
+                 An admin should either forward a message from non-admin member, send his/her contact or add a non-admin member to the group.
+                 """
             );
 
             chat = await testsFixture.GetChatFromAdminAsync();
@@ -43,8 +44,11 @@ public class ChatMemberAdministrationTestFixture : IAsyncLifetime
         if (chat.Username is not null) return chat;
 
         await testsFixture.SendTestCollectionNotificationAsync(collectionName,
-            $"[{chat.FirstName}](tg://user?id={chat.Id}) doesn't have a username.\n" +
-            "❎ Failing tests...");
+            $"""
+             [{chat.FirstName}](tg://user?id={chat.Id}) doesn't have a username.
+             ❎ Failing tests...
+             """
+        );
 
         throw new ArgumentNullException(nameof(chat.Username), "Chat member doesn't have a username");
     }

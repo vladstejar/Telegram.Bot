@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Telegram.Bot.Types;
+﻿using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Xunit;
 

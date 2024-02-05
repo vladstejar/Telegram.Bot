@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Telegram.Bot.Requests;
 using Telegram.Bot.Types.InlineQueryResults;
 using Xunit;

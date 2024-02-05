@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using Telegram.Bot.Types.Enums;
 
 namespace Telegram.Bot.Types;
@@ -8,62 +9,49 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class MessageEntity
 {
     /// <summary>
     /// Type of the entity
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-#endif
+    [DataMember(IsRequired = true)]
     public MessageEntityType Type { get; set; }
 
     /// <summary>
     /// Offset in UTF-16 code units to the start of the entity
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-#endif
+    [DataMember(IsRequired = true)]
     public int Offset { get; set; }
 
     /// <summary>
     /// Length of the entity in UTF-16 code units
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-#endif
+    [DataMember(IsRequired = true)]
     public int Length { get; set; }
 
     /// <summary>
     /// Optional. For <see cref="MessageEntityType.TextLink"/> only, URL that will be opened after user taps on the text
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-#endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Url { get; set; }
 
     /// <summary>
     /// Optional. For <see cref="MessageEntityType.TextMention"/> only, the mentioned user
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-#endif
+    [DataMember(EmitDefaultValue = false)]
     public User? User { get; set; }
 
     /// <summary>
     /// Optional. For <see cref="MessageEntityType.Pre"/> only, the programming language of the entity text
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-#endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Language { get; set; }
 
     /// <summary>
     /// Optional. For <see cref="MessageEntityType.CustomEmoji"/> only, unique identifier of the custom emoji.
     /// Use <see cref="Requests.GetCustomEmojiStickersRequest"/> to get full information about the sticker
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-#endif
+    [DataMember(EmitDefaultValue = false)]
     public string? CustomEmojiId { get; set; }
 }

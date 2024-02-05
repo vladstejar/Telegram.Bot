@@ -559,7 +559,7 @@ public class StickersTests : IClassFixture<StickersTestsFixture>
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.GetStickerSet)]
     public async Task Should_Set_First_Sticker_Keywords()
     {
-        string[] keywords = new[] { "test", "supertest" };
+        string[] keywords = ["test", "supertest"];
 
         StickerSet stickerSet = await BotClient.GetStickerSetAsync(
             name: _stickersTestsFixture.TestStaticRegularStickerSetName
@@ -667,15 +667,15 @@ public class StickersTests : IClassFixture<StickersTestsFixture>
     {
         const string expectedExceptionMessage = "Bad Request: can't parse InputSticker: expected a Unicode emoji";
 
-        string[] invalidEmojis = new[] { "INVALID" };
+        string[] invalidEmojis = ["INVALID"];
 
-        List<InputSticker> inputStickers = new List<InputSticker>
-        {
-            new InputSticker(
+        List<InputSticker> inputStickers =
+        [
+            new(
                 sticker: new InputFileId(_stickersTestsFixture.TestUploadedStaticStickerFile.FileId),
                 emojiList: invalidEmojis
             )
-        };
+        ];
 
         ApiRequestException exception = await Assert.ThrowsAsync<ApiRequestException>(() =>
             BotClient.CreateNewStickerSetAsync(
@@ -760,7 +760,7 @@ public class StickersTests : IClassFixture<StickersTestsFixture>
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.CreateNewStickerSet)]
     public async Task Should_Throw_StickerSetNameExistsException()
     {
-        
+
         const string expectedExceptionMessage = "Bad Request: sticker set name is already occupied";
 
         using System.IO.Stream stream = System.IO.File.OpenRead(Constants.PathToFile.Photos.Ruby);

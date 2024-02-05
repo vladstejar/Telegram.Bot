@@ -6,13 +6,12 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ReplyKeyboardRemove : ReplyMarkupBase
 {
     /// <summary>
     /// Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use '<see cref="ReplyKeyboardMarkup.OneTimeKeyboard"/>' in <see cref="ReplyKeyboardMarkup"/>)
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool RemoveKeyboard => true;
 }

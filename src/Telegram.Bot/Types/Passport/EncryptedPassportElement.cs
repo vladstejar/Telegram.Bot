@@ -9,14 +9,13 @@ namespace Telegram.Bot.Types.Passport;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class EncryptedPassportElement
 {
     /// <summary>
     /// Element type. One of <see cref="EncryptedPassportElementType"/>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public EncryptedPassportElementType Type { get; set; }
 
     /// <summary>
@@ -25,25 +24,19 @@ public class EncryptedPassportElement
     /// <see cref="IdentityCard"/>, <see cref="InternalPassport"/> and <see cref="Address"/>
     /// types. Can be decrypted and verified using the accompanying <see cref="EncryptedCredentials"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Data { get; set; }
 
     /// <summary>
     /// Optional. User's verified phone number, available only for <see cref="PhoneNumber"/> type.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? PhoneNumber { get; set; }
 
     /// <summary>
     /// Optional. User's verified email address, available only for <see cref="Email"/> type.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Email { get; set; }
 
     /// <summary>
@@ -52,9 +45,7 @@ public class EncryptedPassportElement
     /// <see cref="PassportRegistration"/> and <see cref="TemporaryRegistration"/> types.
     /// Files can be decrypted and verified using the accompanying <see cref="EncryptedCredentials"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PassportFile[]? Files { get; set; }
 
     /// <summary>
@@ -63,9 +54,7 @@ public class EncryptedPassportElement
     /// <see cref="InternalPassport"/>. The file can be decrypted and verified using the accompanying
     /// <see cref="EncryptedCredentials"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PassportFile? FrontSide { get; set; }
 
     /// <summary>
@@ -73,9 +62,7 @@ public class EncryptedPassportElement
     /// <see cref="DriverLicence"/> and <see cref="IdentityCard"/>. The file can be decrypted and verified using
     /// the accompanying <see cref="EncryptedCredentials"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PassportFile? ReverseSide { get; set; }
 
     /// <summary>
@@ -84,9 +71,7 @@ public class EncryptedPassportElement
     /// <see cref="InternalPassport"/>. The file can be decrypted and verified using the accompanying
     /// <see cref="EncryptedCredentials"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PassportFile? Selfie { get; set; }
 
     /// <summary>
@@ -97,16 +82,12 @@ public class EncryptedPassportElement
     /// <see cref="TemporaryRegistration"/> types. Files can be decrypted and verified using the accompanying
     /// <see cref="EncryptedCredentials"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public PassportFile[]? Translation { get; set; }
 
     /// <summary>
     /// Base64-encoded element hash for using in PassportElementErrorUnspecified
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Hash { get; set; } = default!;
 }

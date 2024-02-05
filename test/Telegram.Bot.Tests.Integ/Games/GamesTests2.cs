@@ -55,11 +55,10 @@ public class GamesTests2 : IClassFixture<GamesFixture>
         Message gameMessage = await BotClient.SendGameAsync(
             chatId: _fixture.SupergroupChat.Id,
             gameShortName: _classFixture.GameShortName,
-            replyMarkup: new[]
-            {
+            replyMarkup: new([
                 InlineKeyboardButton.WithCallBackGame(text: "Play"),
                 InlineKeyboardButton.WithCallbackData(textAndCallbackData: "Second button")
-            }
+            ])
         );
 
         Assert.Equal(MessageType.Game, gameMessage.Type);

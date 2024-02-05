@@ -10,55 +10,44 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InputLocationMessageContent : InputMessageContent
 {
     /// <summary>
     /// Latitude of the location in degrees
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public double Latitude { get; }
 
     /// <summary>
     /// Longitude of the location in degrees
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public double Longitude { get; }
 
     /// <summary>
     /// Optional. The radius of uncertainty for the location, measured in meters; 0-1500
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public float? HorizontalAccuracy { get; set; }
 
     /// <summary>
     /// Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? LivePeriod { get; set; }
 
     /// <summary>
     /// Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? Heading { get; set; }
 
     /// <summary>
     /// Optional. Maximum distance for proximity alerts about approaching another chat member,
     /// in meters. For sent live locations only.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public int? ProximityAlertRadius { get; set; }
 
     /// <summary>

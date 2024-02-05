@@ -9,30 +9,25 @@ namespace Telegram.Bot.Types.Passport;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class EncryptedCredentials
 {
     /// <summary>
     /// Base64-encoded encrypted JSON-serialized data with unique user's payload, data hashes and secrets
     /// required for <see cref="EncryptedPassportElement"/> decryption and authentication.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Data { get; set; } = default!;
 
     /// <summary>
     /// Base64-encoded data hash for data authentication.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Hash { get; set; } = default!;
 
     /// <summary>
     /// Base64-encoded secret, encrypted with the bot’s public RSA key, required for data decryption.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Secret { get; set; } = default!;
 }

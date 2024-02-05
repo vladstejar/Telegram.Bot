@@ -11,20 +11,17 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class SetChatPermissionsRequest : RequestBase<bool>, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatId ChatId { get; }
 
     /// <summary>
     /// New default chat permissions
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public ChatPermissions Permissions { get; }
 
     /// <summary>
@@ -37,9 +34,7 @@ public class SetChatPermissionsRequest : RequestBase<bool>, IChatTargetable
     /// permissions; the <see cref="ChatPermissions.CanSendPolls"/> permission will imply the
     /// <see cref="ChatPermissions.CanSendMessages"/> permission.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? UseIndependentChatPermissions { get; set; }
 
     /// <summary>

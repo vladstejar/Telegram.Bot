@@ -1,9 +1,6 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+using System.Runtime.Serialization;
 using Telegram.Bot.Types.Enums;
 using Xunit;
-using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -68,14 +65,13 @@ public class MaskPositionPointConverterTests
 #endif
     }
 
-    #if !NET8_0_OR_GREATER
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    #endif
+#if !NET8_0_OR_GREATER
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
+    [DataContract]
     class MaskPosition
     {
-        #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+        [DataMember(IsRequired = true)]
         public MaskPositionPoint Point { get; init; }
     }
 }

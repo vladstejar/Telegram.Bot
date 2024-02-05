@@ -1,6 +1,4 @@
-using System;
 using System.IO;
-using Newtonsoft.Json;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Xunit;
@@ -14,7 +12,7 @@ public class InputStickerSerializationTests
     {
         const string fileName = "myFile";
         InputFileStream inputFile = new(new MemoryStream(), fileName);
-        string[] emojiList = { "🙂" };
+        string[] emojiList = ["🙂"];
         InputSticker inputSticker = new(inputFile, emojiList);
 
         string json = Serializer.Serialize(inputSticker);
@@ -34,8 +32,8 @@ public class InputStickerSerializationTests
     {
         const string fileId = "This-is-a-file_id";
         InputFileId inputFileId = new(fileId);
-        string[] emojiList = new[] { "🙂" };
-        InputSticker inputStickerFileId = new InputSticker(inputFileId, emojiList);
+        string[] emojiList = ["🙂"];
+        InputSticker inputStickerFileId = new(inputFileId, emojiList);
 
         string json = Serializer.Serialize(inputStickerFileId);
         InputSticker? obj = Serializer.Deserialize<InputSticker>(json);
@@ -55,8 +53,8 @@ public class InputStickerSerializationTests
     {
         Uri url = new("http://github.org/TelegramBots");
         InputFileUrl inputFileUrl = new(url);
-        string[] emojiList = new[] { "🙂" };
-        InputSticker inputStickerFileUrl = new InputSticker(inputFileUrl, emojiList);
+        string[] emojiList = ["🙂"];
+        InputSticker inputStickerFileUrl = new(inputFileUrl, emojiList);
 
         string json = Serializer.Serialize(inputStickerFileUrl);
         InputSticker? obj = Serializer.Deserialize<InputSticker>(json);

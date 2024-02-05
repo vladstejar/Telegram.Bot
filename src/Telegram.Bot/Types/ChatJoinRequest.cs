@@ -13,22 +13,19 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatJoinRequest
 {
     /// <summary>
     /// Chat to which the request was sent
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public Chat Chat { get; set; } = default!;
 
     /// <summary>
     /// User that sent the join request
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public User From { get; set; } = default!;
 
     /// <summary>
@@ -38,33 +35,25 @@ public class ChatJoinRequest
     /// identifier. The bot can use this identifier for 24 hours to send messages until the join request is processed,
     /// assuming no other administrator contacted the user.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public long UserChatId { get; set; }
 
     /// <summary>
     /// Date the request was sent
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     [JsonConverter(typeof(UnixDateTimeConverter))]
     public DateTime Date { get; set; }
 
     /// <summary>
     /// Optional. Bio of the user
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? Bio { get; set; }
 
     /// <summary>
     /// Optional. Chat invite link that was used by the user to send the join request
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public ChatInviteLink? InviteLink { get; set; }
 }

@@ -34,7 +34,7 @@ public class AudioMessageTests
         {
             message = await BotClient.SendAudioAsync(
                 chatId: _fixture.SupergroupChat,
-                audio: new InputFileStream(stream, "Jackson F Smith - Cantina Rag.mp3"),
+                audio: InputFile.FromStream(stream, "Jackson F Smith - Cantina Rag.mp3"),
                 title: title,
                 performer: performer,
                 caption: caption,
@@ -68,8 +68,8 @@ public class AudioMessageTests
         {
             message = await BotClient.SendAudioAsync(
                 chatId: _fixture.SupergroupChat,
-                audio: new InputFileStream(stream1, "Ask Again - A State of Despair.mp3"),
-                thumbnail: new InputFileStream(stream2, "thumb.jpg")
+                audio: InputFile.FromStream(stream1, "Ask Again - A State of Despair.mp3"),
+                thumbnail: InputFile.FromStream(stream2, "thumb.jpg")
             );
         }
 
@@ -94,7 +94,7 @@ public class AudioMessageTests
         {
             message = await BotClient.SendVoiceAsync(
                 chatId: _fixture.SupergroupChat,
-                voice: new InputFileStream(stream),
+                voice: InputFile.FromStream(stream),
                 caption: caption,
                 duration: duration
             );

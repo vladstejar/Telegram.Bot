@@ -16,7 +16,7 @@ public static partial class JsonSerializerOptionsProvider
             Converters =
             {
                 new UnixDateTimeConverter(),
-                new BanTimeUnixDateTimeConverter(),
+                new BanTimeConverter(),
                 new ColorConverter(),
                 new InputFileConverter(),
                 new ChatIdConverter(),

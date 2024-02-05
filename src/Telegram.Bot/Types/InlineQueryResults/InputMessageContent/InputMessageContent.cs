@@ -9,5 +9,13 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 /// </summary>
 #if !NET8_0_OR_GREATER
 [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#else
+[JsonPolymorphic(TypeDiscriminatorPropertyName = null)]
+[JsonDerivedType(typeof(InputContactMessageContent))]
+[JsonDerivedType(typeof(InputInvoiceMessageContent))]
+[JsonDerivedType(typeof(InputLocationMessageContent))]
+[JsonDerivedType(typeof(InputTextMessageContent))]
+[JsonDerivedType(typeof(InputVenueMessageContent))]
 #endif
+[DataContract]
 public abstract class InputMessageContent { }

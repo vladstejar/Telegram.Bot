@@ -13,6 +13,7 @@ namespace Telegram.Bot.Types;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class LoginUrl
 {
     /// <summary>
@@ -28,17 +29,13 @@ public class LoginUrl
     /// <a href="https://core.telegram.org/widgets/login#checking-authorization">Checking authorization</a>.
     /// </para>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Url { get; set; } = default!;
 
     /// <summary>
     /// Optional. New text of the button in forwarded messages
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? ForwardText { get; set; }
 
     /// <summary>
@@ -49,16 +46,12 @@ public class LoginUrl
     /// <a href="https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot">
     /// Linking your domain to the bot</a> for more details.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? BotUsername { get; set; }
 
     /// <summary>
     /// Optional. Pass <see langword="true"/> to request the permission for your bot to send messages to the user
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? RequestWriteAccess { get; set; }
 }

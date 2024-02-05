@@ -16,20 +16,17 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class GetGameHighScoresRequest : RequestBase<GameHighScore[]>, IUserTargetable, IChatTargetable
 {
     /// <inheritdoc />
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public long UserId { get; }
 
     /// <summary>
     /// Unique identifier for the target chat
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public long ChatId { get; }
 
     /// <inheritdoc />
@@ -38,9 +35,7 @@ public class GetGameHighScoresRequest : RequestBase<GameHighScore[]>, IUserTarge
     /// <summary>
     /// Identifier of the sent message
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public int MessageId { get; }
 
     /// <summary>

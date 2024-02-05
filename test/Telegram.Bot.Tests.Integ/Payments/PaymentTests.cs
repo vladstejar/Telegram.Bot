@@ -36,7 +36,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Send_Invoice()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Lunar crater \"Copernicus\"")
                 .WithDescription(description:
                     "It was named after the astronomer Nicolaus Copernicus. It may have been created by debris" +
@@ -75,7 +75,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Answer_Shipping_Query_With_Ok()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Reproduction of \"La nascita di Venere\"")
                 .WithDescription(description:
                     "Sandro Botticelli’s the Birth of Venus depicts the goddess Venus arriving at the shore" +
@@ -87,7 +87,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
                     width: 1280,
                     height: 820
                 ))
-            .WithShipping(_ => _
+            .WithShipping(s => s
                 .WithTitle(title: "DHL Express")
                 .WithId(id: "dhl-express")
                 .WithPrice(label: "Packaging", amount: 400_000)
@@ -133,7 +133,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Answer_PreCheckout_Query_With_Ok_And_Shipment_Option()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Reproduction of \"La nascita di Venere\"")
                 .WithDescription(description:
                     "Sandro Botticelli’s the Birth of Venus depicts the goddess Venus arriving at the shore" +
@@ -145,7 +145,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
                     width: 1280,
                     height: 820
                 ))
-            .WithShipping(_ => _
+            .WithShipping(s => s
                 .WithTitle(title: "DHL Express")
                 .WithId(id: "dhl-express")
                 .WithPrice(label: "Packaging", amount: 400_000)
@@ -207,7 +207,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Receive_Successful_Payment_With_Shipment_Option()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Reproduction of \"La nascita di Venere\"")
                 .WithDescription(description:
                     "Sandro Botticelli’s the Birth of Venus depicts the goddess Venus arriving at the shore" +
@@ -219,7 +219,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
                     width: 1280,
                     height: 820
                 ))
-            .WithShipping(_ => _
+            .WithShipping(s => s
                 .WithTitle(title: "DHL Express")
                 .WithId(id: "dhl-express")
                 .WithPrice(label: "Packaging", amount: 400_000)
@@ -291,7 +291,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Receive_Successful_Payment_With_A_Tip()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Three tasty donuts")
                 .WithDescription(description: "Donuts with special glaze")
                 .WithProductPrice(label: "Donut with chocolate glaze", amount: 550)
@@ -331,10 +331,10 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
         SuccessfulPayment successfulPayment = successfulPaymentUpdate.Message!.SuccessfulPayment;
         int totalAmount = paymentsBuilder.GetTotalAmount();
 
-        int[] suggestedTips = {100, 150, 200};
-        int[] totalAmountWithTip = suggestedTips.Select(_ => _ + totalAmount).ToArray();
+        int[] suggestedTips = [100, 150, 200];
+        int[] totalAmountWithTip = suggestedTips.Select(t => t + totalAmount).ToArray();
 
-        Assert.Contains(totalAmountWithTip, _ => _ == successfulPayment!.TotalAmount);
+        Assert.Contains(totalAmountWithTip, p => p == successfulPayment!.TotalAmount);
         Assert.Equal("<my-payload>", successfulPayment!.InvoicePayload);
         Assert.NotNull(invoiceMessage.Invoice);
         Assert.Equal(invoiceMessage.Invoice.Currency, successfulPayment.Currency);
@@ -346,7 +346,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Answer_Shipping_Query_With_Error()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Reproduction of \"La nascita di Venere\"")
                 .WithDescription(description:
                     "Sandro Botticelli’s the Birth of Venus depicts the goddess Venus arriving at the shore" +
@@ -358,7 +358,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
                     width: 1280,
                     height: 820
                 ))
-            .WithShipping(_ => _
+            .WithShipping(s => s
                 .WithTitle(title: "DHL Express")
                 .WithId(id: "dhl-express")
                 .WithPrice(label: "Packaging", amount: 400_000)
@@ -399,7 +399,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Answer_PreCheckout_Query_With_Error_For_No_Shipment_Option()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Reproduction of \"La nascita di Venere\"")
                 .WithDescription(description:
                     "Sandro Botticelli’s the Birth of Venus depicts the goddess Venus arriving at the shore" +
@@ -443,7 +443,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Throw_When_Send_Invoice_Invalid_Provider_Data()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Reproduction of \"La nascita di Venere\"")
                 .WithDescription(description:
                     "Sandro Botticelli’s the Birth of Venus depicts the goddess Venus arriving at the shore" +
@@ -476,7 +476,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task Should_Throw_When_Answer_Shipping_Query_With_Duplicate_Shipping_Id()
     {
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Reproduction of \"La nascita di Venere\"")
                 .WithDescription(description:
                     "Sandro Botticelli’s the Birth of Venus depicts the goddess Venus arriving at the shore" +
@@ -488,12 +488,12 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
                     width: 1280,
                     height: 820
                 ))
-            .WithShipping(_ => _
+            .WithShipping(s => s
                 .WithTitle(title: "DHL Express")
                 .WithId(id: "dhl-express")
                 .WithPrice(label: "Packaging", amount: 400_000)
                 .WithPrice(label: "Shipping price", amount: 337_600))
-            .WithShipping(_ => _
+            .WithShipping(s => s
                 .WithTitle(title: "DHL Express (Duplicate)")
                 .WithId(id: "dhl-express")
                 .WithPrice(label: "Packaging", amount: 400_000)
@@ -541,21 +541,16 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.SendInvoice)]
     public async Task Should_Send_Invoice_With_Reply_Markup()
     {
-        InlineKeyboardMarkup replyMarkup = new(new[]
-        {
-            new[]
-            {
+        InlineKeyboardMarkup replyMarkup = new([
+            [
                 InlineKeyboardButton.WithPayment("Pay this invoice"),
                 InlineKeyboardButton.WithUrl("Repository", "https://github.com/TelegramBots/Telegram.Bot")
-            },
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Some other button")
-            }
-        });
+            ],
+            [InlineKeyboardButton.WithCallbackData("Some other button")],
+        ]);
 
         PaymentsBuilder paymentsBuilder = new PaymentsBuilder()
-            .WithProduct(_ => _
+            .WithProduct(p => p
                 .WithTitle(title: "Reproduction of \"La nascita di Venere\"")
                 .WithDescription(description:
                     "Sandro Botticelli’s the Birth of Venus depicts the goddess Venus arriving at the shore" +
@@ -623,7 +618,7 @@ public class PaymentTests : IClassFixture<PaymentFixture>, IAsyncLifetime
     public async Task InitializeAsync() => await _fixture.UpdateReceiver.DiscardNewUpdatesAsync();
     public Task DisposeAsync() => Task.CompletedTask;
 
-    public static string FormatInstructionWithCurrency(FormattableString instruction) =>
+    static string FormatInstructionWithCurrency(FormattableString instruction) =>
         instruction.ToString(CultureInfo.GetCultureInfo("en-US"));
 }
 

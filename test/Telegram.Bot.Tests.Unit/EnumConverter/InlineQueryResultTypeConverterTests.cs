@@ -1,11 +1,4 @@
-#if NET8_0_OR_GREATER
-using System.Text.Json.Serialization;
-using JsonException = System.Text.Json.JsonException;
-#else
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-#endif
-using System;
+using System.Runtime.Serialization;
 using Telegram.Bot.Types.InlineQueryResults;
 using Xunit;
 
@@ -90,11 +83,10 @@ public class InlineQueryResultTypeConverterTests
 #if !NET8_0_OR_GREATER
     [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+    [DataContract]
     class InlineQueryResult
     {
-#if !NET8_0_OR_GREATER
-        [JsonProperty(Required = Required.Always)]
-#endif
+        [DataMember(IsRequired = true)]
         public InlineQueryResultType Type { get; init; }
     }
 }

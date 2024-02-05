@@ -40,13 +40,12 @@ public class GamesTests : IClassFixture<GamesFixture>
         const string resultId = "game";
         await BotClient.AnswerInlineQueryAsync(
             inlineQueryId: queryUpdate.InlineQuery!.Id,
-            results: new InlineQueryResult[]
-            {
+            results: [
                 new InlineQueryResultGame(
                     id: resultId,
                     gameShortName: _classFixture.GameShortName
                 )
-            },
+            ],
             cacheTime: 0
         );
 
@@ -56,6 +55,7 @@ public class GamesTests : IClassFixture<GamesFixture>
                 messageType: MessageType.Game
             );
 
+        Assert.NotNull(chosenResultUpdate);
         Assert.Equal(MessageType.Game, messageUpdate?.Message?.Type);
         Assert.Equal(resultId, chosenResultUpdate?.ChosenInlineResult?.ResultId);
         Assert.NotNull(chosenResultUpdate?.ChosenInlineResult);

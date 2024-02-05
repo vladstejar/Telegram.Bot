@@ -106,7 +106,7 @@ public class ChatMemberAdministrationTests : IClassFixture<ChatMemberAdministrat
                 u.Message!.Chat.Type == ChatType.Supergroup
                 && u.Message!.Chat.Id == _fixture.SupergroupChat.Id
                 && u.Message!.Type == MessageType.ChatMembersAdded,
-            updateTypes: new[] { UpdateType.Message }
+            updateTypes: [UpdateType.Message]
         );
 
         await _fixture.UpdateReceiver.DiscardNewUpdatesAsync();
@@ -211,7 +211,6 @@ public class ChatMemberAdministrationTests : IClassFixture<ChatMemberAdministrat
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.DeclineChatJoinRequest)]
     public async Task Should_Decline_Chat_Join_Request()
     {
-
         Exception exception = await Record.ExceptionAsync(async () =>
             await BotClient.DeclineChatJoinRequest(
                 chatId: _fixture.SupergroupChat.Id,
@@ -371,8 +370,8 @@ public class ChatMemberAdministrationTests : IClassFixture<ChatMemberAdministrat
         Assert.NotNull(chatMemberUpdated.OldChatMember);
         Assert.NotNull(chatMemberUpdated.NewChatMember);
 
-        Assert.True(chatMemberUpdated.OldChatMember.Status == ChatMemberStatus.Restricted);
-        Assert.True(chatMemberUpdated.NewChatMember.Status == ChatMemberStatus.Kicked);
+        Assert.Equal(ChatMemberStatus.Restricted, chatMemberUpdated.OldChatMember.Status);
+        Assert.Equal(ChatMemberStatus.Kicked, chatMemberUpdated.NewChatMember.Status);
 
         Assert.IsType<ChatMemberRestricted>(chatMemberUpdated.OldChatMember);
         ChatMemberBanned newChatMember = Assert.IsType<ChatMemberBanned>(chatMemberUpdated.NewChatMember);
@@ -398,7 +397,7 @@ public class ChatMemberAdministrationTests : IClassFixture<ChatMemberAdministrat
         Update _ = await _fixture.UpdateReceiver
             .GetUpdateAsync(
                 u => u.Message?.Chat.Id == _fixture.SupergroupChat.Id &&
-                     u.Message.Type == MessageType.ChatMembersAdded,
+                     u.Message.Type is MessageType.ChatMembersAdded,
                 updateTypes: UpdateType.Message,
                 cancellationToken: cts.Token
             );

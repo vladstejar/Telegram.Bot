@@ -39,7 +39,7 @@ public class EditMessageMediaTests
         Assert.NotNull(iqUpdate.InlineQuery);
 
         InlineQueryResult[] inlineQueryResults =
-        {
+        [
             new InlineQueryResultPhoto(
                 id: "photo:rainbow-girl",
                 photoUrl: "https://cdn.pixabay.com/photo/2017/08/30/12/45/girl-2696947_640.jpg",
@@ -48,7 +48,7 @@ public class EditMessageMediaTests
                 Caption = "Rainbow Girl",
                 ReplyMarkup = InlineKeyboardButton.WithCallbackData("Click here to edit"),
             }
-        };
+        ];
 
         await BotClient.AnswerInlineQueryAsync(iqUpdate.InlineQuery.Id, inlineQueryResults, 0);
 
@@ -100,7 +100,7 @@ public class EditMessageMediaTests
         Assert.NotNull(iqUpdate.InlineQuery);
 
         InlineQueryResult[] inlineQueryResults =
-        {
+        [
             new InlineQueryResultDocument(
                 id: "document:acrobat",
                 documentUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
@@ -109,7 +109,7 @@ public class EditMessageMediaTests
             {
                 ReplyMarkup = InlineKeyboardButton.WithCallbackData("Click here to edit"),
             }
-        };
+        ];
 
         await BotClient.AnswerInlineQueryAsync(iqUpdate.InlineQuery.Id, inlineQueryResults, 0);
 

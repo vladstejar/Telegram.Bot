@@ -3,7 +3,7 @@
 // ReSharper disable once CheckNamespace
 namespace Telegram.Bot.Converters;
 
-internal class BanTimeUnixDateTimeConverter : JsonConverter<DateTime?>
+internal class BanTimeConverter : JsonConverter<DateTime?>
 {
     public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {

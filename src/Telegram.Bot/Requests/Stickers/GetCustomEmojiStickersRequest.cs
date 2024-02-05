@@ -10,14 +10,13 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class GetCustomEmojiStickersRequest : RequestBase<Sticker[]>
 {
     /// <summary>
     /// List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public IEnumerable<string> CustomEmojiIds { get; }
 
     /// <summary>

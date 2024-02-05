@@ -34,7 +34,7 @@ public class DiceTests
     public async Task Should_Send_A_Dart()
     {
         Message message = await _testsFixture.BotClient.SendDiceAsync(
-            _testsFixture.SupergroupChat,
+            chatId: _testsFixture.SupergroupChat,
             emoji: Emoji.Darts
         );
 
@@ -49,7 +49,7 @@ public class DiceTests
     public async Task Should_Send_A_Basketball()
     {
         Message message = await _testsFixture.BotClient.SendDiceAsync(
-            _testsFixture.SupergroupChat,
+            chatId: _testsFixture.SupergroupChat,
             emoji: Emoji.Basketball
         );
 
@@ -64,7 +64,7 @@ public class DiceTests
     public async Task Should_Send_A_Football()
     {
         Message message = await _testsFixture.BotClient.SendDiceAsync(
-            _testsFixture.SupergroupChat,
+            chatId: _testsFixture.SupergroupChat,
             emoji: Emoji.Football
         );
 
@@ -78,7 +78,7 @@ public class DiceTests
     public async Task Should_Send_A_SlotMachine()
     {
         Message message = await _testsFixture.BotClient.SendDiceAsync(
-            _testsFixture.SupergroupChat,
+            chatId: _testsFixture.SupergroupChat,
             emoji: Emoji.SlotMachine
         );
 
@@ -93,7 +93,7 @@ public class DiceTests
     public async Task Should_Send_A_Bowling()
     {
         Message message = await _testsFixture.BotClient.SendDiceAsync(
-            _testsFixture.SupergroupChat,
+            chatId: _testsFixture.SupergroupChat,
             emoji: Emoji.Bowling
         );
 

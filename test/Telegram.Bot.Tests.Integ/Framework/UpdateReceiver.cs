@@ -17,17 +17,9 @@ public enum UpdatePosition
     Single
 }
 
-public class UpdateReceiver
+public class UpdateReceiver(ITelegramBotClient botClient, IEnumerable<string>? allowedUsernames)
 {
-    readonly ITelegramBotClient _botClient;
-
-    public List<string> AllowedUsernames { get; }
-
-    public UpdateReceiver(ITelegramBotClient botClient, IEnumerable<string>? allowedUsernames)
-    {
-        _botClient = botClient;
-        AllowedUsernames = allowedUsernames?.ToList() ?? new();
-    }
+    public List<string> AllowedUsernames { get; } = allowedUsernames?.ToList() ?? [];
 
     public async Task DiscardNewUpdatesAsync(CancellationToken cancellationToken = default)
     {
@@ -45,13 +37,13 @@ public class UpdateReceiver
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                var updates = await _botClient.GetUpdatesAsync(
+                var updates = await botClient.GetUpdatesAsync(
                     offset: offset,
                     allowedUpdates: Array.Empty<UpdateType>(),
                     cancellationToken: cancellationToken
                 );
 
-                if (updates.Length == 0) break;
+                if (updates.Length is 0) break;
 
                 offset = updates[^1].Id + 1;
             }
@@ -145,7 +137,7 @@ public class UpdateReceiver
         var updates = await GetUpdatesAsync(
             predicate: u => (messageId is null || u.CallbackQuery?.Message?.MessageId == messageId) &&
                             (data is null || u.CallbackQuery?.Data == data),
-            updateTypes: new [] { UpdateType.CallbackQuery },
+            updateTypes: [UpdateType.CallbackQuery],
             cancellationToken: cancellationToken
         );
 
@@ -161,7 +153,7 @@ public class UpdateReceiver
         if (discardNewUpdates) { await DiscardNewUpdatesAsync(cancellationToken); }
 
         var updates = await GetUpdatesAsync(
-            updateTypes: new [] { UpdateType.InlineQuery },
+            updateTypes: [UpdateType.InlineQuery],
             cancellationToken: cancellationToken
         );
 
@@ -194,7 +186,7 @@ public class UpdateReceiver
                                  id == chatId && type == messageType) ||
                                 u.ChosenInlineResult is not null,
                 cancellationToken: cancellationToken,
-                updateTypes: new[] { UpdateType.Message, UpdateType.ChosenInlineResult }
+                updateTypes: [UpdateType.Message, UpdateType.ChosenInlineResult]
             );
 
             messageUpdate = updates.SingleOrDefault(u => u.Message?.Type == messageType);
@@ -209,7 +201,8 @@ public class UpdateReceiver
             CancellationToken cancellationToken,
             (Update? update1, Update? update2) updates
         ) =>
-            !cancellationToken.IsCancellationRequested && updates is not ({}, {});
+            !cancellationToken.IsCancellationRequested
+            && updates is not (not null, not null);
     }
 
     async Task<Update[]> GetOnlyAllowedUpdatesAsync(
@@ -217,7 +210,7 @@ public class UpdateReceiver
         CancellationToken cancellationToken,
         params UpdateType[] types)
     {
-        var updates = await _botClient.GetUpdatesAsync(
+        var updates = await botClient.GetUpdatesAsync(
             offset: offset,
             timeout: 120,
             allowedUpdates: types,
@@ -234,23 +227,23 @@ public class UpdateReceiver
         return update.Type switch
         {
             UpdateType.Message
-                or UpdateType.InlineQuery
-                or UpdateType.CallbackQuery
-                or UpdateType.PreCheckoutQuery
-                or UpdateType.ShippingQuery
-                or UpdateType.ChosenInlineResult
-                or UpdateType.PollAnswer
-                or UpdateType.ChatMember
-                or UpdateType.MyChatMember
-                or UpdateType.ChatJoinRequest =>
-                AllowedUsernames.Contains(
-                    update.GetUser().Username,
-                    StringComparer.OrdinalIgnoreCase
-                ),
+            or UpdateType.InlineQuery
+            or UpdateType.CallbackQuery
+            or UpdateType.PreCheckoutQuery
+            or UpdateType.ShippingQuery
+            or UpdateType.ChosenInlineResult
+            or UpdateType.PollAnswer
+            or UpdateType.ChatMember
+            or UpdateType.MyChatMember
+            or UpdateType.ChatJoinRequest =>
+                    AllowedUsernames.Contains(
+                        update.GetUser().Username,
+                        StringComparer.OrdinalIgnoreCase
+                    ),
             UpdateType.Poll => true,
             UpdateType.EditedMessage
-                or UpdateType.ChannelPost
-                or UpdateType.EditedChannelPost => false,
+            or UpdateType.ChannelPost
+            or UpdateType.EditedChannelPost => false,
             _ => throw new ArgumentOutOfRangeException(
                 paramName: nameof(update.Type),
                 actualValue: update.Type,

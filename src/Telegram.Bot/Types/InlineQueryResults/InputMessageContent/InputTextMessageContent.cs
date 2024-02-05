@@ -10,14 +10,13 @@ namespace Telegram.Bot.Types.InlineQueryResults;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class InputTextMessageContent : InputMessageContent
 {
     /// <summary>
     /// Text of the message to be sent, 1-4096 characters
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string MessageText { get; }
 
     /// <summary>
@@ -25,26 +24,20 @@ public class InputTextMessageContent : InputMessageContent
     /// <a href="https://core.telegram.org/bots/api#formatting-options">parsing entities</a> in the message
     /// text. See formatting options for more details.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public ParseMode? ParseMode { get; set; }
 
     /// <summary>
     /// Optional. List of special entities that appear in message text, which can be specified
     /// instead of <see cref="ParseMode"/>
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public MessageEntity[]? Entities { get; set; } // ToDo: add test
 
     /// <summary>
     /// Optional. Disables link previews for links in the sent message
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? DisableWebPagePreview { get; set; }
 
     /// <summary>

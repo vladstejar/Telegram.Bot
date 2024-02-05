@@ -1,9 +1,6 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+using System.Runtime.Serialization;
 using Telegram.Bot.Types.Passport;
 using Xunit;
-using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -86,14 +83,13 @@ public class EncryptedPassportElementTypeConverterTests
 #endif
     }
 
-    #if !NET8_0_OR_GREATER
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    #endif
+#if !NET8_0_OR_GREATER
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
+    [DataContract]
     class EncryptedPassportElement
     {
-        #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+        [DataMember(IsRequired = true)]
         public EncryptedPassportElementType Type { get; init; }
     }
 }

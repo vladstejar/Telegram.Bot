@@ -93,7 +93,7 @@ public class TelegramBotClient : ITelegramBotClient
 #pragma warning disable CA2000
         var httpRequest = new HttpRequestMessage(method: request.Method, requestUri: url)
         {
-            Content = request.ToHttpContent()
+            Content = request.ToHttpContent(),
         };
 #pragma warning restore CA2000
 
@@ -149,7 +149,7 @@ public class TelegramBotClient : ITelegramBotClient
 
         var apiResponse = await httpResponse
             .DeserializeContentAsync<ApiResponse<TResponse>>(
-                guard: response => response.Ok == false ||
+                guard: response => !response.Ok ||
                                    response.Result is null
             )
             .ConfigureAwait(false);
@@ -171,10 +171,7 @@ public class TelegramBotClient : ITelegramBotClient
             }
             catch (TaskCanceledException exception)
             {
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    throw;
-                }
+                if (cancellationToken.IsCancellationRequested) throw;
 
                 throw new RequestException(message: "Request timed out", innerException: exception);
             }
@@ -203,7 +200,7 @@ public class TelegramBotClient : ITelegramBotClient
             return true;
         }
         catch (ApiRequestException e)
-            when (e.ErrorCode == 401)
+            when (e.ErrorCode is 401)
         {
             return false;
         }

@@ -23,14 +23,13 @@ namespace Telegram.Bot.Types;
 [JsonDerivedType(typeof(MenuButtonDefault), "default")]
 [JsonDerivedType(typeof(MenuButtonWebApp), "web_app")]
 #endif
+[DataContract]
 public abstract class MenuButton
 {
     /// <summary>
     /// Type of the button
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty]
-    #endif
+    [DataMember(IsRequired = true)]
     public abstract MenuButtonType Type { get; }
 }
 
@@ -40,6 +39,7 @@ public abstract class MenuButton
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class MenuButtonCommands : MenuButton
 {
     /// <inheritdoc />
@@ -52,6 +52,7 @@ public class MenuButtonCommands : MenuButton
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class MenuButtonWebApp : MenuButton
 {
     /// <inheritdoc />
@@ -60,18 +61,14 @@ public class MenuButtonWebApp : MenuButton
     /// <summary>
     /// Text on the button
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public string Text { get; set; } = default!;
 
     /// <summary>
     /// Description of the Web App that will be launched when the user presses the button. The Web App will be able
     /// to send an arbitrary message on behalf of the user using the method <see cref="AnswerWebAppQueryRequest"/>.
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public WebAppInfo WebApp { get; set; } = default!;
 }
 
@@ -81,6 +78,7 @@ public class MenuButtonWebApp : MenuButton
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class MenuButtonDefault : MenuButton
 {
     /// <inheritdoc />

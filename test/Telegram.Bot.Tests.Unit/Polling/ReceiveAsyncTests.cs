@@ -85,7 +85,7 @@ public class ReceiveAsyncTests
 
         MockTelegramBotClient bot = new(new MockClientOptions
         {
-            Messages = new[] { "foo-bar", "baz", "quux" },
+            Messages = ["foo-bar", "baz", "quux"],
             HandleNegativeOffset = true
         });
 

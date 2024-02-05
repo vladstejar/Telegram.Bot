@@ -23,9 +23,7 @@ public class ChatInfoTests
     {
         Chat supergroupChat = _fixture.SupergroupChat;
 
-        Chat chat = await BotClient.GetChatAsync(
-            chatId: supergroupChat.Id
-        );
+        Chat chat = await BotClient.GetChatAsync(chatId: supergroupChat.Id);
 
         Assert.Equal(ChatType.Supergroup, chat.Type);
         Assert.Equal(supergroupChat.Id, chat.Id);
@@ -77,10 +75,10 @@ public class ChatInfoTests
             chatId: _fixture.SupergroupChat.Id
         );
 
-        ChatMember memberCreator = Assert.Single(chatAdmins, _ => _.Status == ChatMemberStatus.Creator);
+        ChatMember memberCreator = Assert.Single(chatAdmins, m => m.Status == ChatMemberStatus.Creator);
         Assert.IsType<ChatMemberOwner>(memberCreator);
 
-        ChatMember memberBot = Assert.Single(chatAdmins, _ => _.User.IsBot);
+        ChatMember memberBot = Assert.Single(chatAdmins, m => m.User.IsBot);
         Debug.Assert(memberBot != null);
 
         Assert.True(2 <= chatAdmins.Length); // at least, Bot and the Creator
@@ -103,9 +101,7 @@ public class ChatInfoTests
                 .User.Id;
         }
 
-        Chat chat = await BotClient.GetChatAsync(
-            chatId: privateChatId
-        );
+        Chat chat = await BotClient.GetChatAsync(chatId: privateChatId);
 
         Assert.Equal(ChatType.Private, chat.Type);
         Assert.Equal(privateChatId, chat.Id);
@@ -129,9 +125,7 @@ public class ChatInfoTests
     [Trait(Constants.MethodTraitName, Constants.TelegramBotApiMethods.GetChatMembersCount)]
     public async Task Should_Get_Chat_Members_Count()
     {
-        int membersCount = await BotClient.GetChatMemberCountAsync(
-            chatId: _fixture.SupergroupChat.Id
-        );
+        int membersCount = await BotClient.GetChatMemberCountAsync(chatId: _fixture.SupergroupChat.Id);
 
         Assert.True(2 <= membersCount); // at least, Bot and the Creator
     }

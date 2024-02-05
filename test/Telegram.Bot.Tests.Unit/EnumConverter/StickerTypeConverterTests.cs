@@ -1,12 +1,9 @@
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Telegram.Bot.Types.Enums;
 using Xunit;
-using JsonException = System.Text.Json.JsonException;
 
 namespace Telegram.Bot.Tests.Unit.EnumConverter;
 
@@ -75,18 +72,13 @@ public class StickerTypeConverterTests
 #endif
     }
 
-    #if !NET8_0_OR_GREATER
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    #endif
+#if !NET8_0_OR_GREATER
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
+    [DataContract]
     class Sticker
     {
-        /// <summary>
-        /// Type of the sticker. The type of the sticker is independent from its format,
-        /// which is determined by the fields <see cref="IsAnimated"/> and <see cref="IsVideo"/>.
-        /// </summary>
-        #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+        [DataMember(IsRequired = true)]
         public StickerType Type { get; set; }
     }
 
@@ -94,9 +86,9 @@ public class StickerTypeConverterTests
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            yield return new object[] { StickerType.Regular, "regular" };
-            yield return new object[] { StickerType.Mask, "mask" };
-            yield return new object[] { StickerType.CustomEmoji, "custom_emoji" };
+            yield return [StickerType.Regular, "regular"];
+            yield return [StickerType.Mask, "mask"];
+            yield return [StickerType.CustomEmoji, "custom_emoji"];
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

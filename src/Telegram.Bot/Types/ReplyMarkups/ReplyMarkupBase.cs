@@ -12,6 +12,7 @@ namespace Telegram.Bot.Types.ReplyMarkups;
 [JsonDerivedType(typeof(ReplyKeyboardMarkup))]
 [JsonDerivedType(typeof(ReplyKeyboardRemove))]
 #endif
+[DataContract]
 public abstract class ReplyMarkupBase : IReplyMarkup
 {
     /// <summary>
@@ -30,8 +31,6 @@ public abstract class ReplyMarkupBase : IReplyMarkup
     /// <i>Example:</i> A user requests to change the bot’s language, bot replies to the request with a keyboard
     /// to select the new language. Other users in the group don't see the keyboard.
     /// </remarks>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? Selective { get; set; }
 }

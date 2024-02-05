@@ -23,22 +23,21 @@ namespace Telegram.Bot.Types;
 [JsonDerivedType(typeof(ChatMemberOwner), "creator")]
 [JsonDerivedType(typeof(ChatMemberRestricted), "restricted")]
 #endif
+[DataContract]
 public abstract class ChatMember
 {
     /// <summary>
     /// The member's status in the chat.
     /// </summary>
-    #if !NET8_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     [JsonProperty]
-    #endif
+#endif
     public abstract ChatMemberStatus Status { get; }
 
     /// <summary>
     /// Information about the user
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public User User { get; set; } = default!;
 }
 
@@ -48,25 +47,23 @@ public abstract class ChatMember
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatMemberOwner : ChatMember
 {
     /// <inheritdoc />
+    [DataMember(IsRequired = true)]
     public override ChatMemberStatus Status => ChatMemberStatus.Creator;
 
     /// <summary>
     /// Custom title for this user
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? CustomTitle { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user's presence in the chat is hidden
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool IsAnonymous { get; set; }
 }
 
@@ -76,25 +73,23 @@ public class ChatMemberOwner : ChatMember
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatMemberAdministrator : ChatMember
 {
     /// <inheritdoc />
+    [DataMember(IsRequired = true)]
     public override ChatMemberStatus Status => ChatMemberStatus.Administrator;
 
     /// <summary>
     /// <see langword="true"/>, if the bot is allowed to edit administrator privileges of that user
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanBeEdited { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user's presence in the chat is hidden
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool IsAnonymous { get; set; }
 
     /// <summary>
@@ -102,33 +97,25 @@ public class ChatMemberAdministrator : ChatMember
     /// in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode.
     /// Implied by any other administrator privilege
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanManageChat { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the administrator can delete messages of other users
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanDeleteMessages { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the administrator can manage video chats
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanManageVideoChats { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the administrator can restrict, ban or unban chat members
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanRestrictMembers { get; set; }
 
     /// <summary>
@@ -136,90 +123,68 @@ public class ChatMemberAdministrator : ChatMember
     /// demote administrators that he has promoted, directly or indirectly (promoted by administrators that
     /// were appointed by the user)
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanPromoteMembers { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the administrator can change the chat title, photo and other settings
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanChangeInfo { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the administrator can invite new users to the chat
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanInviteUsers { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the administrator can post in the channel, channels only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CanPostMessages { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the administrator can edit messages of other users, channels only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CanEditMessages { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the administrator can pin messages, supergroups only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CanPinMessages { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the administrator can post stories in the channel; channels only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CanPostStories { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the administrator can edit stories posted by other users; channels only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CanEditStories { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the administrator can delete stories posted by other users; channels only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CanDeleteStories { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the user is allowed to create, rename, close, and reopen forum topics;
     /// supergroups only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CanManageTopics { get; set; }
 
     /// <summary>
     /// Optional. Custom title for this user
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public string? CustomTitle { get; set; }
 }
 
@@ -229,9 +194,11 @@ public class ChatMemberAdministrator : ChatMember
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatMemberMember : ChatMember
 {
     /// <inheritdoc />
+    [DataMember(IsRequired = true)]
     public override ChatMemberStatus Status => ChatMemberStatus.Member;
 }
 
@@ -241,139 +208,109 @@ public class ChatMemberMember : ChatMember
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatMemberRestricted : ChatMember
 {
     /// <inheritdoc />
+    [DataMember(IsRequired = true)]
     public override ChatMemberStatus Status => ChatMemberStatus.Restricted;
 
     /// <summary>
     /// <see langword="true"/>, if the user is a member of the chat at the moment of the request
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool IsMember { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user can change the chat title, photo and other settings
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanChangeInfo { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user can invite new users to the chat
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanInviteUsers { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user can pin messages, supergroups only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanPinMessages { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user can send text messages, contacts, locations and venues
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendMessages { get; set; }
 
     /// <summary>
     /// <see langword="true" />, if the user is allowed to send audios
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendAudios { get; set; }
 
     /// <summary>
     /// <see langword="true" />, if the user is allowed to send documents
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendDocuments { get; set; }
 
     /// <summary>
     /// <see langword="true" />, if the user is allowed to send photos
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendPhotos { get; set; }
 
     /// <summary>
     /// <see langword="true" />, if the user is allowed to send videos
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendVideos { get; set; }
 
     /// <summary>
     /// <see langword="true" />, if the user is allowed to send video notes
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendVideoNotes { get; set; }
 
     /// <summary>
     /// <see langword="true" />, if the user is allowed to send voice notes
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendVoiceNotes { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user is allowed to send polls
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendPolls { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user is allowed to send animations, games, stickers and use inline bots
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanSendOtherMessages { get; set; }
 
     /// <summary>
     /// <see langword="true"/>, if the user is allowed to add web page previews to their messages
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(Required = Required.Always)]
-    #endif
+    [DataMember(IsRequired = true)]
     public bool CanAddWebPagePreviews { get; set; }
 
     /// <summary>
     /// Date when restrictions will be lifted for this user, UTC time
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
-    [JsonConverter(typeof(BanTimeUnixDateTimeConverter))]
+    [DataMember(EmitDefaultValue = false)]
+    [JsonConverter(typeof(BanTimeConverter))]
     public DateTime? UntilDate { get; set; }
 
     /// <summary>
     /// Optional. <see langword="true"/>, if the user is allowed to create forum topics
     /// supergroups only
     /// </summary>
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [DataMember(EmitDefaultValue = false)]
     public bool? CanManageTopics { get; set; }
 }
 
@@ -383,9 +320,11 @@ public class ChatMemberRestricted : ChatMember
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatMemberLeft : ChatMember
 {
     /// <inheritdoc />
+    [DataMember(IsRequired = true)]
     public override ChatMemberStatus Status => ChatMemberStatus.Left;
 }
 
@@ -396,17 +335,17 @@ public class ChatMemberLeft : ChatMember
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public class ChatMemberBanned : ChatMember
 {
     /// <inheritdoc />
+    [DataMember(IsRequired = true)]
     public override ChatMemberStatus Status => ChatMemberStatus.Kicked;
 
     /// <summary>
     /// Date when restrictions will be lifted for this user, UTC time
     /// </summary>
-    [JsonConverter(typeof(BanTimeUnixDateTimeConverter))]
-    #if !NET8_0_OR_GREATER
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-    #endif
+    [JsonConverter(typeof(BanTimeConverter))]
+    [DataMember(EmitDefaultValue = true)]
     public DateTime? UntilDate { get; set; }
 }

@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Runtime.Serialization;
 using Telegram.Bot.Types.Enums;
 using Xunit;
 
@@ -50,14 +48,13 @@ public class ParseModeConverterTests
         Assert.Equal((ParseMode)0, result.ParseMode);
     }
 
-    #if !NET8_0_OR_GREATER
-[JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    #endif
+#if !NET8_0_OR_GREATER
+    [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+#endif
+    [DataContract]
     class SendMessageRequest
     {
-#if !NET8_0_OR_GREATER
-        [JsonProperty(Required = Required.Always)]
-#endif
+        [DataMember(IsRequired = true)]
         public ParseMode ParseMode { get; init; }
     }
 }
