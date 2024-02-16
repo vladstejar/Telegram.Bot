@@ -11,16 +11,19 @@ public interface IRequest
     /// <summary>
     /// HTTP method of request
     /// </summary>
+    [JsonIgnore]
     HttpMethod Method { get; }
 
     /// <summary>
     /// API method name
     /// </summary>
+    [JsonIgnore]
     string MethodName { get; }
 
     /// <summary>
     /// Allows this object to be used as a response in webhooks
     /// </summary>
+    [JsonIgnore]
     bool IsWebhookResponse { get; set; }
 
     /// <summary>

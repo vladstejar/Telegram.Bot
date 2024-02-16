@@ -975,9 +975,6 @@ public static partial class TelegramBotClientExtensions
     /// (in the format <c>@channelusername</c>)
     /// </param>
     /// <param name="voice">
-    /// <param name="messageThreadId">
-    /// Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-    /// </param>
     /// Audio file to send. Pass a <see cref="InputFileId"/> as String to send a file that exists
     /// on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from
     /// the Internet, or upload a new one using multipart/form-data
@@ -4974,9 +4971,6 @@ public static partial class TelegramBotClientExtensions
     /// </param>
     /// Short name of the game, serves as the unique identifier for the game. Set up your games via
     /// <a href="https://t.me/botfather">@BotFather</a>
-    /// </param>
-    /// <param name="messageThreadId">
-    /// Unique identifier of a message thread to which the message belongs; for supergroups only
     /// </param>
     /// <param name="disableNotification">
     /// Sends the message silently. Users will receive a notification with no sound

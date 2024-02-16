@@ -25,10 +25,8 @@ public static partial class JsonSerializerOptionsProvider
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
-        foreach (var generatedConverter in GeneratedConverters())
-        {
-            Options.Converters.Add(generatedConverter);
-        }
+
+        AddGeneratedConverters(Options.Converters);
     }
 
     /// <summary>
@@ -36,7 +34,7 @@ public static partial class JsonSerializerOptionsProvider
     /// </summary>
     public static JsonSerializerOptions Options { get; }
 
-    private static partial IEnumerable<JsonConverter> GeneratedConverters();
+    static partial void AddGeneratedConverters(IList<JsonConverter> converters);
 }
 
 #endif

@@ -17,7 +17,7 @@ internal class BanTimeConverter : UnixDateTimeConverter
 
         return reader.TokenType is JsonToken.Integer && reader.Value is 0L
             ? nonNullable
-                ? default
+                ? default(DateTime)
                 : null
             : base.ReadJson(reader, objectType, existingValue, serializer);
     }

@@ -12,6 +12,7 @@ namespace Telegram.Bot.Requests;
 #if !NET8_0_OR_GREATER
 [JsonObject(MemberSerialization.OptIn, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
 #endif
+[DataContract]
 public abstract class RequestBase<TResponse> : IRequest<TResponse>
 {
     /// <inheritdoc />
@@ -62,11 +63,11 @@ public abstract class RequestBase<TResponse> : IRequest<TResponse>
     /// If <see cref="IsWebhookResponse"/> is set to <see langword="true"/> is set to the method
     /// name, otherwise it won't be serialized
     /// </summary>
-#if !NET8_0_OR_GREATER
-    [JsonProperty("method", DefaultValueHandling = DefaultValueHandling.Ignore)]
-#else
+
+#if NET8_0_OR_GREATER
     [JsonPropertyName("method")]
     [JsonInclude]
 #endif
+    [DataMember(Name = "method", EmitDefaultValue = true)]
     internal string? WebHookMethodName => IsWebhookResponse ? MethodName : default;
 }

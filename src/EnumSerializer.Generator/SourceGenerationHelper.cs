@@ -18,10 +18,10 @@ internal static class SourceGenerationHelper
         /// </summary>
         public static partial class JsonSerializerOptionsProvider
         {
-            private static partial IEnumerable<JsonConverter> GeneratedConverters()
+            static partial void AddGeneratedConverters(IList<JsonConverter> converters)
             {
                 {{~ for enum in enums ~}}
-                yield return new global::{{ enum.namespace }}.{{ enum.name }}Converter();
+                converters.Add(new global::{{ if enum.namespace }}{{ enum.namespace }}.{{ end }}{{ enum.name }}Converter());
                 {{~ end ~}}
             }
         }
