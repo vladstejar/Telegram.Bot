@@ -39,10 +39,12 @@ steps:
       -p:Version=$(releaseVersion)
       $(projectPath)
     displayName: Create nuget package
-  - pwsh: >
-      dotnet nuget push
-      $(Build.ArtifactStagingDirectory)/packages/*.nupkg
-      --api-key $(NugetFeedNugetApiKey)
-      --skip-duplicate
-      --source https://nuget.voids.site/v3/index.json
+  - task: NuGetAuthenticate@1
+    inputs:
+      nuGetServiceConnections: AzureRelease
+  - task: NuGetCommand@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      publishVstsFeed: tuscen-test
     displayName: Publish package to NuGet
