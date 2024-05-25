@@ -46,5 +46,5 @@ steps:
     inputs:
       command: 'push'
       packagesToPush: '$(Build.ArtifactStagingDirectory)/packages/*.nupkg'
-      publishVstsFeed: tuscen-test
+      publishVstsFeed: AzureRelease
     displayName: Publish package to NuGet
